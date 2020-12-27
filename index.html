@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Study Group Finder</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial;}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+  animation: fadeEffect 1s; /* Fading effect takes 1 second */
+}
+
+/* Go from zero to full opacity */
+@keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+</style>
+</head>
+<body>
+<div class="tab">
+  <button id="defaultOpen" class="tablinks" title="Home" onclick="openTab(event, 'Home')">
+    <img src="icons/home.png" alt="Home" width="50" height="50"/>
+  </button>
+  <button class="tablinks" title="Search" onclick="openTab(event, 'Search')">
+    <img src="icons/search.png" alt="Search" width="50" height="50"/>
+  </button>
+  <button class="tablinks" title="Create Group" onclick="openTab(event, 'Create_Group')">
+    <img src="icons/create_group2.png" alt="Create Group" width="50" height="50"/>
+  </button>
+  <button class="tablinks" title="User Profile" onclick="openTab(event, 'User_Profile')">
+    <img src="icons/user_profile.png" alt="User Profile" width="50" height="50"/>
+  </button>
+  <button class="tablinks" title="Logout"> <!--onclick="openTab(event, 'Logout')"-->
+	<img src="icons/door-exit.png" alt="Logout" width="50" height="50"/>
+  </button>
+</div>
+
+<div id="Home" class="tabcontent">
+  <h3>Home</h3>
+  <p>Content goes here...</p>
+</div>
+
+<div id="Search" class="tabcontent">
+  <h3>Search</h3>
+  <p>Content goes here...</p>
+</div>
+
+<div id="Create_Group" class="tabcontent">
+  <h3>Create Group</h3>
+  <p>Content goes here...</p>
+</div>
+
+<div id="User_Profile" class="tabcontent">
+  <h3>User Profile</h3>
+  <p>Content goes here...</p>
+</div>
+
+<script>
+function openTab(evt, tabName) {  
+  var tabcontents = document.getElementsByClassName("tabcontent");
+  for (var i = 0; i < tabcontents.length; ++i) {
+    tabcontents[i].style.display = "none";
+  }
+  
+  var tablinks = document.getElementsByClassName("tablinks");
+  for (var i = 0; i < tablinks.length; ++i) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+// Show home-tab by default
+document.getElementById("defaultOpen").click();
+</script>
+</body>
+</html>
