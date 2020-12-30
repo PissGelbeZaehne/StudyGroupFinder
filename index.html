@@ -45,6 +45,17 @@ body {font-family: Arial;}
   animation: fadeEffect 1s; /* Fading effect takes 1 second */
 }
 
+input {
+  width: 100%;
+  padding: 12px  20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  background-color: #4CAF50;
+}
+
 /* Go from zero to full opacity */
 @keyframes fadeEffect {
   from {opacity: 0;}
@@ -83,7 +94,26 @@ body {font-family: Arial;}
 
 <div id="Create_Group" class="tabcontent">
   <h3>Create Group</h3>
-  <p>Content goes here...</p>
+  <p>Seems like you want to create a group, pls dont try to take control over the world or be a facist...</p>
+  <form>
+    <label for="groupname">Gruppenname:</label><br>
+    <input type="text" placeholder="Gruppenname eingeben"groupname" required><br>
+
+    <label for="lecture">Fach:</label><br>
+    <input type="text" placeholder="Fach eingeben" name="lecture" required><br>
+
+    <label for="maxusers">Max. Teilnehmeranzahl:</label><br>
+    <input type="text" placeholder="Max. Teilnehmeranzahl eingeben" name="maxusers" required><br>
+
+    <label for="precondition">Voraussetzungen:</label><br>
+    <input type="text" placeholder="Vorraussetzungen eingeben" name="precondition" required><br>
+
+    <label for="description">Beschreibung:</label><br>
+    <input type="text" placeholder="Beschreibung eingeben" name="description" required><br>
+    
+    <label for="createGroupButton"></label><br>
+    <input type="submit" value="Gruppe erstellen"><br>
+  </form>
 </div>
 
 <div id="User_Profile" class="tabcontent">
@@ -92,6 +122,10 @@ body {font-family: Arial;}
 </div>
 
 <script>
+function createGroup(){
+  ;
+}
+
 function openTab(evt, tabName) {  
   var tabcontents = document.getElementsByClassName("tabcontent");
   for (var i = 0; i < tabcontents.length; ++i) {
