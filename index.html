@@ -52,8 +52,62 @@ input {
   box-sizing: border-box;
 }
 
-input[type=submit] {
+input[type=button] {
   background-color: #4CAF50;
+}
+
+.flex-container {
+  flex-wrap: wrap;
+  display: flex;
+}
+
+.sidebar{
+  display: block;
+  flex-basis: 30%;
+  height: 100%;
+  padding: 20px;
+}
+
+.chat{
+  display: block;
+  flex-basis: 60%;
+  height: 100%;
+  padding: 20px;
+}
+
+.sidebar-item{
+  padding-bottom: 20px;
+}
+
+.container {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.darker {
+  border-color: #ccc;
+  background-color: #ddd;
+}
+
+.chat-text{
+  border: 1px solid #dedede;
+  margin-top: 0px;
+  flex-basis: 80%;
+  height: 40px;
+}
+
+.chat-button{
+  border: 1px solid #dedede;
+  margin-top: 0px;
+  flex-basis: 20%;
+  height: 40px;
+}
+
+.newmessage{
+  display: none;
 }
 
 /* Go from zero to full opacity */
@@ -112,16 +166,82 @@ input[type=submit] {
     <input type="text" placeholder="Beschreibung eingeben" name="description" required><br>
     
     <label for="createGroupButton"></label><br>
-    <input type="submit" value="Gruppe erstellen"><br>
+    <input type="button" value="Gruppe erstellen" onclick="openTab(event, 'Group_Profile')"><br>
   </form>
 </div>
+
+<div id="Group_Profile" class="tabcontent">
+  <h3>Gruppe: Die weltbesten Programmierer</h3>
+  <p>Content goes brr...</p>
+  <div class=flex-container>
+    <div class=sidebar>
+      <div class=sidebar-item>
+        <u><b>Mitglieder 3/6</b></u><br>
+        Hans Wurst<br>
+        Joachim Schikele<br>
+        Thomas Morgen<br>
+      </div>
+      <div class=sidebar-item>
+        <u><b>Termine</b></u><br>
+        13.11.20<br>
+        20.11.20<br>
+        27.11.20<br>
+      </div>
+    </div class= sidebar>
+    <div class=chat>
+      <b>Chat</b>
+      <div class="chat-messages" id="chat-messages">
+        <div class="container">
+          <p><b>Ich:</b> Habt ihr schonmal was von Python gehoert?</p>
+          11:00
+        </div>
+        <div class="container darker">
+          <p><b>Hans:</b> Der Schlangenart ? o.O</p>
+          11:02
+        </div>
+        <div class="container darker">
+          <p><b>Joachim:</b> nop...</p>
+          11:03
+        </div>
+      </div>
+      <div class=flex-container>
+        <input class="chat-text" id="chat-text" type="text" placeholder="Schreib etwas..."/>
+        <button class="chat-button" type="button" onclick="sendText()">Send</button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
 
 <div id="User_Profile" class="tabcontent">
   <h3>User Profile</h3>
   <p>Content goes here...</p>
 </div>
 
+<div class="container newmessage" id="newmessage">
+  <p><b>Ich:</b> Zeig ich euch naechstes mal</p>
+  <span class="time-right">11:05</span>
+</div>
+
 <script>
+function sendText(){
+  var chatText = document.getElementById("chat-text");
+  var chatmessages = document.getElementById("chat-messages");
+  var newmessage = document.createElement("div");
+
+  newmessage.classList.add("container");
+  newmessage.style.display = "block";
+  var inputText = chatText.value;
+  var time = new Date().toLocaleTimeString('de-DE', { hour: "numeric", 
+                                             minute: "numeric"});
+
+  newmessage.innerHTML = '<p><b>Ich: </b>' + inputText + '</p>' + time;
+  chatmessages.append(newmessage);
+  chatText.value = "";
+}
+
 function createGroup(){
   ;
 }
