@@ -45,6 +45,13 @@ body {font-family: Arial;}
   animation: fadeEffect 1s; /* Fading effect takes 1 second */
 }
 
+select{
+  width: 100%;
+  padding: 12px  20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
 input {
   width: 100%;
   padding: 12px  20px;
@@ -65,7 +72,8 @@ input[type=button] {
   display: block;
   flex-basis: 30%;
   height: 100%;
-  padding: 20px;
+  padding-top: 20px;
+  padding-right: 20px;
 }
 
 .chat{
@@ -76,6 +84,7 @@ input[type=button] {
 }
 
 .sidebar-item{
+  padding-left: 0%;
   padding-bottom: 20px;
 }
 
@@ -104,6 +113,18 @@ input[type=button] {
   margin-top: 0px;
   flex-basis: 20%;
   height: 40px;
+}
+
+.group-header{
+  flex-basis: 90%;
+  align-self: center;
+}
+
+.settings-icon{
+  flex-basis: 10%;
+  border: none;
+  background: none;
+  padding-top: 10px;
 }
 
 .newmessage{
@@ -149,40 +170,83 @@ input[type=button] {
 <div id="Create_Group" class="tabcontent">
   <h3>Create Group</h3>
   <p>Seems like you want to create a group, pls dont try to take control over the world or be a facist...</p>
-  <form>
-    <label for="groupname"><b>Gruppenname:</b></label><br>
-    <input type="text" placeholder="Gruppenname eingeben"groupname" required><br>
+  <form name="groupform">
+    <label for="groupname"><b>Group name:</b></label><br>
+    <input type="text" placeholder="Enter group name" id="groupname" required><br>
 
-    <label for="lecture"><b>Fach:</b></label><br>
-    <input type="text" placeholder="Fach eingeben" name="lecture" required><br>
+    <label for="lecture"><b>Lecture:</b></label><br>
+    <input type="text" placeholder="Enter lecture" id="lecture" required><br>
 
-    <label for="maxusers"><b>Max. Teilnehmeranzahl:</b></label><br>
-    <input type="text" placeholder="Max. Teilnehmeranzahl eingeben" name="maxusers" required><br>
+    <label for="maxusers"><b>Member limit:</b></label><br>
+      <select name="maxusers size="1">
+        <option>2</option>
+        <option>6</option>
+        <option>10</option>
+        <option>15</option>
+        <option>20</option>
+      </select><br>
 
-    <label for="precondition"><b>Voraussetzungen:</b></label><br>
-    <input type="text" placeholder="Vorraussetzungen eingeben" name="precondition" required><br>
+    <label for="precondition"><b>Precondition:</b></label><br>
+    <input type="text" placeholder="Enter preconditions" id="precondition" required><br>
 
-    <label for="description"><b>Beschreibung:</b></label><br>
-    <input type="text" placeholder="Beschreibung eingeben" name="description" required><br>
+    <label for="description"><b>Description:</b></label><br>
+    <input type="text" placeholder="Enter description" id="description" required><br>
     
     <label for="createGroupButton"></label><br>
-    <input type="button" value="Gruppe erstellen" onclick="openTab(event, 'Group_Profile')"><br>
+    <input type="button" value="Save group" onclick='validateForm("groupname","lecture","precondition","description")'><br>
+  </form>
+</div>
+
+<div id="Group-Settings" class="tabcontent">
+  <h3>Group Settings</h3>
+  <form>
+    <label for="groupname"><b>Group name:</b></label><br>
+    <input type="text" value="Programmers of tomorrow" id="settinggroupname" required><br>
+
+    <label for="lecture"><b>Lecture:</b></label><br>
+    <input type="text" id="settinglecture" value="Programmieren 1" required><br>
+
+    <label for="maxusers"><b>Member limit:</b></label><br>
+      <select name="maxusers size="1">
+        <option>2</option>
+        <option selected>6</option>
+        <option>10</option>
+        <option>15</option>
+        <option>20</option>
+      </select><br>
+
+    <label for="precondition"><b>Precondition:</b></label><br>
+    <input type="text" id="settingprecondition" value="None" required><br>
+
+    <label for="description"><b>Description:</b></label><br>
+    <input type="text" id="settingdescription" value="If u want to work on your Programmieren 1 assignments together this is the right place" name="description" required><br>
+    
+    <label for="createGroupButton"></label><br>
+    <input type="button" id="1" value="Save group" onclick='validateForm("settinggroupname","settinglecture","settingprecondition","settingdescription")'><br>
   </form>
 </div>
 
 <div id="Group_Profile" class="tabcontent">
-  <h3>Gruppe: Die weltbesten Programmierer</h3>
-  <p>Content goes brr...</p>
+  <div class="flex-container">
+    <div class=group-header>
+      <h3>Group Profile: Programmers of tomorrow</h3>
+    </div>
+    <div class=settings-icon>
+      <button class="settings-icon" title="User Profile" onclick="openTab(event, 'Group-Settings')">
+      <img src="icons/settings.png" alt="User Profile" width="40" height="40"/>
+    </button>
+    </div>
+  </div>
   <div class=flex-container>
     <div class=sidebar>
       <div class=sidebar-item>
-        <u><b>Mitglieder 3/6</b></u><br>
-        Hans Wurst<br>
+        <b>Members 3/6</b><br><br>
+        You<br>
+        Hans Wurst <img src="icons/star.png" alt="Group Admin" width="10" height="10"/><br>
         Joachim Schikele<br>
-        Thomas Morgen<br>
       </div>
       <div class=sidebar-item>
-        <u><b>Termine</b></u><br>
+        <b>Dates</b><br><br>
         13.11.20<br>
         20.11.20<br>
         27.11.20<br>
@@ -192,20 +256,20 @@ input[type=button] {
       <b>Chat</b>
       <div class="chat-messages" id="chat-messages">
         <div class="container">
-          <p><b>Ich:</b> Habt ihr schonmal was von Python gehoert?</p>
+          <p><b>Ich:</b> Hello my name is Thomas.</p>
           11:00
         </div>
         <div class="container darker">
-          <p><b>Hans:</b> Der Schlangenart ? o.O</p>
+          <p><b>Hans:</b> has anyone of you heard of stack overflow ?</p>
           11:02
         </div>
         <div class="container darker">
-          <p><b>Joachim:</b> nop...</p>
+          <p><b>Joachim:</b> yeah it had a neet fix for my relationship</p>
           11:03
         </div>
       </div>
       <div class=flex-container>
-        <input class="chat-text" id="chat-text" type="text" placeholder="Schreib etwas..."/>
+        <input class="chat-text" id="chat-text" type="text" placeholder="Write something..."/>
         <button class="chat-button" type="button" onclick="sendText()">Send</button>
       </div>
 
@@ -220,30 +284,41 @@ input[type=button] {
   <p>Content goes here...</p>
 </div>
 
-<div class="container newmessage" id="newmessage">
-  <p><b>Ich:</b> Zeig ich euch naechstes mal</p>
-  <span class="time-right">11:05</span>
-</div>
-
 <script>
+
+function validateForm(groupname,lecture,precondition,description){
+  var groupname = document.getElementById(groupname).value;
+  var lecture = document.getElementById(lecture).value;
+  var precondition = document.getElementById(precondition).value;
+  var description = document.getElementById(description).value;
+  console.log(groupname,lecture,precondition,description);
+
+  if(groupname == "" || lecture == "" || precondition == "" || description == "" ){
+    alert("Please fill out all inputs.");
+  }
+  else{
+    openTab(event,"Group_Profile");
+  }
+} 
+
 function sendText(){
   var chatText = document.getElementById("chat-text");
+  var inputText = chatText.value;
+  if (inputText == ""){
+    return false;
+  }
+
   var chatmessages = document.getElementById("chat-messages");
   var newmessage = document.createElement("div");
 
   newmessage.classList.add("container");
   newmessage.style.display = "block";
-  var inputText = chatText.value;
   var time = new Date().toLocaleTimeString('de-DE', { hour: "numeric", 
                                              minute: "numeric"});
 
   newmessage.innerHTML = '<p><b>Ich: </b>' + inputText + '</p>' + time;
   chatmessages.append(newmessage);
   chatText.value = "";
-}
-
-function createGroup(){
-  ;
 }
 
 function openTab(evt, tabName) {  
