@@ -45,11 +45,113 @@ body {font-family: Arial;}
   animation: fadeEffect 1s; /* Fading effect takes 1 second */
 }
 
+/* Style the collapsible */
+.collapsible {
+  background-color: #777;
+  color: white;
+  cursor: pointer;
+  padding-left: 20px;
+  width: 100%;
+  border: none;
+  text-align: left;
+}
+
+/* Change background color of collapsible button when active and on hover*/
+.active, .collapsible:hover {
+  background-color: #555;
+}
+
+/* Style the content of the collapsible */
+.collapsiblecontent {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
+/* Style search result table */
+table{
+  margin: 0 auto;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 16px;
+}
+
+/* Style clickable group name */
+button.group {
+  cursor: pointer;
+  font-family: Arial;
+  font-size: 12pt;
+}
+
+/* Underline group name on hover*/
+button.group:hover {
+  text-decoration: underline;
+}
+
+/* Style request form */
+.popup .overlay {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  background: rgba(0,0,0,0.7);
+  z-index:1;
+}
+
+.popup .content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%) scale(0);
+  background:#fff;
+  width: 450px;
+  height: 220px;
+  z-index: 2;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Close button for request form */
+.close {
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 30px;
+  height: 30px;
+  color: #000;
+  font-size: 25px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.popup.active .overlay {
+  display: block;
+}
+
+.popup.active .content {
+  transition: all 300ms ease-in-out;
+  transform: translate(-50%,-50%) scale(1);
+}
+
 select{
   width: 100%;
   padding: 12px  20px;
   margin: 8px 0;
   box-sizing: border-box;
+}
+
+select:invalid {
+  color: gray;
 }
 
 input {
@@ -172,7 +274,85 @@ fieldset {
 
 <div id="Search" class="tabcontent">
   <h3>Search</h3>
-  <p>Content goes here...</p>
+  <form id="searchform" onsubmit="showResults();">
+	<div>
+	  <input type="text" placeholder="Search..." name="search" required>
+	</div>
+	
+	<button class="collapsible" onclick="openDetailedSearch();"><h4>Detailed Search</h4></button>
+	<div id="colcontent" class="collapsiblecontent"><br>
+	  <div style="width: 65%;max-width: 375px">
+	  <label for="course"><b>Course</b></label><br>
+	  <select name="course" style="margin-top:10px;margin-bottom:20px">
+	    <option value="" disabled selected hidden>Select course...</option>
+        <option value="prog1">Programmieren 1</option>
+        <option value="prog2">Programmieren 2</option>
+        <option value="gmci">Grundlagen der Mensch-Computer-Interaktion</option>
+		<option value="gds">Grundlagen digitaler Systeme</option>
+		<option value="anaA">Analysis A</option>
+        <option value="anaB">Analysis B</option>
+	  </select>
+	  
+	  <label for="groupsizemin"><b>Group size</b></label><br>
+      <input type="number" placeholder="Enter min size..." name="groupsizemin" min=1 max=100 style="width:50%;max-width:175px;margin-right:10px;margin-top:10px;margin-bottom:20px">
+	  <input type="number" placeholder="Enter max size..." name="groupsizemax" min=1 max=100 style="width:50%;max-width:175px;margin-left:10px;margin-top:10px;margin-bottom:20px">
+	  
+	  <label for="semester"><b>Semester founded</b></label><br>
+      <select name="semester" style="margin-top:10px;margin-bottom:20px">
+	    <option value="" disabled selected hidden>Select semester...</option>
+        <option value="wise20">WiSe 20/21</option>
+        <option value="sose20">SoSe 20</option>
+        <option value="wise19">WiSe 19/20</option>
+		<option value="sose19">SoSe 19</option>
+		<option value="wise18">WiSe 18/19</option>
+	  </select>
+	  </div>
+    </div>
+  </form>
+
+  <div id="searchresults" style="display:none">
+	<h3>Results</h3>
+    <table>
+	  <tr>
+		<th>Name</th>
+		<th>Course</th>
+		<th>Size</th>
+		<th>Date</th>
+	  </tr>
+	  <tr>
+		<td><button class="group" style="background:none;border:none" onclick="toggleRequest()">Programmieren 1 Lerngruppe</button></td>
+		<td>Programmieren 1</td>
+		<td>14</td>
+		<td>WiSe 20/21</td>
+	  </tr>
+	  <tr>
+		<td><button class="group" style="background:none;border:none" onclick="toggleRequest()">Programmieren 2</button></td>
+		<td>Programmieren 2</td>
+		<td>5</td>
+		<td>SoSe 20</td>
+	  </tr>
+	  <tr>
+  		<td><button class="group" style="background:none;border:none" onclick="toggleRequest()">Die Programmier-Profis</button></td>
+		<td>Programmieren 1</td>
+		<td>6</td>
+	    <td>WiSe 18/19</td>
+      </tr>
+    </table>
+  </div>
+  
+  <div id="request" class="popup" style="display:none">
+    <div class="overlay"></div>
+	<div class="content"></div>
+	  <div class="close" onclick="toggleRequest()">&times;</div>
+      <h3>Request</h3>
+	  <form>
+	    <label for="reqmessage"><b>Message</b></label>
+        <input type="text" placeholder="Enter Message..." name="reqmessage" style="height:200px;width:100%;vertical-align:text-top" required>
+	  
+	    <button type="submit" style="float:center">Send Request</button>
+      </form>
+	</div>
+  </div>
 </div>
 
 <div id="Create_Group" class="tabcontent">
@@ -366,6 +546,10 @@ fieldset {
 
 <script>
 
+var form = document.getElementById("searchform");
+function handleForm(event) { event.preventDefault(); }
+form.addEventListener('submit', handleForm);
+
 function validateForm(groupname,lecture,precondition,description){
   var groupname = document.getElementById(groupname).value;
   var lecture = document.getElementById(lecture).value;
@@ -442,6 +626,28 @@ function openTab(evt, tabName) {
   
   document.getElementById(tabName).style.display = "block";
   evt.currentTarget.className += " active";
+}
+
+function openDetailedSearch() {
+  var content = document.getElementById("colcontent");
+  if (content.style.display === "block") {
+    content.style.display = "none";
+  } else {
+    content.style.display = "block";
+  }
+}
+
+function showResults() {
+  document.getElementById("searchresults").style.display = "block";
+}
+
+function toggleRequest() {
+  var content = document.getElementById("request");
+  if (content.style.display === "block") {
+    content.style.display = "none";
+  } else {
+    content.style.display = "block";
+  }
 }
 
 // Show home-tab by default
