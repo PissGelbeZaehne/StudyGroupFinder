@@ -50,7 +50,8 @@ body {font-family: Arial;}
   background-color: #777;
   color: white;
   cursor: pointer;
-  padding-left: 20px;
+  padding: 0px 20px;
+  margin: 8px 0;
   width: 100%;
   border: none;
   text-align: left;
@@ -94,53 +95,69 @@ button.group:hover {
   text-decoration: underline;
 }
 
-/* Style request form */
-.popup .overlay {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  width: 100vw;
-  height: 100vh;
+/* The Modal (background) */
+#Search .modal {
   display: none;
-  background: rgba(0,0,0,0.7);
-  z-index:1;
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto;
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4);
+  padding-top: 60px;
 }
 
-.popup .content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%) scale(0);
-  background:#fff;
-  width: 450px;
-  height: 220px;
-  z-index: 2;
-  text-align: center;
-  padding: 20px;
-  box-sizing: border-box;
+/* Modal Content/Box */
+#Search .modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  width: 80%; /* Could be more or less, depending on screen size */
 }
 
-/* Close button for request form */
-.close {
-  cursor: pointer;
+#Search .container {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 0px;
+  padding: 15px;
+}
+
+#Search span.psw {
+  position: fixed; 
+  float: right;
+  padding-top: 0px;
+}
+
+/* The Close Button (x) */
+#Search .close {
   position: absolute;
-  right: 20px;
-  top: 20px;
-  width: 30px;
-  height: 30px;
+  right: 200px;
+  top: 155px;
   color: #000;
-  font-size: 25px;
-  font-weight: 600;
-  text-align: center;
+  font-size: 35px;
+  font-weight: bold;
 }
 
-.popup.active .overlay {
-  display: block;
+#Search .close:hover,
+#Search .close:focus {
+  color: red;
+  cursor: pointer;
 }
 
-.popup.active .content {
-  transition: all 300ms ease-in-out;
-  transform: translate(-50%,-50%) scale(1);
+#submitRequest{
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+#submitRequest:hover {
+  opacity: 0.8;
 }
 
 select{
@@ -270,12 +287,12 @@ fieldset {
 
 <div id="Search" class="tabcontent">
   <h3>Search</h3>
-  <form id="searchform" onsubmit="showResults();">
+  <form id="searchform" onsubmit="showResults()">
 	<div>
 	  <input type="text" placeholder="Search..." name="search" required>
 	</div>
 	
-	<button class="collapsible" onclick="openDetailedSearch();"><h4>Detailed Search</h4></button>
+	<button id="detailedSearch" class="collapsible" onclick="openDetailedSearch()"><h4>Detailed Search</h4></button>
 	<div id="colcontent" class="collapsiblecontent"><br>
 	  <div style="width: 65%;max-width: 375px">
 	  <label for="course"><b>Course</b></label><br>
@@ -313,7 +330,7 @@ fieldset {
 		<th>Name</th>
 		<th>Course</th>
 		<th>Size</th>
-		<th>Date</th>
+		<th>Semester</th>
 	  </tr>
 	  <tr>
 		<td><button class="group" style="background:none;border:none" onclick="toggleRequest()">Programmieren 1 Lerngruppe</button></td>
@@ -336,18 +353,19 @@ fieldset {
     </table>
   </div>
   
-  <div id="request" class="popup" style="display:none">
-    <div class="overlay"></div>
-	<div class="content"></div>
-	  <div class="close" onclick="toggleRequest()">&times;</div>
-      <h3>Request</h3>
-	  <form>
-	    <label for="reqmessage"><b>Message</b></label>
-        <input type="text" placeholder="Enter Message..." name="reqmessage" style="height:200px;width:100%;vertical-align:text-top" required>
+  <div id="request" class="modal">
+    <form id="requestForm" class="modal-content animate" method="post" autocomplete="on" accept-charset="UTF-8">
+	  <div class="imgcontainer">
+	    <span onclick="document.getElementById('request').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
 	  
-	    <button type="submit" style="float:center">Send Request</button>
-      </form>
-	</div>
+	  <div class="container">
+        <h3>Request</h3>
+	    <label for="reqmessage"><b>Message</b></label>
+		<textarea style="height:150px;width:100%;margin-top:15px;margin-bottom:15px;overflow:auto;resize:vertical"></textarea>
+	    <button id="submitRequest" onclick="document.getElementById('request').style.display='none'"><b>Send Request</b></button><br>
+	  </div>
+	</form>
   </div>
 </div>
 
@@ -546,6 +564,10 @@ var form = document.getElementById("searchform");
 function handleForm(event) { event.preventDefault(); }
 form.addEventListener('submit', handleForm);
 
+var form = document.getElementById("requestForm");
+function handleForm(event) { event.preventDefault(); }
+form.addEventListener('submit', handleForm);
+
 function validateForm(groupname,lecture,precondition,description){
   var groupname = document.getElementById(groupname).value;
   var lecture = document.getElementById(lecture).value;
@@ -643,6 +665,13 @@ function toggleRequest() {
     content.style.display = "none";
   } else {
     content.style.display = "block";
+  }
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == request) {
+	request.style.display = "none";
   }
 }
 
