@@ -53,13 +53,13 @@ select{
 }
 
 input {
-  width: 100%;
+  //width: 100%;
   padding: 12px  20px;
   margin: 8px 0;
   box-sizing: border-box;
 }
 
-input[type=button] {
+input[type=button], input[type=reset] {
   background-color: #4CAF50;
 }
 
@@ -136,6 +136,10 @@ input[type=button] {
   from {opacity: 0;}
   to {opacity: 1;}
 }
+
+fieldset {
+	width: 200px;
+}
 </style>
 </head>
 <body>
@@ -147,14 +151,14 @@ input[type=button] {
     <img src="icons/search.png" alt="Search" width="50" height="50"/>
   </button>
   <button class="tablinks" title="Create Group" onclick="openTab(event, 'Create_Group')">
-    <img src="icons/create_group2.png" alt="Create Group" width="50" height="50"/>
+    <img src="icons/create_group.png" alt="Create Group" width="50" height="50"/>
   </button>
   <button class="tablinks" title="User Profile" onclick="openTab(event, 'User_Profile')">
     <img src="icons/user_profile.png" alt="User Profile" width="50" height="50"/>
   </button>
-  <a href="login.html"><button class="tablinks" title="Logout"> <!--onclick="openTab(event, 'Logout')"-->
-	<img src="icons/door-exit.png" alt="Logout" width="50" height="50"/>
-  </button></a>
+  <a href="login.html"><button class="tablinks" title="Logout">
+	<img src="icons/logout.png" alt="Logout" width="50" height="50"/>
+  </a>
 </div>
 
 <div id="Home" class="tabcontent">
@@ -275,13 +279,85 @@ input[type=button] {
 
     </div>
   </div>
-
 </div>
-
 
 <div id="User_Profile" class="tabcontent">
   <h3>User Profile</h3>
-  <p>Content goes here...</p>
+  <img src="icons/user_profile.png" alt="Avatar" style="width:128px;height:128px;float:left;cursor:pointer;" onclick="uploadAvatar(this)">
+  <input type="file" id="avatar_upload" name="avatar_upload" style="display:none;">
+  <!-- drag & drop? -->
+
+  <form>
+	<fieldset style="float:left;">
+		<legend><b>Personal Data</b></legend>
+		<label for="user_name"><b>Name:*</b></label><br>
+		<input type="text" id="user_name" name="user_name" value="Hans Wurst" size="30" readonly required><br>
+		<label for="user_birthday"><b>Birthday:*</b></label><br>
+		<input type="date" id="user_birthday" name="birthday" value="1996-04-15" readonly required><br>
+		<fieldset disabled>
+			<legend><b>Sex*</b></legend>
+			<input type="radio" id="male" name="sex" value="male" checked>
+			<label for="male">Male</label>
+			<input type="radio" id="female" name="sex" value="female">
+			<label for="female">Female</label>
+			<input type="radio" id="other" name="sex" value="other">
+			<label for="other">Other</label>
+		</fieldset>
+	</fieldset>
+
+	<fieldset style="float:left;">
+		<legend><b>Contact Details</b></legend>
+		<label for="user_email"><b>Email:*</b></label><br>
+		<input type="email" id="user_email" name="user_email" value="hans.wurst@stud.uni-hannover.de" size="30" required><br>
+		<label for="user_phone"><b>Telephone:</b></label><br>
+		<input type="tel" id="user_phone" name="user_phone" value="+49 511 123456" size="30"><br><!-- pattern=""-->
+		<label for="user_mobile"><b>Mobile Phone:</b></label><br>
+		<input type="tel" id="user_mobile" name="user_mobile" value="0123 456789" size="30"><!-- pattern=""-->
+		
+		<!-- Social Media... facebook, instagram, twitter etc. -->
+	</fieldset>
+
+	<fieldset>
+		<legend><b>Studies</b></legend>
+		<label for="user_university"><b>University:*</b></label><br>
+		<input type="text" list="universities" id="user_university" name="user_university" value="Leibniz Universität Hannover" size="30" required><br>
+		<datalist id="universities">
+			<option value="Leibniz Universität Hannover">
+			<option value="Medizinische Hochschule Hannover">
+			<option value="Tierärztliche Hochschule Hannover">
+			<option value="Hochschule Hannover">
+			<option value="Hochschule für Musik, Theater und Medien Hannover">
+			<option value="...">
+		</datalist>
+		<label for="user_studycourse"><b>Study Course:*</b></label><br>
+		<input type="text" list="studycourses" id="user_studycourse" name="user_studycourse" value="Informatik B.Sc." size="30" required><br>
+		<datalist id="studycourses">
+			<option value="Informatik B.Sc.">
+			<option value="Informatik M.Sc.">
+			<option value="Technische Informatik B.Sc.">
+			<option value="Technische Informatik M.Sc.">
+			<option value="Elektrotechnik und Informationstechnik B.Sc.">
+			<option value="Elektrotechnik und Informationstechnik M.Sc.">
+			<option value="Energietechnik B.Sc.">
+			<option value="Energietechnik M.Sc.">
+			<option value="Mechatronik B.Sc.">
+			<option value="...">
+		</datalist>
+		<label for="user_studystart"><b>Study Start:*</b></label><br>
+		<input type="date" id="user_studystart" name="studystart" value="2018-09-01" required><br>
+		<label for="user_semester"><b>Semester:</b></label>
+		<input type="number" id="user_semester" name="user_semester" min="1" max="99" size="3" step="1" value="5">
+	</fieldset><br>
+	
+	<label for="user_description"><b>Description:</b></label><br>
+	<textarea rows="5" cols="30"id="user_description" name="user_description">Meine Hobbys sind Reiten, Lesen, Schwimmen.</textarea><br>
+    
+    <input type="button" value="Save" onclick="saveUserProfile()">
+	<input type="reset" value="Reset">
+	<a href="login.html"><input type="button" value="Delete Account" onclick="deleteAccount()" style="background-color: #f44336;"></a><br>
+	
+	<small>* input required</small>
+  </form>
 </div>
 
 <script>
@@ -319,6 +395,34 @@ function sendText(){
   newmessage.innerHTML = '<p><b>Ich: </b>' + inputText + '</p>' + time;
   chatmessages.append(newmessage);
   chatText.value = "";
+}
+
+function createGroup(){
+  ;
+}
+
+function uploadAvatar(img) {
+	var file = document.getElementById('avatar_upload');
+	var answer = file.click();
+	
+	if (answer) {
+		//update avatar
+		//img.setAttribute("src", file.value);
+	}
+}
+
+function saveUserProfile() {
+	//save user profile changes...
+	
+	window.alert('Saved');
+}
+
+function deleteAccount() {
+	var answer = window.confirm("Are you sure that you want to delete your account?\nOnce your account has been deleted, you won't be able to restore it.");
+	
+	if (answer) {
+		//delete account...
+	}
 }
 
 function openTab(evt, tabName) {  
