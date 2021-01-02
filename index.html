@@ -131,6 +131,10 @@ input[type=button], input[type=reset] {
   display: none;
 }
 
+.groupinput{
+  width: 100%;
+}
+
 /* Go from zero to full opacity */
 @keyframes fadeEffect {
   from {opacity: 0;}
@@ -176,10 +180,10 @@ fieldset {
   <p>Seems like you want to create a group, pls dont try to take control over the world or be a facist...</p>
   <form name="groupform">
     <label for="groupname"><b>Group name:</b></label><br>
-    <input type="text" placeholder="Enter group name" id="groupname" required><br>
+    <input type="text" class="groupinput" placeholder="Enter group name" id="groupname" required><br>
 
     <label for="lecture"><b>Lecture:</b></label><br>
-    <input type="text" placeholder="Enter lecture" id="lecture" required><br>
+    <input type="text" class="groupinput" placeholder="Enter lecture" id="lecture" required><br>
 
     <label for="maxusers"><b>Member limit:</b></label><br>
       <select name="maxusers size="1">
@@ -191,10 +195,10 @@ fieldset {
       </select><br>
 
     <label for="precondition"><b>Precondition:</b></label><br>
-    <input type="text" placeholder="Enter preconditions" id="precondition" required><br>
+    <input type="text"  class="groupinput" placeholder="Enter preconditions" id="precondition" required><br>
 
     <label for="description"><b>Description:</b></label><br>
-    <input type="text" placeholder="Enter description" id="description" required><br>
+    <input type="text"  class="groupinput" placeholder="Enter description" id="description" required><br>
     
     <label for="createGroupButton"></label><br>
     <input type="button" value="Save group" onclick='validateForm("groupname","lecture","precondition","description")'><br>
@@ -205,10 +209,10 @@ fieldset {
   <h3>Group Settings</h3>
   <form>
     <label for="groupname"><b>Group name:</b></label><br>
-    <input type="text" value="Programmers of tomorrow" id="settinggroupname" required><br>
+    <input type="text" class="groupinput" value="Programmers of tomorrow" id="settinggroupname" required><br>
 
     <label for="lecture"><b>Lecture:</b></label><br>
-    <input type="text" id="settinglecture" value="Programmieren 1" required><br>
+    <input type="text" class="groupinput" id="settinglecture" value="Programmieren 1" required><br>
 
     <label for="maxusers"><b>Member limit:</b></label><br>
       <select name="maxusers size="1">
@@ -220,14 +224,14 @@ fieldset {
       </select><br>
 
     <label for="precondition"><b>Precondition:</b></label><br>
-    <input type="text" id="settingprecondition" value="None" required><br>
+    <input type="text" class="groupinput" id="settingprecondition" value="None" required><br>
 
     <label for="description"><b>Description:</b></label><br>
-    <input type="text" id="settingdescription" value="If u want to work on your Programmieren 1 assignments together this is the right place" name="description" required><br>
+    <input type="text" class="groupinput" id="settingdescription" value="If u want to work on your Programmieren 1 assignments together this is the right place" name="description" required><br>
     
     <label for="createGroupButton"></label><br>
     <input type="button" id="1" value="Save group" onclick='validateForm("settinggroupname","settinglecture","settingprecondition","settingdescription")'><br>
-  </form>
+  </form wi>
 </div>
 
 <div id="Group_Profile" class="tabcontent">
