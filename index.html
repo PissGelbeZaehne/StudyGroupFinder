@@ -5,13 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="icons/favicon-group.png" type="image/png" sizes="16x16">
 <style>
-body {font-family: Arial;}
+body {
+  background-color: white;
+  font-family: Calibri, Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
 
 /* Style the tab */
 .tab {
-  overflow: hidden;
   border: 1px solid #ccc;
   background-color: #f1f1f1;
+  overflow: hidden;
 }
 
 /* Style the buttons inside the tab */
@@ -28,18 +35,21 @@ body {font-family: Arial;}
 
 /* Change background color of buttons on hover */
 .tab button:hover {
-  background-color: #ddd;
+  //background-color: #ddd;
+  background-color: rgba(50,200,250,0.5);
 }
 
 /* Create an active/current tablink class */
 .tab button.active {
-  background-color: #ccc;
+  //background-color: #ccc;
+  background-color: rgba(50,200,250,1.0);
 }
 
 /* Style the tab content */
 .tabcontent {
   display: none;
   padding: 6px 12px;
+  background-color: rgba(50,200,250,0.5);
   border: 1px solid #ccc;
   border-top: none;
   animation: fadeEffect 1s; /* Fading effect takes 1 second */
@@ -174,15 +184,21 @@ select:invalid {
 input {
   padding: 12px  20px;
   margin: 8px 0;
+  border-radius: 12px;
   box-sizing: border-box;
 }
 
 input[type=button], input[type=reset] {
-  background-color: #4CAF50;
+  background-color: #cccccc;
+  border: 1px solid white;
+  border-radius: 12px;
+  color: white;
 }
 
 input[type=button]:hover, input[type=reset]:hover {
-  opacity: 0.8;
+  background-color: #aaaaaa;
+  border: 1px solid black;
+  color: black;
   cursor: pointer;
 }
 
@@ -266,8 +282,16 @@ input[type=button]:hover, input[type=reset]:hover {
 
 fieldset {
 	background-color: #eeeeee;
+	border-radius: 12px;
 	float:left;
 	width: 200px;
+}
+
+#btn_deleteAccount {
+	background-color: rgba(225,75,50,1.0);
+}
+#btn_deleteAccount:hover {
+	background-color: rgba(200,50,50,1.0);
 }
 </style>
 </head>
@@ -558,6 +582,8 @@ fieldset {
 		<input type="tel" id="user_phone" name="user_phone" value="+49 511 123456" size="30"><br><!-- pattern=""-->
 		<label for="user_mobile"><b>Mobile Phone:</b></label><br>
 		<input type="tel" id="user_mobile" name="user_mobile" value="0123 456789" size="30"><!-- pattern=""-->
+		<label for="user_homepage"><b>Homepage:</b></label><br>
+		<input type="url" id="user_homepage" name="user_homepage" value="https://www.hans-wurst.de" size="30">
 	</fieldset>
 	
 	<fieldset>
@@ -578,11 +604,11 @@ fieldset {
 	
 	<div style="clear:both;">
 		<label for="user_description"><big><b>Description:</b></big></label><br>
-		<textarea rows="10" cols="100"id="user_description" name="user_description" style="margin-top:10px;padding:10px;">Meine Hobbys sind Reiten, Lesen, Schwimmen.</textarea><br>
+		<textarea rows="10" cols="100"id="user_description" name="user_description" style="border-radius:12px;margin-top:10px;padding:10px;">Meine Hobbys sind Reiten, Lesen, Schwimmen.</textarea><br>
 		
 		<input type="button" value="Save" onclick="saveUserProfile()">
 		<input type="reset" value="Reset">
-		<input type="button" value="Delete Account" onclick="deleteAccount()" style="background-color: #f44336;"><br>
+		<input type="button" id="btn_deleteAccount" value="Delete Account" onclick="deleteAccount()"><br>
 		<a href="login.html" id="link_login"></a>
 		
 		<small>* input required</small>
@@ -671,18 +697,19 @@ function deleteAccount() {
 }
 
 function openTab(evt, tabName) {  
-  var tabcontents = document.getElementsByClassName("tabcontent");
-  for (var i = 0; i < tabcontents.length; ++i) {
-    tabcontents[i].style.display = "none";
-  }
-  
-  var tablinks = document.getElementsByClassName("tablinks");
-  for (var i = 0; i < tablinks.length; ++i) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-  
-  document.getElementById(tabName).style.display = "block";
-  evt.currentTarget.className += " active";
+    var tabcontents = document.getElementsByClassName("tabcontent");
+    for (var i = 0; i < tabcontents.length; ++i) {
+        tabcontents[i].style.display = "none";
+    }
+    
+    var tablinks = document.getElementsByClassName("tablinks");
+    
+    for (var i = 0; i < tablinks.length; ++i) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
 }
 
 // Show home-tab by default
@@ -711,8 +738,8 @@ function setMaxSemester(studystart) {
     var months = (currentDate.getFullYear() - studystart.getFullYear()) * 12;
     months -= studystart.getMonth();
     months += currentDate.getMonth() + 1;
-	
-	document.getElementById("user_semester").max = Math.ceil(months / 6);
+    
+    document.getElementById("user_semester").max = Math.ceil(months / 6);
 }
 var studystart = document.getElementById("user_studystart");
 if (studystart.value != "") {
