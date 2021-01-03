@@ -172,7 +172,6 @@ select:invalid {
 }
 
 input {
-  //width: 100%;
   padding: 12px  20px;
   margin: 8px 0;
   box-sizing: border-box;
@@ -180,6 +179,11 @@ input {
 
 input[type=button], input[type=reset] {
   background-color: #4CAF50;
+}
+
+input[type=button]:hover, input[type=reset]:hover {
+  opacity: 0.8;
+  cursor: pointer;
 }
 
 .flex-container {
@@ -261,6 +265,8 @@ input[type=button], input[type=reset] {
 }
 
 fieldset {
+	background-color: #eeeeee;
+	float:left;
 	width: 200px;
 }
 </style>
@@ -285,13 +291,13 @@ fieldset {
 </div>
 
 <div id="Home" class="tabcontent">
-  <h3>Home</h3>
+  <h2>Home</h2>
   <p>Content goes here...</p>
 </div>
 
 <div id="Search" class="tabcontent">
-  <h3>Search</h3>
-  <form id="searchform" onsubmit="showResults()">
+  <h2>Search</h2>
+  <form id="searchform" onsubmit="showResults();">
 	<div>
 	  <input type="text" placeholder="Search..." name="search" required>
 	</div>
@@ -374,7 +380,7 @@ fieldset {
 </div>
 
 <div id="Create_Group" class="tabcontent">
-  <h3>Create Group</h3>
+  <h2>Create Group</h2>
   <p>Seems like you want to create a group, pls dont try to take control over the world or be a facist...</p>
   <form name="groupform">
     <label for="groupname"><b>Group name:</b></label><br>
@@ -484,20 +490,25 @@ fieldset {
 </div>
 
 <div id="User_Profile" class="tabcontent">
-  <h3>User Profile</h3>
-  <img src="icons/user_profile.png" alt="Avatar" style="width:128px;height:128px;float:left;cursor:pointer;" onclick="uploadAvatar(this)">
-  <input type="file" id="avatar_upload" name="avatar_upload" style="display:none;">
+  <h2>User Profile</h2>
+  <img src="icons/user_profile.png" alt="User Avatar" style="width:128px;height:128px;float:left;margin:10px;" onmouseover="showAvatarSVG()">
+  <svg id="avatar_svg" height="150" width="150" style="position:fixed;left:24px;top:169px;cursor:pointer;display:none;" onclick="openFileDialog(this)" onmouseleave="hideAvatarSVG()">
   <!-- drag & drop? -->
-
-  <form>
-	<fieldset style="float:left;">
-		<legend><b>Personal Data</b></legend>
+    <circle cx="71" cy="71" r="70" stroke="black" stroke-width="1" fill="rgba(200,200,200,0.5)"/>
+    Sorry, your browser does not support inline SVG.
+  </svg>
+  <input type="file" id="avatar_upload" name="avatar_upload" style="display:none;" onchange="setAvatar(evt)">
+  
+  <form method="post" autocomplete="on" accept-charset="UTF-8"> <!--action="/user_profile.php" target="_self"-->
+	<fieldset>
+		<legend><big><b>Personal Data</b></big></legend>
 		<label for="user_name"><b>Name:*</b></label><br>
 		<input type="text" id="user_name" name="user_name" value="Hans Wurst" size="30" readonly required><br>
 		<label for="user_birthday"><b>Birthday:*</b></label><br>
-		<input type="date" id="user_birthday" name="birthday" value="1996-04-15" readonly required><br>
-		<fieldset disabled>
-			<legend><b>Sex*</b></legend>
+		<input type="date" id="user_birthday" name="birthday" value="1996-04-15" readonly required>
+		<span id="user_age" name="user_age" style="margin:10px;"></span><br>
+		<label><b>Sex:*</b></label><br>
+		<fieldset style="background-color:white;margin-top:10px;" disabled>
 			<input type="radio" id="male" name="sex" value="male" checked>
 			<label for="male">Male</label>
 			<input type="radio" id="female" name="sex" value="female">
@@ -506,21 +517,9 @@ fieldset {
 			<label for="other">Other</label>
 		</fieldset>
 	</fieldset>
-
-	<fieldset style="float:left;">
-		<legend><b>Contact Details</b></legend>
-		<label for="user_email"><b>Email:*</b></label><br>
-		<input type="email" id="user_email" name="user_email" value="hans.wurst@stud.uni-hannover.de" size="30" required><br>
-		<label for="user_phone"><b>Telephone:</b></label><br>
-		<input type="tel" id="user_phone" name="user_phone" value="+49 511 123456" size="30"><br><!-- pattern=""-->
-		<label for="user_mobile"><b>Mobile Phone:</b></label><br>
-		<input type="tel" id="user_mobile" name="user_mobile" value="0123 456789" size="30"><!-- pattern=""-->
-		
-		<!-- Social Media... facebook, instagram, twitter etc. -->
-	</fieldset>
-
+	
 	<fieldset>
-		<legend><b>Studies</b></legend>
+		<legend><big><b>Studies</b></big></legend>
 		<label for="user_university"><b>University:*</b></label><br>
 		<input type="text" list="universities" id="user_university" name="user_university" value="Leibniz Universität Hannover" size="30" required><br>
 		<datalist id="universities">
@@ -546,24 +545,52 @@ fieldset {
 			<option value="...">
 		</datalist>
 		<label for="user_studystart"><b>Study Start:*</b></label><br>
-		<input type="date" id="user_studystart" name="studystart" value="2018-09-01" required><br>
+		<input type="date" id="user_studystart" name="studystart" value="2018-10-01" onchange="setMaxSemester(this.value)" required><br>
 		<label for="user_semester"><b>Semester:</b></label>
 		<input type="number" id="user_semester" name="user_semester" min="1" max="99" size="3" step="1" value="5">
-	</fieldset><br>
+	</fieldset>
+
+	<fieldset>
+		<legend><big><b>Contact Details</b></big></legend>
+		<label for="user_email"><b>Email:*</b></label><br>
+		<input type="email" id="user_email" name="user_email" value="hans.wurst@stud.uni-hannover.de" size="30" required><br>
+		<label for="user_phone"><b>Telephone:</b></label><br>
+		<input type="tel" id="user_phone" name="user_phone" value="+49 511 123456" size="30"><br><!-- pattern=""-->
+		<label for="user_mobile"><b>Mobile Phone:</b></label><br>
+		<input type="tel" id="user_mobile" name="user_mobile" value="0123 456789" size="30"><!-- pattern=""-->
+	</fieldset>
 	
-	<label for="user_description"><b>Description:</b></label><br>
-	<textarea rows="5" cols="30"id="user_description" name="user_description">Meine Hobbys sind Reiten, Lesen, Schwimmen.</textarea><br>
-    
-    <input type="button" value="Save" onclick="saveUserProfile()">
-	<input type="reset" value="Reset">
-	<a href="login.html"><input type="button" value="Delete Account" onclick="deleteAccount()" style="background-color: #f44336;"></a><br>
+	<fieldset>
+		<legend><big><b>Address</b></big></legend>
+		<label for="user_streetaddress"><b>Street Address:</b></label>
+		<input type="text" id="user_streetaddress" name="user_streetaddress" value="Welfengarten 1" size="30"><br>
+		<label for="user_city"><b>City:</b></label>
+		<input type="text" id="user_city" name="user_city" value="Hannover" size="30"><br>
+		<label for="user_postalcode"><b>Postal Code:</b></label>
+		<input type="text" id="user_postalcode" name="user_postalcode" value="30167" size="5"><br>
+		<label for="user_federalstate"><b>Federal State:</b></label><br>
+		<input type="text" id="user_federalstate" name="user_federalstate" value="Niedersachsen" size="30"><br>
+		<label for="user_country"><b>Country:</b></label><br>
+		<input type="text" id="user_country" name="user_country" value="Deutschland" size="30">
+		
+		<!-- Social Media... facebook, instagram, twitter etc. -->
+	</fieldset>
 	
-	<small>* input required</small>
+	<div style="clear:both;">
+		<label for="user_description"><big><b>Description:</b></big></label><br>
+		<textarea rows="10" cols="100"id="user_description" name="user_description" style="margin-top:10px;padding:10px;">Meine Hobbys sind Reiten, Lesen, Schwimmen.</textarea><br>
+		
+		<input type="button" value="Save" onclick="saveUserProfile()">
+		<input type="reset" value="Reset">
+		<input type="button" value="Delete Account" onclick="deleteAccount()" style="background-color: #f44336;"><br>
+		<a href="login.html" id="link_login"></a>
+		
+		<small>* input required</small>
+	</div>
   </form>
 </div>
 
 <script>
-
 var form = document.getElementById("searchform");
 function handleForm(event) { event.preventDefault(); }
 form.addEventListener('submit', handleForm);
@@ -611,20 +638,25 @@ function createGroup(){
   ;
 }
 
-function uploadAvatar(img) {
+function openFileDialog(img) {
 	var file = document.getElementById('avatar_upload');
-	var answer = file.click();
+	file.click();
 	
-	if (answer) {
-		//update avatar
-		//img.setAttribute("src", file.value);
-	}
+/*
+	//img.src = <path_to_image>;
+	//alert(file.name + ": " + file.value + ", " + file.size + ", " + file.type);
+	//alert(file.files[0].name);
+*/
+}
+
+function setAvatar(evt) {
+	//update avatar
 }
 
 function saveUserProfile() {
 	//save user profile changes...
 	
-	window.alert('Saved');
+	window.alert("Your user profile changes have been saved.");
 }
 
 function deleteAccount() {
@@ -632,6 +664,9 @@ function deleteAccount() {
 	
 	if (answer) {
 		//delete account...
+		
+		//logout
+		document.getElementById("link_login").click();
 	}
 }
 
@@ -648,6 +683,40 @@ function openTab(evt, tabName) {
   
   document.getElementById(tabName).style.display = "block";
   evt.currentTarget.className += " active";
+}
+
+// Show home-tab by default
+document.getElementById("defaultOpen").click();
+
+function showAvatarSVG() {
+	document.getElementById("avatar_svg").style.display="block";
+}
+
+function hideAvatarSVG() {
+	document.getElementById("avatar_svg").style.display="none";
+}
+
+// calculate the current age of user
+var currentDate = new Date(),
+	birthDate = new Date(document.getElementById("user_birthday").value),
+	age = currentDate.getFullYear() - birthDate.getFullYear();
+if (currentDate.getMonth() < birthDate.getMonth() || (currentDate.getMonth() == birthDate.getMonth() && currentDate.getDate() < birthDate.getDate())) {
+	--age;
+}
+document.getElementById("user_age").innerHTML = "<b>Age: </b>" + age;
+
+function setMaxSemester(studystart) {
+    var currentDate = new Date();
+	var studystart = new Date(studystart);
+    var months = (currentDate.getFullYear() - studystart.getFullYear()) * 12;
+    months -= studystart.getMonth();
+    months += currentDate.getMonth() + 1;
+	
+	document.getElementById("user_semester").max = Math.ceil(months / 6);
+}
+var studystart = document.getElementById("user_studystart");
+if (studystart.value != "") {
+	setMaxSemester(studystart.value);
 }
 
 function openDetailedSearch() {
@@ -678,9 +747,6 @@ window.onclick = function(event) {
 	request.style.display = "none";
   }
 }
-
-// Show home-tab by default
-document.getElementById("defaultOpen").click();
 </script>
 </body>
 </html>
