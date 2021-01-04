@@ -4,6 +4,7 @@
 <title>Study Group Finder</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="icons/favicon-group.png" type="image/png" sizes="16x16">
+<link rel="stylesheet" href="css/main.css">
 <style>
 body {
     background-color: rgb(50,200,250);
@@ -237,11 +238,13 @@ span.psw {
             </div>
         </form>
     </div>
-
+    
+<script src="js/main.js"></script>
 <script>
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     var id = event.target.id;
+    
 	if (id == "login" || id == "signup") {
 		hide(id);
 	}
@@ -256,18 +259,11 @@ function centerDiv(id) {
 	center.style.top = top + "px";
 }
 
-function show(id) {
-	document.getElementById(id).style.display = "block";
-}
-
-function hide(id) {
-	document.getElementById(id).style.display = "none";
-}
-
 function login() {
 	document.getElementById("link_index").click();
     
-    //check username and password in database...
+    // check username and password in database...
+    // note login in database and cookies...
 }
 </script>
 </body>

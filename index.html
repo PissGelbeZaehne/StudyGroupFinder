@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
 <title>Study Group Finder</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="icons/favicon-group.png" type="image/png" sizes="16x16">
+<link rel="stylesheet" href="css/main.css">
 <style>
 body {
   background-color: white;
@@ -31,6 +32,10 @@ body {
   padding: 14px 16px;
   transition: 0.3s;
   font-size: 17px;
+}
+
+#logout {
+    float: right;
 }
 
 /* Change background color of buttons on hover */
@@ -188,14 +193,14 @@ input {
   box-sizing: border-box;
 }
 
-input[type=button], input[type=reset] {
+input[type=button], input[type=submit], input[type=reset] {
   background-color: #cccccc;
   border: 1px solid white;
   border-radius: 12px;
   color: white;
 }
 
-input[type=button]:hover, input[type=reset]:hover {
+input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
   background-color: #aaaaaa;
   border: 1px solid black;
   color: black;
@@ -252,6 +257,7 @@ input[type=button]:hover, input[type=reset]:hover {
   margin-top: 0px;
   flex-basis: 20%;
   height: 40px;
+  cursor: pointer;
 }
 
 .group-header{
@@ -260,18 +266,16 @@ input[type=button]:hover, input[type=reset]:hover {
 }
 
 .settings-icon{
-  flex-basis: 10%;
-  border: none;
-  background: none;
   padding-top: 10px;
+  cursor: pointer;
 }
 
 .newmessage{
   display: none;
 }
 
-.groupinput{
-  width: 500px;
+.groupinput {
+    width: 500px;
 }
 
 /* Go from zero to full opacity */
@@ -281,471 +285,458 @@ input[type=button]:hover, input[type=reset]:hover {
 }
 
 fieldset {
-	background-color: #eeeeee;
-	border-radius: 12px;
-	float:left;
-	width: 200px;
+    background-color: #eeeeee;
+    border-radius: 12px;
+    float:left;
+    width: 205px;
 }
 
-#btn_deleteAccount {
-	background-color: rgba(225,75,50,1.0);
+#btn_delete {
+    background-color: rgba(225,75,50,1.0);
 }
-#btn_deleteAccount:hover {
-	background-color: rgba(200,50,50,1.0);
+#btn_delete:hover {
+    background-color: rgba(200,50,50,1.0);
+}
+
+.footer {
+    position: sticky;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+    outline: none;
+    background-color: #aaa;
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow-x: auto;
+}
+
+#joinedgroups {
+    background: #f1f1f1;
+    border: 1px solid #fefefe;
+    padding: 10px;
+    width: 50%;
+}
+
+.joined_group {
+    background-color: rgba(50,200,250,0.5);
+    border: 1px solid white;
+    cursor: pointer;
+    height: 60px;
+    margin: 10px 0;
+    padding: 10px;
+    white-space: nowrap;
+}
+
+.joined_group:hover {
+    background-color: rgba(50,200,250,1.0);
+    border: 1px solid black;
+    font-weight: bold;
+}
+
+.joined_group_name {
+    display: inline-block;
+    float:left;
+    margin:10px;
+}
+
+.joined_group_img {
+    display: inline-block;
+    float:right;
+    height:32px;
+    width:32px;
 }
 </style>
 </head>
 <body>
 <div class="tab">
-  <button id="defaultOpen" class="tablinks" title="Home" onclick="openTab(event, 'Home')">
-    <img src="icons/home.png" alt="Home" width="50" height="50"/>
-  </button>
-  <button class="tablinks" title="Search" onclick="openTab(event, 'Search')">
-    <img src="icons/search.png" alt="Search" width="50" height="50"/>
-  </button>
-  <button class="tablinks" title="Create Group" onclick="openTab(event, 'Create_Group')">
-    <img src="icons/create_group.png" alt="Create Group" width="50" height="50"/>
-  </button>
-  <button class="tablinks" title="User Profile" onclick="openTab(event, 'User_Profile')">
-    <img src="icons/user_profile.png" alt="User Profile" width="50" height="50"/>
-  </button>
-  <a href="login.html"><button class="tablinks" title="Logout">
-	<img src="icons/logout.png" alt="Logout" width="50" height="50"/>
-  </a>
+    <button id="defaultOpenTab" class="tablinks" title="Home" onclick="openTab(event, 'Home')">
+        <img src="icons/home.png" alt="Home" width="50" height="50"/>
+    </button>
+    <button class="tablinks" title="Search" onclick="openTab(event, 'Search')">
+        <img src="icons/search.png" alt="Search" width="50" height="50"/>
+    </button>
+    <button class="tablinks" title="Create Group" onclick="openTab(event, 'Create_Group')">
+        <img src="icons/create_group.png" alt="Create Group" width="50" height="50"/>
+    </button>
+    <button class="tablinks" title="User Profile" onclick="openTab(event, 'User_Profile')">
+        <img src="icons/user_profile.png" alt="User Profile" width="50" height="50"/>
+    </button>
+    <button id="logout" class="tablinks" title="Logout" onclick="logout()">
+        <img src="icons/logout.png" alt="Logout" width="50" height="50"/>
+    </button>
+    <a href="login.html"></a>
 </div>
 
 <div id="Home" class="tabcontent">
-  <h2>Home</h2>
-  <p>Content goes here...</p>
+    <h2>Home</h2>
+    <div id="joinedgroups">
+        <h3>Joined Groups</h3>
+        <div id="joined_group_1" class="joined_group" onclick="openTab(null, 'Group_Profile')">
+            <p class="joined_group_name">Programmieren I: Scriptkiddies</p>
+            <img src="icons/new-message.png" alt="Mail" title="New Messages" class="joined_group_img"/>
+        </div>
+        <div id="joined_group_2" class="joined_group">
+            <p class="joined_group_name">GMCI: Übung Gruppenarbeit</p>
+            <img src="icons/new-message.png" alt="Mail" title="New Messages" class="joined_group_img"/>
+        </div>
+    </div>
 </div>
 
 <div id="Search" class="tabcontent">
   <h2>Search</h2>
   <form id="searchform" onsubmit="showResults();">
-	<div>
-	  <input type="text" placeholder="Search..." name="search" required>
-	</div>
-	
-	<button id="detailedSearch" class="collapsible" onclick="openDetailedSearch()"><h4>Detailed Search</h4></button>
-	<div id="colcontent" class="collapsiblecontent"><br>
-	  <div style="width: 65%;max-width: 375px">
-	  <label for="course"><b>Course</b></label><br>
-	  <select name="course" style="margin-top:10px;margin-bottom:20px">
-	    <option value="" disabled selected hidden>Select course...</option>
+    <div>
+      <input type="text" placeholder="Search..." name="search" required>
+    </div>
+    
+    <button id="detailedSearch" class="collapsible" onclick="openDetailedSearch()"><h4>Detailed Search</h4></button>
+    <div id="colcontent" class="collapsiblecontent"><br>
+      <div style="width: 65%;max-width: 375px">
+      <label for="course"><b>Course</b></label><br>
+      <select name="course" style="margin-top:10px;margin-bottom:20px">
+        <option value="" disabled selected hidden>Select course...</option>
         <option value="prog1">Programmieren 1</option>
         <option value="prog2">Programmieren 2</option>
         <option value="gmci">Grundlagen der Mensch-Computer-Interaktion</option>
-		<option value="gds">Grundlagen digitaler Systeme</option>
-		<option value="anaA">Analysis A</option>
+        <option value="gds">Grundlagen digitaler Systeme</option>
+        <option value="anaA">Analysis A</option>
         <option value="anaB">Analysis B</option>
-	  </select>
-	  
-	  <label for="groupsizemin"><b>Group size</b></label><br>
+      </select>
+      
+      <label for="groupsizemin"><b>Group size</b></label><br>
       <input type="number" placeholder="Enter min size..." name="groupsizemin" min=1 max=100 style="width:50%;max-width:175px;margin-right:10px;margin-top:10px;margin-bottom:20px">
-	  <input type="number" placeholder="Enter max size..." name="groupsizemax" min=1 max=100 style="width:50%;max-width:175px;margin-left:10px;margin-top:10px;margin-bottom:20px">
-	  
-	  <label for="semester"><b>Semester founded</b></label><br>
+      <input type="number" placeholder="Enter max size..." name="groupsizemax" min=1 max=100 style="width:50%;max-width:175px;margin-left:10px;margin-top:10px;margin-bottom:20px">
+      
+      <label for="semester"><b>Semester founded</b></label><br>
       <select name="semester" style="margin-top:10px;margin-bottom:20px">
-	    <option value="" disabled selected hidden>Select semester...</option>
+        <option value="" disabled selected hidden>Select semester...</option>
         <option value="wise20">WiSe 20/21</option>
         <option value="sose20">SoSe 20</option>
         <option value="wise19">WiSe 19/20</option>
-		<option value="sose19">SoSe 19</option>
-		<option value="wise18">WiSe 18/19</option>
-	  </select>
-	  </div>
+        <option value="sose19">SoSe 19</option>
+        <option value="wise18">WiSe 18/19</option>
+      </select>
+      </div>
     </div>
   </form>
 
   <div id="searchresults" style="display:none">
-	<h3>Results</h3>
+    <h3>Results</h3>
     <table>
-	  <tr>
-		<th>Name</th>
-		<th>Course</th>
-		<th>Size</th>
-		<th>Semester</th>
-	  </tr>
-	  <tr>
-		<td><button class="group" style="background:none;border:none" onclick="toggleRequest()">Programmieren 1 Lerngruppe</button></td>
-		<td>Programmieren 1</td>
-		<td>14</td>
-		<td>WiSe 20/21</td>
-	  </tr>
-	  <tr>
-		<td><button class="group" style="background:none;border:none" onclick="toggleRequest()">Programmieren 2</button></td>
-		<td>Programmieren 2</td>
-		<td>5</td>
-		<td>SoSe 20</td>
-	  </tr>
-	  <tr>
-  		<td><button class="group" style="background:none;border:none" onclick="toggleRequest()">Die Programmier-Profis</button></td>
-		<td>Programmieren 1</td>
-		<td>6</td>
-	    <td>WiSe 18/19</td>
+      <tr>
+        <th>Name</th>
+        <th>Course</th>
+        <th>Size</th>
+        <th>Semester</th>
+      </tr>
+      <tr>
+        <td><button class="group" style="background:none;border:none" onclick="toggleRequest()">Programmieren 1 Lerngruppe</button></td>
+        <td>Programmieren 1</td>
+        <td>14</td>
+        <td>WiSe 20/21</td>
+      </tr>
+      <tr>
+        <td><button class="group" style="background:none;border:none" onclick="toggleRequest()">Programmieren 2</button></td>
+        <td>Programmieren 2</td>
+        <td>5</td>
+        <td>SoSe 20</td>
+      </tr>
+      <tr>
+          <td><button class="group" style="background:none;border:none" onclick="toggleRequest()">Die Programmier-Profis</button></td>
+        <td>Programmieren 1</td>
+        <td>6</td>
+        <td>WiSe 18/19</td>
       </tr>
     </table>
   </div>
   
   <div id="request" class="modal">
     <form id="requestForm" class="modal-content animate" method="post" autocomplete="on" accept-charset="UTF-8">
-	  <div class="imgcontainer">
-	    <span onclick="document.getElementById('request').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <div class="imgcontainer">
+        <span onclick="document.getElementById('request').style.display='none'" class="close" title="Close Modal">&times;</span>
       </div>
-	  
-	  <div class="container">
+      
+      <div class="container">
         <h3>Request</h3>
-	    <label for="reqmessage"><b>Message</b></label>
-		<textarea style="height:150px;width:100%;margin-top:15px;margin-bottom:15px;overflow:auto;resize:vertical"></textarea>
-	    <button id="submitRequest" onclick="document.getElementById('request').style.display='none'"><b>Send Request</b></button><br>
-	  </div>
-	</form>
+        <label for="reqmessage"><b>Message</b></label>
+        <textarea style="height:150px;width:100%;margin-top:15px;margin-bottom:15px;overflow:auto;resize:vertical"></textarea>
+        <button id="submitRequest" onclick="document.getElementById('request').style.display='none'"><b>Send Request</b></button><br>
+      </div>
+    </form>
   </div>
 </div>
 
 <div id="Create_Group" class="tabcontent">
-  <h2>Create Group</h2>
-  <p>Seems like you want to create a group, pls dont try to take control over the world or be a facist...</p>
-  <form name="groupform">
-    <label for="groupname"><b>Group name:</b></label><br>
-    <input type="text" class="groupinput" placeholder="Enter group name" id="groupname" required><br>
-
-    <label for="lecture"><b>Lecture:</b></label><br>
-    <input type="text" class="groupinput" placeholder="Enter lecture" id="lecture" required><br>
-
-    <label for="maxusers"><b>Member limit:</b></label><br>
-      <select name="maxusers size="1">
-        <option>2</option>
-        <option>6</option>
-        <option>10</option>
-        <option>15</option>
-        <option>20</option>
-      </select><br>
-
-    <label for="precondition"><b>Precondition:</b></label><br>
-    <input type="text"  class="groupinput" placeholder="Enter preconditions" id="precondition" required><br>
-
-    <label for="description"><b>Description:</b></label><br>
-    <input type="text"  class="groupinput" placeholder="Enter description" id="description" required><br>
-    
-    <label for="createGroupButton"></label><br>
-    <input type="button" value="Save group" onclick='validateForm("groupname","lecture","precondition","description")'><br>
-  </form>
+    <h2>Create Group</h2>
+    <form name="groupform">
+        <label for="creategroup_name"><b>Group Name:*</b></label><br>
+        <input type="text" class="groupinput" placeholder="Enter Group Name" id="creategroup_name" name="creategroup_name" required><br>
+        
+        <label for="creategroup_memberlimit"><b>Member Limit:*</b></label>
+        <input type="number" id="creategroup_memberlimit" name="creategroup_memberlimit" min="2" max="999" size="4" step="1" required><br>
+        
+        <label for="creategroup_lecture"><b>Lecture:*</b></label><br>
+        <input type="text" list="lectures" class="groupinput" placeholder="Enter Lecture" id="creategroup_lecture" name="creategroup_lecture" required><br>
+        <datalist id="lectures">
+            <option value="Programmieren I">
+            <option value="Programmieren II">
+            <option value="Grundlagen der Mensch-Computer-Interaktion">
+            <option value="Grundlagen der Software-Technik">
+            <option value="Grundlagen der IT-Sicherheit">
+            <option value="...">
+        </datalist>
+        
+        <label for="creategroup_requirements"><b>Requirements:</b></label><br>
+        <input type="text" class="groupinput" placeholder="Enter Requirements" id="creategroup_requirements" name="creategroup_requirements"><br>
+        
+        <label for="creategroup_description"><b>Description:</b></label><br>
+        <textarea rows="10" cols="100" placeholder="Enter Description" id="creategroup_description" name="creategroup_description" style="border-radius:12px;margin-top:10px;padding:10px;"></textarea><br>
+        
+        <input type="checkbox" id="creategroup_joinonrequest" name="creategroup_joinonrequest">
+        <label for="creategroup_joinonrequest"><b>Join on Request</b></label><br>
+        
+        <input type="submit" value="Create Group" onclick="createGroup()"> <!-- onsubmit="..." -->
+        <input type="reset" value="Reset"><br>
+        
+        <small>* input required</small>
+    </form>
 </div>
 
-<div id="Group-Settings" class="tabcontent">
-  <h3>Group Settings</h3>
-  <form>
-    <label for="groupname"><b>Group name:</b></label><br>
-    <input type="text" class="groupinput" value="Programmers of tomorrow" id="settinggroupname" required><br>
-
-    <label for="lecture"><b>Lecture:</b></label><br>
-    <input type="text" class="groupinput" id="settinglecture" value="Programmieren 1" required><br>
-
-    <label for="maxusers"><b>Member limit:</b></label><br>
-      <select name="maxusers size="1">
-        <option>2</option>
-        <option selected>6</option>
-        <option>10</option>
-        <option>15</option>
-        <option>20</option>
-      </select><br>
-
-    <label for="precondition"><b>Precondition:</b></label><br>
-    <input type="text" class="groupinput" id="settingprecondition" value="None" required><br>
-
-    <label for="description"><b>Description:</b></label><br>
-    <input type="text" class="groupinput" id="settingdescription" value="If u want to work on your Programmieren 1 assignments together this is the right place" name="description" required><br>
-    
-    <label for="createGroupButton"></label><br>
-    <input type="button" id="1" value="Save group" onclick='validateForm("settinggroupname","settinglecture","settingprecondition","settingdescription")'><br>
-  </form wi>
+<div id="Edit_Group" class="tabcontent">
+    <h2>Edit Group</h2>
+    <form>
+        <label for="editgroup_name"><b>Group Name:*</b></label><br>
+        <input type="text" class="groupinput" placeholder="Enter Group Name" id="editgroup_name" name="editgroup_name" value="Programmers of tomorrow" required><br>
+        
+        <label for="editgroup_memberlimit"><b>Member Limit:*</b></label>
+        <input type="number" id="editgroup_memberlimit" name="editgroup_memberlimit" min="2" max="999" value="6" size="4" step="1" required><br>
+        
+        <label for="editgroup_lecture"><b>Lecture:*</b></label><br>
+        <input type="text" list="lectures" class="groupinput" placeholder="Enter Lecture" id="editgroup_lecture" name="editgroup_lecture" value="Programmieren 1" required><br>
+        
+        <label for="editgroup_requirements"><b>Requirements:</b></label><br>
+        <input type="text" class="groupinput" placeholder="Enter Requirements" id="editgroup_requirements" name="editgroup_requirements" value="None"><br>
+        
+        <label for="editgroup_description"><b>Description:</b></label><br>
+        <textarea rows="10" cols="100" placeholder="Enter Description" id="editgroup_description" name="editgroup_description" style="border-radius:12px;margin-top:10px;padding:10px;">If u want to work on your Programmieren 1 assignments together this is the right place</textarea><br>
+        
+        <input type="checkbox" id="editgroup_joinonrequest" name="editgroup_joinonrequest">
+        <label for="editgroup_joinonrequest"><b>Join on Request</b></label><br>
+        
+        <!-- Hinzufügen und Entfernen von Mitgliedern fehlt -->
+        
+        <!-- Bearbeitung von Anfragen -->
+        
+        <!-- kein Back-Button zurück zum Group Profile -->
+        
+        <!-- <input type="submit" value="Save" onclick="saveGroup()" onsubmit"..."> -->
+        <input type="button" value="Save" onclick="saveGroup()">
+        <input type="reset" value="Reset">
+        <input type="button" id="btn_delete" value="Delete Group" onclick="deleteGroup()"><br>
+        
+        <small>* input required</small>
+    </form>
 </div>
 
 <div id="Group_Profile" class="tabcontent">
-  <div class="flex-container">
-    <div class=group-header>
-      <h3>Group Profile: Programmers of tomorrow</h3>
-    </div>
-    <div class=settings-icon>
-      <button class="settings-icon" title="User Profile" onclick="openTab(event, 'Group-Settings')">
-      <img src="icons/settings.png" alt="User Profile" width="40" height="40"/>
-    </button>
-    </div>
-  </div>
-  <div class=flex-container>
-    <div class=sidebar>
-      <div class=sidebar-item>
-        <b>Members 3/6</b><br><br>
-        You<br>
-        Hans Wurst <img src="icons/star.png" alt="Group Admin" width="10" height="10"/><br>
-        Joachim Schikele<br>
-      </div>
-      <div class=sidebar-item>
-        <b>Dates</b><br><br>
-        13.11.20<br>
-        20.11.20<br>
-        27.11.20<br>
-      </div>
-    </div class= sidebar>
-    <div class=chat>
-      <b>Chat</b>
-      <div class="chat-messages" id="chat-messages">
-        <div class="container">
-          <p><b>Ich:</b> Hello my name is Thomas.</p>
-          11:00
+    <div class="flex-container">
+        <div class="group-header">
+            <h2>Group: Scriptkiddies</h2>
         </div>
-        <div class="container darker">
-          <p><b>Hans:</b> has anyone of you heard of stack overflow ?</p>
-          11:02
-        </div>
-        <div class="container darker">
-          <p><b>Joachim:</b> yeah it had a neet fix for my relationship</p>
-          11:03
-        </div>
-      </div>
-      <div class=flex-container>
-        <input class="chat-text" id="chat-text" type="text" placeholder="Write something..."/>
-        <button class="chat-button" type="button" onclick="sendText()">Send</button>
-      </div>
-
+        <img src="icons/settings.png" alt="Edit Group" title="Edit Group" class="settings-icon" width="40" height="40" onclick="openTab(null, 'Edit_Group')"/>
     </div>
-  </div>
+    
+    <div class="flex-container">
+        <div class="sidebar">
+            <div class="sidebar-item">
+                <b>Members 3/6</b><br><br>
+                You<br>
+                Hans Wurst <img src="icons/star.png" alt="Group Admin" title="Group Admin" width="10" height="10"/><br>
+                Joachim Schikele<br>
+            </div>
+            <div class="sidebar-item">
+                <b>Dates</b><br><br>
+                13.11.20<br>
+                20.11.20<br>
+                27.11.20<br>
+            </div>
+        </div>
+        
+        <div class="chat">
+            <b>Chat</b>
+            <div class="chat-messages" id="chat-messages">
+                <div class="container">
+                    <p><b>Ich:</b> Hello my name is Thomas.</p>
+                    11:00
+                </div>
+                <div class="container darker">
+                    <p><b>Hans:</b> has anyone of you heard of stack overflow ?</p>
+                    11:02
+                </div>
+                <div class="container darker">
+                    <p><b>Joachim:</b> yeah it had a neet fix for my relationship</p>
+                    11:03
+                </div>
+            </div>
+            <div class="flex-container">
+                <input class="chat-text" id="chat-text" type="text" placeholder="Write a message..." onkeyup="onEnterSendMessage(event)"/>
+                <button class="chat-button" type="button" onclick="sendText()">Send</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div id="User_Profile" class="tabcontent">
-  <h2>User Profile</h2>
-  <img src="icons/user_profile.png" alt="User Avatar" style="width:128px;height:128px;float:left;margin:10px;" onmouseover="showAvatarSVG()">
-  <svg id="avatar_svg" height="150" width="150" style="position:fixed;left:24px;top:169px;cursor:pointer;display:none;" onclick="openFileDialog(this)" onmouseleave="hideAvatarSVG()">
-  <!-- drag & drop? -->
-    <circle cx="71" cy="71" r="70" stroke="black" stroke-width="1" fill="rgba(200,200,200,0.5)"/>
-    Sorry, your browser does not support inline SVG.
-  </svg>
-  <input type="file" id="avatar_upload" name="avatar_upload" style="display:none;" onchange="setAvatar(evt)">
-  
-  <form method="post" autocomplete="on" accept-charset="UTF-8"> <!--action="/user_profile.php" target="_self"-->
-	<fieldset>
-		<legend><big><b>Personal Data</b></big></legend>
-		<label for="user_name"><b>Name:*</b></label><br>
-		<input type="text" id="user_name" name="user_name" value="Hans Wurst" size="30" readonly required><br>
-		<label for="user_birthday"><b>Birthday:*</b></label><br>
-		<input type="date" id="user_birthday" name="birthday" value="1996-04-15" readonly required>
-		<span id="user_age" name="user_age" style="margin:10px;"></span><br>
-		<label><b>Sex:*</b></label><br>
-		<fieldset style="background-color:white;margin-top:10px;" disabled>
-			<input type="radio" id="male" name="sex" value="male" checked>
-			<label for="male">Male</label>
-			<input type="radio" id="female" name="sex" value="female">
-			<label for="female">Female</label>
-			<input type="radio" id="other" name="sex" value="other">
-			<label for="other">Other</label>
-		</fieldset>
-	</fieldset>
-	
-	<fieldset>
-		<legend><big><b>Studies</b></big></legend>
-		<label for="user_university"><b>University:*</b></label><br>
-		<input type="text" list="universities" id="user_university" name="user_university" value="Leibniz Universität Hannover" size="30" required><br>
-		<datalist id="universities">
-			<option value="Leibniz Universität Hannover">
-			<option value="Medizinische Hochschule Hannover">
-			<option value="Tierärztliche Hochschule Hannover">
-			<option value="Hochschule Hannover">
-			<option value="Hochschule für Musik, Theater und Medien Hannover">
-			<option value="...">
-		</datalist>
-		<label for="user_studycourse"><b>Study Course:*</b></label><br>
-		<input type="text" list="studycourses" id="user_studycourse" name="user_studycourse" value="Informatik B.Sc." size="30" required><br>
-		<datalist id="studycourses">
-			<option value="Informatik B.Sc.">
-			<option value="Informatik M.Sc.">
-			<option value="Technische Informatik B.Sc.">
-			<option value="Technische Informatik M.Sc.">
-			<option value="Elektrotechnik und Informationstechnik B.Sc.">
-			<option value="Elektrotechnik und Informationstechnik M.Sc.">
-			<option value="Energietechnik B.Sc.">
-			<option value="Energietechnik M.Sc.">
-			<option value="Mechatronik B.Sc.">
-			<option value="...">
-		</datalist>
-		<label for="user_studystart"><b>Study Start:*</b></label><br>
-		<input type="date" id="user_studystart" name="studystart" value="2018-10-01" onchange="setMaxSemester(this.value)" required><br>
-		<label for="user_semester"><b>Semester:</b></label>
-		<input type="number" id="user_semester" name="user_semester" min="1" max="99" size="3" step="1" value="5">
-	</fieldset>
-
-	<fieldset>
-		<legend><big><b>Contact Details</b></big></legend>
-		<label for="user_email"><b>Email:*</b></label><br>
-		<input type="email" id="user_email" name="user_email" value="hans.wurst@stud.uni-hannover.de" size="30" required><br>
-		<label for="user_phone"><b>Telephone:</b></label><br>
-		<input type="tel" id="user_phone" name="user_phone" value="+49 511 123456" size="30"><br><!-- pattern=""-->
-		<label for="user_mobile"><b>Mobile Phone:</b></label><br>
-		<input type="tel" id="user_mobile" name="user_mobile" value="0123 456789" size="30"><!-- pattern=""-->
-		<label for="user_homepage"><b>Homepage:</b></label><br>
-		<input type="url" id="user_homepage" name="user_homepage" value="https://www.hans-wurst.de" size="30">
-	</fieldset>
-	
-	<fieldset>
-		<legend><big><b>Address</b></big></legend>
-		<label for="user_streetaddress"><b>Street Address:</b></label>
-		<input type="text" id="user_streetaddress" name="user_streetaddress" value="Welfengarten 1" size="30"><br>
-		<label for="user_city"><b>City:</b></label>
-		<input type="text" id="user_city" name="user_city" value="Hannover" size="30"><br>
-		<label for="user_postalcode"><b>Postal Code:</b></label>
-		<input type="text" id="user_postalcode" name="user_postalcode" value="30167" size="5"><br>
-		<label for="user_federalstate"><b>Federal State:</b></label><br>
-		<input type="text" id="user_federalstate" name="user_federalstate" value="Niedersachsen" size="30"><br>
-		<label for="user_country"><b>Country:</b></label><br>
-		<input type="text" id="user_country" name="user_country" value="Deutschland" size="30">
-		
-		<!-- Social Media... facebook, instagram, twitter etc. -->
-	</fieldset>
-	
-	<div style="clear:both;">
-		<label for="user_description"><big><b>Description:</b></big></label><br>
-		<textarea rows="10" cols="100"id="user_description" name="user_description" style="border-radius:12px;margin-top:10px;padding:10px;">Meine Hobbys sind Reiten, Lesen, Schwimmen.</textarea><br>
-		
-		<input type="button" value="Save" onclick="saveUserProfile()">
-		<input type="reset" value="Reset">
-		<input type="button" id="btn_deleteAccount" value="Delete Account" onclick="deleteAccount()"><br>
-		<a href="login.html" id="link_login"></a>
-		
-		<small>* input required</small>
-	</div>
-  </form>
+    <h2>User Profile</h2>
+    <img src="icons/user_profile.png" alt="User Avatar" style="width:128px;height:128px;float:left;margin:10px;" onmouseover="show('avatar_svg')">
+    <svg id="avatar_svg" height="150" width="150" style="position:absolute;left:24px;top:170px;cursor:pointer;display:none;" onclick="openFileDialog(this)" onmouseleave="hide('avatar_svg')">
+        <!-- drag & drop? -->
+        <circle cx="71" cy="71" r="70" stroke="black" stroke-width="1" fill="rgba(200,200,200,0.5)"/>
+        Sorry, your browser does not support inline SVG.
+    </svg>
+    <input type="file" id="avatar_upload" name="avatar_upload" style="display:none;" onchange="setAvatar(evt)">
+    
+    <form method="post" autocomplete="on" accept-charset="UTF-8"> <!--action="/user_profile.php" target="_self"-->
+        <fieldset>
+            <legend><big><b>Personal Data</b></big></legend>
+            <label for="user_name"><b>Name:*</b></label><br>
+            <input type="text" id="user_name" name="user_name" value="Hans Wurst" size="30" required><br>
+            <label for="user_birthday"><b>Birthday:*</b></label><br>
+            <input type="date" id="user_birthday" name="birthday" value="1996-04-15" onchange="setAge(this.value)" required>
+            <span id="user_age" name="user_age" style="margin:10px;"></span><br>
+            <label><b>Sex:*</b></label><br>
+            <fieldset style="background-color:white;margin-top:10px;">
+                <input type="radio" id="male" name="sex" value="male" checked>
+                <label for="male">Male</label>
+                <input type="radio" id="female" name="sex" value="female">
+                <label for="female">Female</label>
+                <input type="radio" id="other" name="sex" value="other">
+                <label for="other">Other</label>
+            </fieldset>
+        </fieldset>
+        
+        <fieldset>
+            <legend><big><b>Studies</b></big></legend>
+            <label for="user_university"><b>University:*</b></label><br>
+            <input type="text" list="universities" id="user_university" name="user_university" value="Leibniz Universität Hannover" size="30" required><br>
+            <datalist id="universities">
+                <option value="Leibniz Universität Hannover">
+                <option value="Medizinische Hochschule Hannover">
+                <option value="Tierärztliche Hochschule Hannover">
+                <option value="Hochschule Hannover">
+                <option value="Hochschule für Musik, Theater und Medien Hannover">
+                <option value="...">
+            </datalist>
+            <label for="user_studycourse"><b>Study Course:*</b></label><br>
+            <input type="text" list="studycourses" id="user_studycourse" name="user_studycourse" value="Informatik B.Sc." size="30" required><br>
+            <datalist id="studycourses">
+                <option value="Informatik B.Sc.">
+                <option value="Informatik M.Sc.">
+                <option value="Technische Informatik B.Sc.">
+                <option value="Technische Informatik M.Sc.">
+                <option value="Elektrotechnik und Informationstechnik B.Sc.">
+                <option value="Elektrotechnik und Informationstechnik M.Sc.">
+                <option value="Energietechnik B.Sc.">
+                <option value="Energietechnik M.Sc.">
+                <option value="Mechatronik B.Sc.">
+                <option value="...">
+            </datalist>
+            <label for="user_studystart"><b>Study Start:*</b></label><br>
+            <input type="date" id="user_studystart" name="studystart" value="2018-10-01" onchange="setMaxSemester(this.value)" required><br>
+            <label for="user_semester"><b>Semester:</b></label>
+            <input type="number" id="user_semester" name="user_semester" min="1" max="99" size="3" step="1" value="5">
+        </fieldset>
+        
+        <fieldset>
+            <legend><big><b>Contact Details</b></big></legend>
+            <label for="user_email"><b>Email:*</b></label><br>
+            <input type="email" id="user_email" name="user_email" value="hans.wurst@stud.uni-hannover.de" size="30" required><br>
+            <label for="user_phone"><b>Telephone:</b></label><br>
+            <input type="tel" id="user_phone" name="user_phone" value="+49 511 123456" size="30"><br><!-- pattern=""-->
+            <label for="user_mobile"><b>Mobile Phone:</b></label><br>
+            <input type="tel" id="user_mobile" name="user_mobile" value="0123 456789" size="30"><!-- pattern=""-->
+            <label for="user_homepage"><b>Homepage:</b></label><br>
+            <input type="url" id="user_homepage" name="user_homepage" value="https://www.hans-wurst.de" size="30">
+        </fieldset>
+        
+        <fieldset>
+            <legend><big><b>Address</b></big></legend>
+            <label for="user_streetaddress"><b>Street Address:</b></label>
+            <input type="text" id="user_streetaddress" name="user_streetaddress" value="Welfengarten 1" size="30"><br>
+            <label for="user_city"><b>City:</b></label>
+            <input type="text" id="user_city" name="user_city" value="Hannover" size="30"><br>
+            <label for="user_postalcode"><b>Postal Code:</b></label>
+            <input type="text" id="user_postalcode" name="user_postalcode" value="30167" size="5"><br>
+            <label for="user_federalstate"><b>Federal State:</b></label><br>
+            <input type="text" id="user_federalstate" name="user_federalstate" value="Niedersachsen" size="30"><br>
+            <label for="user_country"><b>Country:</b></label><br>
+            <input type="text" id="user_country" name="user_country" value="Deutschland" size="30">
+            
+            <!-- Social Media... facebook, instagram, twitter etc. -->
+        </fieldset>
+        
+        <div style="clear:both;">
+            <label for="user_description"><big><b>Description:</b></big></label><br>
+            <textarea rows="10" cols="100"id="user_description" name="user_description" style="border-radius:12px;margin-top:10px;padding:10px;">Meine Hobbys sind Reiten, Lesen, Schwimmen.</textarea><br>
+            
+            <input type="submit" value="Save" onclick="saveUserProfile()">
+            <input type="reset" value="Reset">
+            <input type="button" id="btn_delete" value="Delete Account" onclick="deleteAccount()"><br>
+            <a href="login.html" id="link_login"></a>
+            
+            <small>* input required</small>
+        </div>
+    </form>
 </div>
 
+<div class="footer">
+    <p style="margin:0px;padding:0px;display:inline-block;">Copyright © 2021 by Copycats</p>
+    <span style="display:inline-block;position:relative;top:7px;"><img src="icons/cat.png" alt="Cat" title="Copycats" style="width:25px;height:25px;"/></span>
+</div>
+
+<script src="js/main.js"></script>
 <script>
-var form = document.getElementById("searchform");
-function handleForm(event) { event.preventDefault(); }
-form.addEventListener('submit', handleForm);
-
-var form = document.getElementById("requestForm");
-function handleForm(event) { event.preventDefault(); }
-form.addEventListener('submit', handleForm);
-
-function validateForm(groupname,lecture,precondition,description){
-  var groupname = document.getElementById(groupname).value;
-  var lecture = document.getElementById(lecture).value;
-  var precondition = document.getElementById(precondition).value;
-  var description = document.getElementById(description).value;
-  console.log(groupname,lecture,precondition,description);
-
-  if(groupname == "" || lecture == "" || precondition == "" || description == "" ){
-    alert("Please fill out all inputs.");
-  }
-  else{
-    openTab(event,"Group_Profile");
-  }
-} 
-
-function sendText(){
-  var chatText = document.getElementById("chat-text");
-  var inputText = chatText.value;
-  if (inputText == ""){
-    return false;
-  }
-
-  var chatmessages = document.getElementById("chat-messages");
-  var newmessage = document.createElement("div");
-
-  newmessage.classList.add("container");
-  newmessage.style.display = "block";
-  var time = new Date().toLocaleTimeString('de-DE', { hour: "numeric", 
-                                             minute: "numeric"});
-
-  newmessage.innerHTML = '<p><b>Ich: </b>' + inputText + '</p>' + time;
-  chatmessages.append(newmessage);
-  chatText.value = "";
-}
-
-function createGroup(){
-  ;
-}
-
-function openFileDialog(img) {
-	var file = document.getElementById('avatar_upload');
-	file.click();
-	
-/*
-	//img.src = <path_to_image>;
-	//alert(file.name + ": " + file.value + ", " + file.size + ", " + file.type);
-	//alert(file.files[0].name);
-*/
-}
-
-function setAvatar(evt) {
-	//update avatar
-}
-
-function saveUserProfile() {
-	//save user profile changes...
-	
-	window.alert("Your user profile changes have been saved.");
-}
-
-function deleteAccount() {
-	var answer = window.confirm("Are you sure that you want to delete your account?\nOnce your account has been deleted, you won't be able to restore it.");
-	
-	if (answer) {
-		//delete account...
-		
-		//logout
-		document.getElementById("link_login").click();
-	}
-}
-
-function openTab(evt, tabName) {  
+//// GENERAL ////
+// open tabcontent by tabName
+function openTab(evt, tabName) {
     var tabcontents = document.getElementsByClassName("tabcontent");
     for (var i = 0; i < tabcontents.length; ++i) {
         tabcontents[i].style.display = "none";
     }
     
     var tablinks = document.getElementsByClassName("tablinks");
-    
     for (var i = 0; i < tablinks.length; ++i) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
     
     document.getElementById(tabName).style.display = "block";
-    evt.currentTarget.className += " active";
+    if (evt != null && evt != undefined) {
+        evt.currentTarget.className += " active";
+    }
 }
 
-// Show home-tab by default
-document.getElementById("defaultOpen").click();
+// Show hometab by default
+function showHome() {
+    document.getElementById("defaultOpenTab").click();
+}
+showHome();
 
-function showAvatarSVG() {
-	document.getElementById("avatar_svg").style.display="block";
+// logout current user
+function logout() {
+    // note logout in database and cookies...
+    document.getElementById("link_login").click();
 }
 
-function hideAvatarSVG() {
-	document.getElementById("avatar_svg").style.display="none";
-}
+//// HOME ////
+//...
 
-// calculate the current age of user
-var currentDate = new Date(),
-	birthDate = new Date(document.getElementById("user_birthday").value),
-	age = currentDate.getFullYear() - birthDate.getFullYear();
-if (currentDate.getMonth() < birthDate.getMonth() || (currentDate.getMonth() == birthDate.getMonth() && currentDate.getDate() < birthDate.getDate())) {
-	--age;
-}
-document.getElementById("user_age").innerHTML = "<b>Age: </b>" + age;
-
-function setMaxSemester(studystart) {
-    var currentDate = new Date();
-	var studystart = new Date(studystart);
-    var months = (currentDate.getFullYear() - studystart.getFullYear()) * 12;
-    months -= studystart.getMonth();
-    months += currentDate.getMonth() + 1;
-    
-    document.getElementById("user_semester").max = Math.ceil(months / 6);
-}
-var studystart = document.getElementById("user_studystart");
-if (studystart.value != "") {
-	setMaxSemester(studystart.value);
-}
-
+//// SEARCH ////
 function openDetailedSearch() {
   var content = document.getElementById("colcontent");
   if (content.style.display === "block") {
@@ -771,8 +762,125 @@ function toggleRequest() {
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   if (event.target == request) {
-	request.style.display = "none";
+    request.style.display = "none";
   }
+}
+
+var form = document.getElementById("searchform");
+function handleForm(event) { event.preventDefault(); }
+form.addEventListener('submit', handleForm);
+
+var form = document.getElementById("requestForm");
+function handleForm(event) { event.preventDefault(); }
+form.addEventListener('submit', handleForm);
+
+//// CREATE GROUP ////
+function createGroup() {
+    // create group in database...
+    openTab(null, "Group_Profile");
+}
+
+function saveGroup() {
+    // save group in database...
+    openTab(null, "Group_Profile");
+}
+
+function deleteGroup() {
+    var answer = window.confirm("Are you sure that you want to delete your group?\nOnce your group has been deleted, you won't be able to restore it.");
+    
+    if (answer) {
+        // delete group in database...
+        hide("joined_group_1");
+        showHome();
+    }
+}
+
+function onEnterSendMessage(evt) {
+    // check which key was pressed
+    if (evt.key === "Enter") {
+        sendText();
+    }
+}
+
+function sendText(){
+    var chatText = document.getElementById("chat-text");
+    var inputText = chatText.value;
+    if (inputText == "") {
+        return false;
+    }
+    
+    var chatmessages = document.getElementById("chat-messages");
+    var newmessage = document.createElement("div");
+    
+    newmessage.classList.add("container");
+    newmessage.style.display = "block";
+    var time = new Date().toLocaleTimeString('de-DE', { hour: "numeric", minute: "numeric" });
+    
+    newmessage.innerHTML = '<p><b>Ich: </b>' + inputText + '</p>' + time;
+    chatmessages.append(newmessage);
+    chatText.value = "";
+}
+
+//// USER PROFILE ////
+function openFileDialog(img) {
+    var file = document.getElementById('avatar_upload');
+    file.click();
+    
+    /*
+    img.src = <path_to_image>;
+    alert(file.name + ": " + file.value + ", " + file.size + ", " + file.type);
+    alert(file.files[0].name);
+    */
+}
+
+function setAvatar(evt) {
+    // update avatar
+}
+
+// calculate the current age of user
+function setAge(birthDate) {
+    var currentDate = new Date(),
+        birthDate = new Date(birthDate),
+        age = currentDate.getFullYear() - birthDate.getFullYear();
+    
+    if (currentDate.getMonth() < birthDate.getMonth() || (currentDate.getMonth() == birthDate.getMonth() && currentDate.getDate() < birthDate.getDate())) {
+        --age;
+    }
+    
+    document.getElementById("user_age").innerHTML = "<b>Age: </b>" + age;
+}
+var birthDate = document.getElementById("user_birthday");
+if (birthDate.value != "") {
+    setAge(birthDate.value);
+}
+
+// calculate the max. possible semester depending on study start
+function setMaxSemester(studystart) {
+    var currentDate = new Date();
+    var studystart = new Date(studystart);
+    var months = (currentDate.getFullYear() - studystart.getFullYear()) * 12;
+    months -= studystart.getMonth();
+    months += currentDate.getMonth() + 1;
+    
+    document.getElementById("user_semester").max = Math.ceil(months / 6);
+}
+var studystart = document.getElementById("user_studystart");
+if (studystart.value != "") {
+    setMaxSemester(studystart.value);
+}
+
+function saveUserProfile() {
+    // save user profile changes in database...
+    window.alert("Your user profile changes have been saved.");
+}
+
+function deleteAccount() {
+    var answer = window.confirm("Are you sure that you want to delete your account?\nOnce your account has been deleted, you won't be able to restore it.");
+    
+    if (answer) {
+        // delete account in database...
+        logout();
+    }
 }
 </script>
 </body>
