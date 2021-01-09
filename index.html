@@ -6,8 +6,10 @@
 <link rel="icon" href="icons/favicon-group.png" type="image/png" sizes="16x16">
 <link rel="stylesheet" href="css/main.css">
 <style>
+
 body {
-    background-color: rgba(50,200,250,0.5);
+  background-color: #F8F8F8;
+  font-family: Helvetica, sans-serif;
 }
 
 * {
@@ -16,17 +18,16 @@ body {
 
 /* Style the tab */
 .tab {
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
+  background-color: #222222;
   overflow: hidden;
 }
 
 /* Style the buttons inside the tab */
 .tab button {
   background-color: inherit;
+  //border-bottom: black 10px solid;
   float: left;
   border: none;
-  outline: none;
   cursor: pointer;
   padding: 14px 16px;
   transition: 0.3s;
@@ -39,61 +40,84 @@ body {
 
 /* Change background color of buttons on hover */
 .tab button:hover {
-  //background-color: #ddd;
-  background-color: rgba(50,200,250,0.5);
+  background-color: #F8F8F8;
+}
+
+.tab button:hover .icons{
+  filter: none;
 }
 
 /* Create an active/current tablink class */
 .tab button.active {
-  //background-color: #ccc;
-  background-color: rgba(50,200,250,1.0);
+  background-color: #F8F8F8;
+}
+
+.tab button.active .icons{
+  filter: none;
 }
 
 /* Style the tab content */
 .tabcontent {
   display: none;
-  margin: 0 0 50px 20px;
   padding: 6px 12px;
-  //background-color: rgba(50,200,250,0.5);
-  //border: 1px solid #ccc;
-  border-top: none;
+  border-radius: 10px;
+  color:#44403f;
+  background-color: #F8F8F8;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+
   animation: fadeEffect 1s; /* Fading effect takes 1 second */
 }
 
 /* Style the collapsible */
 .collapsible {
-  background-color: #777;
-  color: white;
+  color: #F8F8F8;
+  background-color: #696965;
   cursor: pointer;
   padding: 0px 20px;
   margin: 8px 0;
   width: 100%;
-  border: none;
+  border-radius: 10px;
   text-align: left;
+  letter-spacing: 1pt;
+  //font-size: medium;
 }
 
 /* Change background color of collapsible button when active and on hover*/
 .active, .collapsible:hover {
-  background-color: #555;
+  background-color: #ba2026;
+  //color: black;
 }
 
 /* Style the content of the collapsible */
 .collapsiblecontent {
+  color: #44403f;
+  //background-color: #696965;
   padding: 0 18px;
+  border-radius: 10px;
+  border: 1px solid #ae946d;
   display: none;
   overflow: hidden;
-  background-color: #f1f1f1;
 }
 
 /* Style search result table */
 table{
-  margin: 0 auto;
+  margin: 10 auto;
   border-collapse: collapse;
   width: 100%;
 }
 
-td, th {
-  border: 1px solid #dddddd;
+td {
+  //border: 1px solid #ae946d;
+  background-color: white;
+  text-align: center;
+  padding: 16px;
+}
+th {
+  //border: 1px solid #ae946d;
+  background-color: #696965;
+  color: #F8F8F8;
+
   text-align: center;
   padding: 16px;
 }
@@ -101,13 +125,27 @@ td, th {
 /* Style clickable group name */
 button.group {
   cursor: pointer;
-  font-family: Arial;
   font-size: 12pt;
+  color: #44403f;
+  background-color: white;
+  border: none;
+}
+
+button.members{
+  cursor: pointer;
+  font-size: 12pt;
+  color: #44403f;
+  background-color: #F8F8F8;
+  border: none;
+}
+
+button.members:hover{
+  color: #ba2026;
 }
 
 /* Underline group name on hover*/
 button.group:hover {
-  text-decoration: underline;
+  color: #ba2026;
 }
 
 /* The Modal (background) */
@@ -163,7 +201,7 @@ button.group:hover {
 
 #submitRequest{
   background-color: #4CAF50;
-  color: white;
+  color: #F8F8F8;
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
@@ -176,35 +214,54 @@ button.group:hover {
 }
 
 select{
-  width:500px;
+  border-radius: 10px; 
+  width: 500px;
   padding: 12px  20px;
   margin: 8px 0;
   box-sizing: border-box;
+  background-color: #FEFEFE;
+  color: #44403f;
+  border:1px solid #ae946d;
 }
 
 select:invalid {
   color: gray;
 }
 
+
+
 input {
   padding: 12px  20px;
   margin: 8px 0;
-  border-radius: 12px;
+  background-color: #FEFEFE;
+  border:1px solid #ae946d;
+  border-radius: 10px;
   box-sizing: border-box;
 }
 
 input[type=button], input[type=submit], input[type=reset] {
-  background-color: #cccccc;
-  border: 1px solid white;
-  border-radius: 12px;
-  color: white;
+  border: none;
+  font-weight: bold;
+  font-size: medium;
+  letter-spacing: 1pt;
+  color: #F8F8F8;
+  background-color: #222222;
 }
 
 input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
-  background-color: #aaaaaa;
-  border: 1px solid black;
-  color: black;
+  border: none;
+  background-color: #ba2026;
+  color: #F8F8F8;
   cursor: pointer;
+}
+
+.description {
+    padding: 12px  20px;
+    margin: 8px 0;
+    border-radius: 10px;
+    border:1px solid #ae946d;
+    background-color: #FEFEFE ;
+    resize: none;
 }
 
 .flex-container {
@@ -214,7 +271,7 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
 
 .sidebar{
   display: block;
-  flex-basis: 30%;
+  flex-basis: 20%;
   height: 100%;
   padding-top: 20px;
   padding-right: 20px;
@@ -228,32 +285,56 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
 }
 
 .sidebar-item{
-  padding-left: 0%;
-  padding-bottom: 20px;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 10px;
+  border:1px solid #ae946d;
+  margin: 20px;
+  margin-left: 0;
+  //padding: 5px;
+}
+
+.sidebar-item-header{
+  padding: 5px;
+  font-size: x-large;
+  font-weight: bold;
+  border-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  background-color: #696965;
+  color: #F8F8F8;
 }
 
 .container {
-  border: 2px solid #dedede;
-  background-color: #f1f1f1;
+  background-color: #FEFEFE;
+  color: #44403f;;
   border-radius: 5px;
   padding: 10px;
   margin: 10px 0;
 }
 
 .darker {
-  border-color: #ccc;
-  background-color: #ddd;
+  background-color: #e6ded2;
+  color: #44403f;
 }
 
 .chat-text{
-  border: 1px solid #dedede;
+  background-color: #FEFEFE;
+  border:1px solid #ae946d;
+  border-radius: 10px;
   margin-top: 0px;
-  flex-basis: 80%;
+  margin-right: 10px;
+  flex-basis: 75%;
   height: 40px;
 }
 
 .chat-button{
-  border: 1px solid #dedede;
+  background-color: #222222;
+  border-radius: 10px;
+  border: none;
+  color: #F8F8F8;
+  letter-spacing: 1pt;
+  font-weight: bold;
   margin-top: 0px;
   flex-basis: 20%;
   height: 40px;
@@ -278,65 +359,73 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
     width: 500px;
 }
 
+label{
+  font-weight:normal;
+}
+
 /* Go from zero to full opacity */
 @keyframes fadeEffect {
   from {opacity: 0;}
   to {opacity: 1;}
 }
 
+.fieldset_title{
+  font-size: x-large;
+  font-weight: bolder;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
 fieldset {
-    background-color: #eeeeee;
+    color: #44403f;;
+    border: 1px solid #ae946d;
+    //background-color: #696965;
     border-radius: 12px;
     float:left;
     width: 205px;
+    margin: 10px;
 }
 
 #btn_delete {
-    background-color: rgba(225,75,50,1.0);
+    //background-color: rgba(225,75,50,1.0);
 }
 #btn_delete:hover {
-    background-color: rgba(200,50,50,1.0);
+    background-color: darkgray;
 }
 
 .footer {
-    position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
     height: 40px;
-    border: 0;
-    margin: 0;
-    padding: 0;
-    outline: none;
-    background-color: #aaa;
-    color: black;
+    font-size: small;
+    background-color: #F8F8F8;
+    color: #696965;;
     text-align: center;
-    font-weight: bold;
-    white-space: nowrap;
-    overflow-x: auto;
 }
 
 #joinedgroups {
-    background: #f1f1f1;
-    border: 1px solid #fefefe;
+    color: #44403f;
+
+    border: 2px solid;
+    border-radius: 10px;
     padding: 10px;
     width: 50%;
 }
 
 .joined_group {
-    background-color: rgba(50,200,250,0.5);
-    border: 1px solid white;
+    color: #44403f;
+    background-color: #F8F8F8;
+    border: 1px solid #696965;
     cursor: pointer;
     height: 60px;
-    margin: 10px 0;
+    margin: 10px;
     padding: 10px;
-    white-space: nowrap;
+    border-radius: 10px;
 }
 
 .joined_group:hover {
-    background-color: rgba(50,200,250,1.0);
-    border: 1px solid black;
-    font-weight: bold;
+    background-color: #e6ded2;
 }
 
 .joined_group_name {
@@ -351,32 +440,51 @@ fieldset {
     height:32px;
     width:32px;
 }
+
+.joined_group_img:hover{
+  filter: invert(19%) sepia(94%) saturate(2647%) hue-rotate(343deg) brightness(79%) contrast(95%);
+}
+
+.request {
+  height:150px;
+  width:100%;
+  margin-top:15px;
+  margin-bottom:15px;
+  overflow:auto;
+  resize:vertical" 
+}
+
+.icons {
+  filter:invert(99%) sepia(2%) saturate(358%) hue-rotate(181deg) brightness(117%) contrast(95%);
+}
+
+
 </style>
 </head>
 <body>
 <div class="tab">
     <button id="defaultOpenTab" class="tablinks" title="Home" onclick="openTab(event, 'Home')">
-        <img src="icons/home.png" alt="Home" width="50" height="50"/>
+        <img class="icons" src="icons/home.png" alt="Home" width="50" height="50"/>
     </button>
     <button class="tablinks" title="Search" onclick="openTab(event, 'Search')">
-        <img src="icons/search.png" alt="Search" width="50" height="50"/>
+        <img class="icons" src="icons/search.png" alt="Search" width="50" height="50"/>
     </button>
     <button class="tablinks" title="Create Group" onclick="openTab(event, 'Create_Group')">
-        <img src="icons/create_group.png" alt="Create Group" width="50" height="50"/>
+        <img class="icons" src="icons/create_group.png" alt="Create Group" width="50" height="50"/>
     </button>
     <button class="tablinks" title="User Profile" onclick="openTab(event, 'User_Profile')">
-        <img src="icons/user_profile.png" alt="User Profile" width="50" height="50"/>
+        <img class="icons" src="icons/user_profile.png" alt="User Profile" width="50" height="50"/>
     </button>
     <button id="logout" class="tablinks" title="Logout" onclick="logout()">
-        <img src="icons/logout.png" alt="Logout" width="50" height="50"/>
+        <img class="icons" src="icons/logout.png" alt="Logout" width="50" height="50"/>
     </button>
     <a href="login.html"></a>
 </div>
 
 <div id="Home" class="tabcontent">
-    <h2>Home</h2>
+    <h1>Home</h1>
     <div id="joinedgroups">
-        <h3>Joined Groups</h3>
+        <h2>Joined Groups</h2>
         <div id="joined_group_1" class="joined_group" onclick="openTab(null, 'Group_Profile')">
             <p class="joined_group_name">Programmieren I: Scriptkiddies</p>
             <img src="icons/new-message.png" alt="Mail" title="New Messages" class="joined_group_img"/>
@@ -389,7 +497,7 @@ fieldset {
 </div>
 
 <div id="Search" class="tabcontent">
-  <h2>Search</h2>
+  <h1>Search</h1>
   <form id="searchform" onsubmit="showResults();">
     <div>
       <input type="text" placeholder="Search..." name="search" required>
@@ -399,7 +507,7 @@ fieldset {
     <div id="colcontent" class="collapsiblecontent"><br>
       <div style="width: 65%;max-width: 375px">
       <label for="course"><b>Course</b></label><br>
-      <select name="course" style="margin-top:10px;margin-bottom:20px">
+      <select name="course">
         <option value="" disabled selected hidden>Select course...</option>
         <option value="prog1">Programmieren 1</option>
         <option value="prog2">Programmieren 2</option>
@@ -414,7 +522,7 @@ fieldset {
       <input type="number" placeholder="Enter max size..." name="groupsizemax" min=1 max=100 style="width:50%;max-width:175px;margin-left:10px;margin-top:10px;margin-bottom:20px">
       
       <label for="semester"><b>Semester founded</b></label><br>
-      <select name="semester" style="margin-top:10px;margin-bottom:20px">
+      <select name="semester">
         <option value="" disabled selected hidden>Select semester...</option>
         <option value="wise20">WiSe 20/21</option>
         <option value="sose20">SoSe 20</option>
@@ -426,7 +534,7 @@ fieldset {
     </div>
   </form>
 
-  <div id="searchresults" style="display:none;background-color:white;">
+  <div id="searchresults" style="display:none">
     <h3>Results</h3>
     <table>
       <tr>
@@ -436,19 +544,19 @@ fieldset {
         <th>Semester</th>
       </tr>
       <tr>
-        <td><button class="group" style="background:none;border:none" onclick="toggleRequest()">Programmieren 1 Lerngruppe</button></td>
+        <td><button class="group" onclick="toggleRequest()">Programmieren 1 Lerngruppe</button></td>
         <td>Programmieren 1</td>
         <td>14</td>
         <td>WiSe 20/21</td>
       </tr>
       <tr>
-        <td><button class="group" style="background:none;border:none" onclick="toggleRequest()">Programmieren 2</button></td>
+        <td><button class="group" onclick="toggleRequest()">Programmieren 2</button></td>
         <td>Programmieren 2</td>
         <td>5</td>
         <td>SoSe 20</td>
       </tr>
       <tr>
-          <td><button class="group" style="background:none;border:none" onclick="toggleRequest()">Die Programmier-Profis</button></td>
+          <td><button class="group" onclick="toggleRequest()">Die Programmier-Profis</button></td>
         <td>Programmieren 1</td>
         <td>6</td>
         <td>WiSe 18/19</td>
@@ -465,7 +573,7 @@ fieldset {
       <div class="container">
         <h3>Request</h3>
         <label for="reqmessage"><b>Message</b></label>
-        <textarea style="height:150px;width:100%;margin-top:15px;margin-bottom:15px;overflow:auto;resize:vertical"></textarea>
+        <textarea class="request" ></textarea>
         <button id="submitRequest" onclick="document.getElementById('request').style.display='none'"><b>Send Request</b></button><br>
       </div>
     </form>
@@ -473,15 +581,15 @@ fieldset {
 </div>
 
 <div id="Create_Group" class="tabcontent">
-    <h2>Create Group</h2>
+    <h1>Create Group</h1>
     <form name="groupform">
-        <label for="creategroup_name"><b>Group Name:*</b></label><br>
+        <label for="creategroup_name">Group Name:*</label><br>
         <input type="text" class="groupinput" placeholder="Enter Group Name" id="creategroup_name" name="creategroup_name" required><br>
         
-        <label for="creategroup_memberlimit"><b>Member Limit:*</b></label>
-        <input type="number" id="creategroup_memberlimit" name="creategroup_memberlimit" min="2" max="999" size="4" step="1" required><br>
+        <label for="creategroup_memberlimit">Member Limit:*</label><br>
+        <input type="number" class="groupinput" id="creategroup_memberlimit" name="creategroup_memberlimit" min="2" max="999" size="4" step="1" required><br>
         
-        <label for="creategroup_lecture"><b>Lecture:*</b></label><br>
+        <label for="creategroup_lecture">Lecture:*</label><br>
         <input type="text" list="lectures" class="groupinput" placeholder="Enter Lecture" id="creategroup_lecture" name="creategroup_lecture" required><br>
         <datalist id="lectures">
             <option value="Programmieren I">
@@ -492,16 +600,16 @@ fieldset {
             <option value="...">
         </datalist>
         
-        <label for="creategroup_requirements"><b>Requirements:</b></label><br>
+        <label for="creategroup_requirements">Requirements:</label><br>
         <input type="text" class="groupinput" placeholder="Enter Requirements" id="creategroup_requirements" name="creategroup_requirements"><br>
         
-        <label for="creategroup_description"><b>Description:</b></label><br>
-        <textarea rows="10" cols="100" placeholder="Enter Description" id="creategroup_description" name="creategroup_description" style="border-radius:12px;margin-top:10px;padding:10px;"></textarea><br>
+        <label for="creategroup_description">Description:</label><br>
+        <textarea class="description" rows="10" cols="100" placeholder="Enter Description" id="creategroup_description" name="creategroup_description" ></textarea><br>
         
         <input type="checkbox" id="creategroup_joinonrequest" name="creategroup_joinonrequest">
-        <label for="creategroup_joinonrequest"><b>Join on Request</b></label><br>
+        <label for="creategroup_joinonrequest">Join on Request</label><br>
         
-        <input type="submit" value="Create Group" onclick="createGroup()"> <!-- onsubmit="..." -->
+        <input type="button" value="Create Group" onclick='saveGroup()'> <!-- onsubmit="..." -->
         <input type="reset" value="Reset"><br>
         
         <small>* input required</small>
@@ -509,25 +617,25 @@ fieldset {
 </div>
 
 <div id="Edit_Group" class="tabcontent">
-    <h2>Edit Group</h2>
+    <h1>Edit Group</h1>
     <form>
-        <label for="editgroup_name"><b>Group Name:*</b></label><br>
+        <label for="editgroup_name">Group Name:*</label><br>
         <input type="text" class="groupinput" placeholder="Enter Group Name" id="editgroup_name" name="editgroup_name" value="Programmers of tomorrow" required><br>
         
-        <label for="editgroup_memberlimit"><b>Member Limit:*</b></label>
-        <input type="number" id="editgroup_memberlimit" name="editgroup_memberlimit" min="2" max="999" value="6" size="4" step="1" required><br>
+        <label for="editgroup_memberlimit">Member Limit:*</label><br>
+        <input type="number"  class="groupinput" id="editgroup_memberlimit" name="editgroup_memberlimit" min="2" max="999" value="6" size="4" step="1" required><br>
         
-        <label for="editgroup_lecture"><b>Lecture:*</b></label><br>
+        <label for="editgroup_lecture">Lecture:*</label><br>
         <input type="text" list="lectures" class="groupinput" placeholder="Enter Lecture" id="editgroup_lecture" name="editgroup_lecture" value="Programmieren 1" required><br>
         
-        <label for="editgroup_requirements"><b>Requirements:</b></label><br>
+        <label for="editgroup_requirements">Requirements:</label><br>
         <input type="text" class="groupinput" placeholder="Enter Requirements" id="editgroup_requirements" name="editgroup_requirements" value="None"><br>
         
-        <label for="editgroup_description"><b>Description:</b></label><br>
-        <textarea rows="10" cols="100" placeholder="Enter Description" id="editgroup_description" name="editgroup_description" style="border-radius:12px;margin-top:10px;padding:10px;">If u want to work on your Programmieren 1 assignments together this is the right place</textarea><br>
+        <label for="editgroup_description">Description:</label><br>
+        <textarea rows="10" cols="100" placeholder="Enter Description" id="editgroup_description" name="editgroup_description" class="description"">If u want to work on your Programmieren 1 assignments together this is the right place</textarea><br>
         
         <input type="checkbox" id="editgroup_joinonrequest" name="editgroup_joinonrequest">
-        <label for="editgroup_joinonrequest"><b>Join on Request</b></label><br>
+        <label for="editgroup_joinonrequest">Join on Request</label><br>
         
         <!-- Hinzufügen und Entfernen von Mitgliedern fehlt -->
         
@@ -547,7 +655,7 @@ fieldset {
 <div id="Group_Profile" class="tabcontent">
     <div class="flex-container">
         <div class="group-header">
-            <h2>Group: Scriptkiddies</h2>
+            <h1>Group: Scriptkiddies</h1>
         </div>
         <img src="icons/settings.png" alt="Edit Group" title="Edit Group" class="settings-icon" width="40" height="40" onclick="openTab(null, 'Edit_Group')"/>
     </div>
@@ -555,13 +663,13 @@ fieldset {
     <div class="flex-container">
         <div class="sidebar">
             <div class="sidebar-item">
-                <b>Members 3/6</b><br><br>
-                You<br>
-                Hans Wurst <img src="icons/star.png" alt="Group Admin" title="Group Admin" width="10" height="10"/><br>
-                Joachim Schikele<br>
+                <div class="sidebar-item-header">Members 3/6</div>
+                <button class="members" onclick='openTab(event,"User_Profile")'>You</button><br>
+                <button class="members" onclick='openTab(event,"User_Profile")'>Hans Wurst</button> <img src="icons/star.png" alt="Group Admin" title="Group Admin" width="10" height="10"/><br>
+                <button class="members" onclick='openTab(event,"User_Profile")'>Joachim Schikele</button><br>
             </div>
             <div class="sidebar-item">
-                <b>Dates</b><br><br>
+                <div class="sidebar-item-header">Members 3/6</div>
                 13.11.20<br>
                 20.11.20<br>
                 27.11.20<br>
@@ -593,7 +701,7 @@ fieldset {
 </div>
 
 <div id="User_Profile" class="tabcontent">
-    <h2>User Profile</h2>
+    <h1>User Profile</h1>
     <img src="icons/user_profile.png" alt="User Avatar" style="width:128px;height:128px;float:left;margin:10px;" onmouseover="show('avatar_svg')">
     <svg id="avatar_svg" height="150" width="150" style="position:absolute;left:24px;top:170px;cursor:pointer;display:none;" onclick="openFileDialog(this)" onmouseleave="hide('avatar_svg')">
         <!-- drag & drop? -->
@@ -604,26 +712,17 @@ fieldset {
     
     <form method="post" autocomplete="on" accept-charset="UTF-8"> <!--action="/user_profile.php" target="_self"-->
         <fieldset>
-            <legend><big><b>Personal Data</b></big></legend>
-            <label for="user_name"><b>Name:*</b></label><br>
+            <div class="fieldset_title">Personal Data</div>
+            <label for="user_name">Name:*</label><br>
             <input type="text" id="user_name" name="user_name" value="Hans Wurst" size="30" required><br>
             <label for="user_birthday"><b>Birthday:*</b></label><br>
             <input type="date" id="user_birthday" name="birthday" value="1996-04-15" onchange="setAge(this.value)" required>
             <span id="user_age" name="user_age" style="margin:10px;"></span><br>
-            <label><b>Sex:*</b></label><br>
-            <fieldset style="background-color:white;margin-top:10px;">
-                <input type="radio" id="male" name="sex" value="male" checked>
-                <label for="male">Male</label>
-                <input type="radio" id="female" name="sex" value="female">
-                <label for="female">Female</label>
-                <input type="radio" id="other" name="sex" value="other">
-                <label for="other">Other</label>
-            </fieldset>
         </fieldset>
         
         <fieldset>
-            <legend><big><b>Studies</b></big></legend>
-            <label for="user_university"><b>University:*</b></label><br>
+          <div class="fieldset_title">Studies</div>
+            <label for="user_university">University:*</label><br>
             <input type="text" list="universities" id="user_university" name="user_university" value="Leibniz Universität Hannover" size="30" required><br>
             <datalist id="universities">
                 <option value="Leibniz Universität Hannover">
@@ -633,7 +732,7 @@ fieldset {
                 <option value="Hochschule für Musik, Theater und Medien Hannover">
                 <option value="...">
             </datalist>
-            <label for="user_studycourse"><b>Study Course:*</b></label><br>
+            <label for="user_studycourse">Study Course:*</label><br>
             <input type="text" list="studycourses" id="user_studycourse" name="user_studycourse" value="Informatik B.Sc." size="30" required><br>
             <datalist id="studycourses">
                 <option value="Informatik B.Sc.">
@@ -647,43 +746,32 @@ fieldset {
                 <option value="Mechatronik B.Sc.">
                 <option value="...">
             </datalist>
-            <label for="user_studystart"><b>Study Start:*</b></label><br>
+            <label for="user_studystart">Study Start:*</label><br>
             <input type="date" id="user_studystart" name="studystart" value="2018-10-01" onchange="setMaxSemester(this.value)" required><br>
-            <label for="user_semester"><b>Semester:</b></label>
+            <label for="user_semester">Semester:</label>
             <input type="number" id="user_semester" name="user_semester" min="1" max="99" size="3" step="1" value="5">
         </fieldset>
         
         <fieldset>
-            <legend><big><b>Contact Details</b></big></legend>
-            <label for="user_email"><b>Email:*</b></label><br>
+          <div class="fieldset_title">Contact Details</div>
+            <label for="user_email">Email:*</label><br>
             <input type="email" id="user_email" name="user_email" value="hans.wurst@stud.uni-hannover.de" size="30" required><br>
-            <label for="user_phone"><b>Telephone:</b></label><br>
-            <input type="tel" id="user_phone" name="user_phone" value="+49 511 123456" size="30"><br><!-- pattern=""-->
-            <label for="user_mobile"><b>Mobile Phone:</b></label><br>
-            <input type="tel" id="user_mobile" name="user_mobile" value="0123 456789" size="30"><!-- pattern=""-->
-            <label for="user_homepage"><b>Homepage:</b></label><br>
+            <label for="user_homepage">Homepage:</label><br>
             <input type="url" id="user_homepage" name="user_homepage" value="https://www.hans-wurst.de" size="30">
         </fieldset>
         
         <fieldset>
-            <legend><big><b>Address</b></big></legend>
-            <label for="user_streetaddress"><b>Street Address:</b></label>
-            <input type="text" id="user_streetaddress" name="user_streetaddress" value="Welfengarten 1" size="30"><br>
-            <label for="user_city"><b>City:</b></label>
+          <div class="fieldset_title">Address</div>
+
+            <label for="user_city">City:</label>
             <input type="text" id="user_city" name="user_city" value="Hannover" size="30"><br>
-            <label for="user_postalcode"><b>Postal Code:</b></label>
+            <label for="user_postalcode">Postal Code:</label><br>
             <input type="text" id="user_postalcode" name="user_postalcode" value="30167" size="5"><br>
-            <label for="user_federalstate"><b>Federal State:</b></label><br>
-            <input type="text" id="user_federalstate" name="user_federalstate" value="Niedersachsen" size="30"><br>
-            <label for="user_country"><b>Country:</b></label><br>
-            <input type="text" id="user_country" name="user_country" value="Deutschland" size="30">
-            
-            <!-- Social Media... facebook, instagram, twitter etc. -->
         </fieldset>
         
         <div style="clear:both;">
-            <label for="user_description"><big><b>Description:</b></big></label><br>
-            <textarea rows="10" cols="100"id="user_description" name="user_description" style="border-radius:12px;margin-top:10px;padding:10px;">Meine Hobbys sind Reiten, Lesen, Schwimmen.</textarea><br>
+            <label for="user_description">Description:</label><br>
+            <textarea rows="10" cols="100"id="user_description" name="user_description" class="description">Meine Hobbys sind Reiten, Lesen, Schwimmen.</textarea><br>
             
             <input type="submit" value="Save" onclick="saveUserProfile()">
             <input type="reset" value="Reset">
@@ -696,8 +784,7 @@ fieldset {
 </div>
 
 <div class="footer">
-    <p style="margin:0px;padding:0px;display:inline-block;">Copyright © 2021 by Copycats</p>
-    <span style="display:inline-block;position:relative;top:7px;"><img src="icons/cat.png" alt="Cat" title="Copycats" style="width:25px;height:25px;"/></span>
+    <p>Copyright © 2021 by Copycats</p>
 </div>
 
 <script src="js/main.js"></script>
