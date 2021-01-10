@@ -79,17 +79,19 @@ body {
 
 /* Style the collapsible */
 .collapsible {
+  border: none;
   color: #F8F8F8;
   background-color: #696965;
   cursor: pointer;
-  padding: 0px 20px;
   margin: 8px 0;
   width: 100%;
-  border-radius: 10px;
   text-align: left;
+  font-size: medium;
+  font-weight: bold;
   letter-spacing: 1pt;
-  //font-size: medium;
-  text-align: left;
+  padding: 12px  20px;
+  border-radius: 12px;
+  box-sizing: border-box;
 }
 
 /* Change background color of collapsible button when active and on hover*/
@@ -177,6 +179,7 @@ button.group:hover {
 
 /* Modal Content/Box */
 .modal-content {
+  border-radius: 12px;
   background-color: #fefefe;
   margin: auto;
   padding: 20px;
@@ -204,6 +207,7 @@ button.group:hover {
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
   width: 100%;
 }
@@ -488,7 +492,7 @@ fieldset {
     </div>
   </form>
     
-    <button id="detailedSearch" class="collapsible" onclick="openDetailedSearch()"><h4>Detailed Search</h4></button>
+    <button id="detailedSearch" class="collapsible" onclick="openDetailedSearch()">Detailed Search</button>
     <div id="colcontent" class="collapsiblecontent"><br>
       <div style="width: 65%;max-width: 375px">
       <label for="course"><b>Course</b></label><br>
@@ -558,7 +562,7 @@ fieldset {
 			<b>Semester:</b> WiSe 20/21<br>
 			<b>Description:</b> Suchen motivierte Kommilitonen zum Lernen für Programmieren 1. Wir sind keine Experten, aber stets motiviert!<br><br>
 			<label for="reqmessage"><b>Message</b></label>
-			<textarea style="height:150px;width:100%;margin-top:15px;margin-bottom:15px;overflow:auto;resize:vertical"></textarea>
+			<textarea style="height:150px;width:100%;margin-top:15px;margin-bottom:15px;overflow:auto;resize:vertical;border-radius:6px;"></textarea>
 			<button id="submitRequest" onclick="document.getElementById('request').style.display='none'"><b>Send Request</b></button><br>
         </div>
     </form>
@@ -665,7 +669,7 @@ fieldset {
             <b>Chat</b>
             <div class="chat-messages" id="chat-messages">
                 <div class="container">
-                    <p><b>Ich:</b> Hello my name is Thomas.</p>
+                    <p><b>You:</b> Hello my name is Thomas.</p>
                     11:00
                 </div>
                 <div class="container darker">
