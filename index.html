@@ -502,8 +502,8 @@ fieldset {
       </select>
       
       <label for="groupsizemin"><b>Group size</b></label><br>
-      <input type="number" placeholder="Enter min size..." name="groupsizemin" min=1 max=100 style="width:50%;max-width:175px;margin-right:10px;margin-top:10px;margin-bottom:20px">
-      <input type="number" placeholder="Enter max size..." name="groupsizemax" min=1 max=100 style="width:50%;max-width:175px;margin-left:10px;margin-top:10px;margin-bottom:20px">
+      <input id="minGroupSize" type="number" placeholder="Enter min size..." name="groupsizemin" min=1 max=100 onchange="adjustBorders()" style="width:50%;max-width:175px;margin-right:10px;margin-top:10px;margin-bottom:20px">
+      <input id="maxGroupSize" type="number" placeholder="Enter max size..." name="groupsizemax" min=1 max=100 onchange="adjustBorders()" style="width:50%;max-width:175px;margin-left:10px;margin-top:10px;margin-bottom:20px">
       
       <label for="semester"><b>Semester founded</b></label><br>
       <select name="semester" style="margin-top:10px;margin-bottom:20px">
@@ -683,8 +683,8 @@ fieldset {
 	<div id="profile" class="modal">
 		<div class="modal-content animate">
 			<span onclick="toggleProfile()" class="close" title="Close Modal">&times;</span>
-			<div class="container">
-				<h3>Profile</h3><br>
+			<div class="container" style="line-height: 24px;">
+				<h3>Profile</h3>
 				<b>Name:</b> Hans Wurst<br>
 				<b>University:</b> Leibniz Universität Hannover<br>
 				<b>Study Course:</b> Informatik B.Sc.<br>
@@ -854,6 +854,19 @@ function openDetailedSearch() {
 
 function showResults() {
   document.getElementById("searchresults").style.display = "block";
+}
+
+function adjustBorders() {
+  var min = document.getElementById("minGroupSize");
+  var max = document.getElementById("maxGroupSize");
+  min.setAttribute("max",max.value);
+  max.setAttribute("min",min.value);
+  if (min.value > min.max) {
+    min.setAttribute("value", min.max);
+  }
+  if (max.value < max.min) {
+    max.setAttribute("value", max.min);
+  }
 }
 
 function toggleRequest() {
