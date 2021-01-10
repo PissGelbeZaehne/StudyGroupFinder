@@ -484,8 +484,9 @@ fieldset {
   <h2>Search</h2>
   <form id="searchform" onsubmit="showResults();">
     <div>
-      <input type="text" placeholder="Search..." name="search" required>
+      <input id="search" type="text" placeholder="Search..." required>
     </div>
+  </form>
     
     <button id="detailedSearch" class="collapsible" onclick="openDetailedSearch()"><h4>Detailed Search</h4></button>
     <div id="colcontent" class="collapsiblecontent"><br>
@@ -516,7 +517,6 @@ fieldset {
       </select>
       </div>
     </div>
-  </form>
 
   <div id="searchresults" style="display:none;background-color:white;padding:10px;margin-top:15px;">
     <h3>Results</h3>
@@ -551,8 +551,12 @@ fieldset {
   <div id="request" class="modal">
     <form id="requestForm" class="modal-content animate" method="post" autocomplete="on" accept-charset="UTF-8">
 		<span onclick="toggleRequest()" class="close" title="Close Modal">&times;</span>
-		<div class="container" style="background-color: #FEFEFE;color:#44403f;border-radius: 5px;padding: 10px;margin: 10px 0;">
-			<h3>Request</h3>
+		<div class="container" style="line-height:24px;background-color: #FEFEFE;color:#44403f;border-radius: 5px;padding: 10px;margin: 10px 0;">
+			<h3>Request for Group: "Programmieren 1 Lerngruppe"</h3>
+			<b>Course:</b> Programmieren 1<br>
+			<b>Size:</b> 14/20<br>
+			<b>Semester:</b> WiSe 20/21<br>
+			<b>Description:</b> Suchen motivierte Kommilitonen zum Lernen für Programmieren 1. Wir sind keine Experten, aber stets motiviert!<br><br>
 			<label for="reqmessage"><b>Message</b></label>
 			<textarea style="height:150px;width:100%;margin-top:15px;margin-bottom:15px;overflow:auto;resize:vertical"></textarea>
 			<button id="submitRequest" onclick="document.getElementById('request').style.display='none'"><b>Send Request</b></button><br>
@@ -685,14 +689,17 @@ fieldset {
 			<span onclick="toggleProfile()" class="close" title="Close Modal">&times;</span>
 			<div class="container" style="line-height: 24px;">
 				<h3>Profile</h3>
-				<b>Name:</b> Hans Wurst<br>
-				<b>University:</b> Leibniz Universität Hannover<br>
-				<b>Study Course:</b> Informatik B.Sc.<br>
-				<b>Semester:</b> 5<br>
-				<b>Email:</b> hans.wurst@stud.uni-hannover.de<br>
-				<b>Telephone:</b> +49 511 123456<br>
-				<b>Mobile Phone:</b> 0123 456789<br>
-				<b>Description:</b> Meine Hobbys sind Reiten, Lesen, Schwimmen.<br>
+				<img src="icons/user_profile.png" alt="User Avatar" style="width:128px;height:128px;float:left;margin:10px;margin-right:30px;">
+				<div style="display:inline-block;">
+					<b>Name:</b> Hans Wurst<br>
+					<b>University:</b> Leibniz Universität Hannover<br>
+					<b>Study Course:</b> Informatik B.Sc.<br>
+					<b>Semester:</b> 5<br>
+					<b>Email:</b> hans.wurst@stud.uni-hannover.de<br>
+					<b>Telephone:</b> +49 511 123456<br>
+					<b>Mobile Phone:</b> 0123 456789<br>
+					<b>Description:</b> Meine Hobbys sind Reiten, Lesen, Schwimmen.<br>
+				</div>
 			</div>
 		</div>
     </div>
@@ -802,7 +809,7 @@ fieldset {
 </div>
 
 <div class="footer">
-    <p style="margin:0px;padding:0px;display:inline-block;">Copyright © 2021 by Copycats</p>
+    <p style="margin:0px;padding:0px;display:inline-block;">Copyright © 2021 by CopyCats</p>
     <span style="display:inline-block;position:relative;top:7px;"><img src="icons/cat.png" alt="Cat" title="Copycats" class="cat-icon"/></span>
 </div>
 
