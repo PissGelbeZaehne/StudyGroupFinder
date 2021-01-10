@@ -33,6 +33,15 @@ body {
   font-size: 17px;
 }
 
+#logo {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  padding: 8px 16px 0px;
+  font-size: 17px;
+}
+
 #logout {
     float: right;
 }
@@ -222,10 +231,6 @@ select{
   background-color: #FEFEFE;
   color: #44403f;
   border:1px solid #ae946d;
-}
-
-select:invalid {
-  color: gray;
 }
 
 input {
@@ -450,19 +455,27 @@ fieldset {
 </style>
 </head>
 <body>
-<div class="tab">
-    <button id="defaultOpenTab" class="tablinks" title="Home" onclick="openTab(event, 'Home')">
-        <img class="icons" src="icons/home.png" alt="Home" width="50" height="50"/>
-    </button>
-    <button class="tablinks" title="Search" onclick="openTab(event, 'Search')">
-        <img class="icons" src="icons/search.png" alt="Search" width="50" height="50"/>
-    </button>
-    <button class="tablinks" title="Create Group" onclick="openTab(event, 'Create_Group')">
-        <img class="icons" src="icons/create_group.png" alt="Create Group" width="50" height="50"/>
-    </button>
-    <button class="tablinks" title="User Profile" onclick="openTab(event, 'User_Profile')">
-        <img class="icons" src="icons/user_profile.png" alt="User Profile" width="50" height="50"/>
-    </button>
+<div id="Tab" class="tab">
+	<div id="logo" style="display:inline-block;">
+		<img class="icons" src="icons/logo.png" alt="Logo" width="60" height="60"/>
+	</div>
+	<div style="display:inline-block;">
+		<h1 style="line-height:80px;display:inline-block;vertical-align:middle;color:white;margin:0;border:0;padding:0;">Study Group Finder</h1>
+    </div>
+	<div style="position:fixed;left:42%;text-align:center;z-index:1;margin:0px;padding:0px;display:inline-block;">
+		<button id="defaultOpenTab" class="tablinks" title="Home" onclick="openTab(event, 'Home')">
+			<img class="icons" src="icons/home.png" alt="Home" width="50" height="50"/>
+		</button>
+		<button class="tablinks" title="Search" onclick="openTab(event, 'Search')">
+			<img class="icons" src="icons/search.png" alt="Search" width="50" height="50"/>
+		</button>
+		<button class="tablinks" title="Create Group" onclick="openTab(event, 'Create_Group')">
+			<img class="icons" src="icons/create_group.png" alt="Create Group" width="50" height="50"/>
+		</button>
+		<button id="userprofile" class="tablinks" title="User Profile" onclick="openTab(event, 'User_Profile')">
+			<img class="icons" src="icons/user_profile.png" alt="User Profile" width="50" height="50"/>
+		</button>
+	</div>
     <button id="logout" class="tablinks" title="Logout" onclick="logout()">
         <img class="icons" src="icons/logout.png" alt="Logout" width="50" height="50"/>
     </button>
@@ -522,7 +535,7 @@ fieldset {
     </div>
   </form>
 
-  <div id="searchresults" style="display:none;background-color:white;">
+  <div id="searchresults" style="display:none;background-color:white;padding:10px;margin-top:15px;">
     <h3>Results</h3>
     <table>
       <tr>
