@@ -7,7 +7,8 @@
 <link rel="stylesheet" href="css/main.css">
 <style>
 body {
-    background-color: rgba(50,200,250,0.5);
+  background-color: #F8F8F8;
+  font-family: Helvetica, sans-serif;
 }
 
 * {
@@ -16,8 +17,7 @@ body {
 
 /* Style the tab */
 .tab {
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
+  background-color: #222222;
   overflow: hidden;
 }
 
@@ -39,14 +39,20 @@ body {
 
 /* Change background color of buttons on hover */
 .tab button:hover {
-  //background-color: #ddd;
-  background-color: rgba(50,200,250,0.5);
+  background-color: #F8F8F8;
+}
+
+.tab button:hover .icons{
+  filter: none;
 }
 
 /* Create an active/current tablink class */
 .tab button.active {
-  //background-color: #ccc;
-  background-color: rgba(50,200,250,1.0);
+  background-color: #F8F8F8;
+}
+
+.tab button.active .icons{
+  filter: none;
 }
 
 /* Style the tab content */
@@ -54,46 +60,64 @@ body {
   display: none;
   margin: 0 0 50px 20px;
   padding: 6px 12px;
-  //background-color: rgba(50,200,250,0.5);
-  //border: 1px solid #ccc;
-  border-top: none;
+  border-radius: 10px;
+  color:#44403f;
+  background-color: #F8F8F8;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
   animation: fadeEffect 1s; /* Fading effect takes 1 second */
 }
 
 /* Style the collapsible */
 .collapsible {
-  background-color: #777;
-  color: white;
+  color: #F8F8F8;
+  background-color: #696965;
   cursor: pointer;
   padding: 0px 20px;
   margin: 8px 0;
   width: 100%;
-  border: none;
+  border-radius: 10px;
+  text-align: left;
+  letter-spacing: 1pt;
+  //font-size: medium;
   text-align: left;
 }
 
 /* Change background color of collapsible button when active and on hover*/
 .active, .collapsible:hover {
-  background-color: #555;
+  background-color: #ba2026;
+  //color: black;
 }
 
 /* Style the content of the collapsible */
 .collapsiblecontent {
+  color: #44403f;
+  //background-color: #696965;
   padding: 0 18px;
+  border-radius: 10px;
+  border: 1px solid #ae946d;
   display: none;
   overflow: hidden;
-  background-color: #f1f1f1;
 }
 
 /* Style search result table */
 table{
-  margin: 0 auto;
+  margin: 10 auto;
   border-collapse: collapse;
   width: 100%;
 }
 
-td, th {
-  border: 1px solid #dddddd;
+td {
+  //border: 1px solid #ae946d;
+  background-color: white;
+  text-align: center;
+  padding: 16px;
+}
+
+th {
+  //border: 1px solid #ae946d;
+  background-color: #696965;
+  color: #F8F8F8;
   text-align: center;
   padding: 16px;
 }
@@ -101,13 +125,27 @@ td, th {
 /* Style clickable group name */
 button.group {
   cursor: pointer;
-  font-family: Arial;
+  color: #44403f;
+  background-color: white;
+  border: none;
   font-size: 12pt;
+}
+
+button.members{
+  cursor: pointer;
+  font-size: 12pt;
+  color: #44403f;
+  background-color: #F8F8F8;
+  border: none;
+}
+
+button.members:hover{
+  color: #ba2026;
 }
 
 /* Underline group name on hover*/
 button.group:hover {
-  text-decoration: underline;
+  color: #ba2026;
 }
 
 /* The Modal (background) */
@@ -163,7 +201,7 @@ button.group:hover {
 
 #submitRequest{
   background-color: #4CAF50;
-  color: white;
+  color: #F8F8F8;
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
@@ -176,10 +214,14 @@ button.group:hover {
 }
 
 select{
-  width:500px;
+  border-radius: 10px; 
+  width: 500px;
   padding: 12px  20px;
   margin: 8px 0;
   box-sizing: border-box;
+  background-color: #FEFEFE;
+  color: #44403f;
+  border:1px solid #ae946d;
 }
 
 select:invalid {
@@ -194,16 +236,18 @@ input {
 }
 
 input[type=button], input[type=submit], input[type=reset] {
-  background-color: #cccccc;
-  border: 1px solid white;
-  border-radius: 12px;
-  color: white;
+  border: none;
+  font-weight: bold;
+  font-size: medium;
+  letter-spacing: 1pt;
+  color: #F8F8F8;
+  background-color: #222222;
 }
 
 input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
-  background-color: #aaaaaa;
-  border: 1px solid black;
-  color: black;
+  border: none;
+  background-color: #ba2026;
+  color: #F8F8F8;
   cursor: pointer;
 }
 
@@ -214,7 +258,7 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
 
 .sidebar{
   display: block;
-  flex-basis: 30%;
+  flex-basis: 20%;
   height: 100%;
   padding-top: 20px;
   padding-right: 20px;
@@ -228,32 +272,56 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
 }
 
 .sidebar-item{
-  padding-left: 0%;
-  padding-bottom: 20px;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 10px;
+  border:1px solid #ae946d;
+  margin: 20px;
+  margin-left: 0;
+  //padding: 5px;
+}
+
+.sidebar-item-header{
+  padding: 5px;
+  font-size: x-large;
+  font-weight: bold;
+  border-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  background-color: #696965;
+  color: #F8F8F8;
 }
 
 .container {
-  border: 2px solid #dedede;
-  background-color: #f1f1f1;
+  background-color: #FEFEFE;
+  color: #44403f;
   border-radius: 5px;
   padding: 10px;
   margin: 10px 0;
 }
 
 .darker {
-  border-color: #ccc;
-  background-color: #ddd;
+  background-color: #e6ded2;
+  color: #44403f;
 }
 
 .chat-text{
-  border: 1px solid #dedede;
+  background-color: #FEFEFE;
+  border:1px solid #ae946d;
+  border-radius: 10px;
   margin-top: 0px;
-  flex-basis: 80%;
+  margin-right: 10px;
+  flex-basis: 75%;
   height: 40px;
 }
 
 .chat-button{
-  border: 1px solid #dedede;
+  background-color: #222222;
+  border-radius: 10px;
+  border: none;
+  color: #F8F8F8;
+  letter-spacing: 1pt;
+  font-weight: bold;
   margin-top: 0px;
   flex-basis: 20%;
   height: 40px;
@@ -285,17 +353,20 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
 }
 
 fieldset {
-    background-color: #eeeeee;
+    color: #44403f;;
+    border: 1px solid #ae946d;
+    //background-color: #696965;
     border-radius: 12px;
     float:left;
     width: 205px;
+    margin: 10px;
 }
 
 #btn_delete {
-    background-color: rgba(225,75,50,1.0);
+    //background-color: rgba(225,75,50,1.0);
 }
 #btn_delete:hover {
-    background-color: rgba(200,50,50,1.0);
+    background-color: darkgray;
 }
 
 .footer {
@@ -308,7 +379,8 @@ fieldset {
     margin: 0;
     padding: 0;
     outline: none;
-    background-color: #aaa;
+    background-color: #F8F8F8;
+	font-size: small;
     color: black;
     text-align: center;
     font-weight: bold;
@@ -317,26 +389,26 @@ fieldset {
 }
 
 #joinedgroups {
-    background: #f1f1f1;
-    border: 1px solid #fefefe;
+    color: #44403f;
+    border: 2px solid;
+    border-radius: 10px;
     padding: 10px;
     width: 50%;
 }
 
 .joined_group {
-    background-color: rgba(50,200,250,0.5);
-    border: 1px solid white;
+    color: #44403f;
+    background-color: #F8F8F8;
+    border: 1px solid #696965;
     cursor: pointer;
     height: 60px;
-    margin: 10px 0;
+    margin: 10px;
     padding: 10px;
-    white-space: nowrap;
+    border-radius: 10px;
 }
 
 .joined_group:hover {
-    background-color: rgba(50,200,250,1.0);
-    border: 1px solid black;
-    font-weight: bold;
+    background-color: #e6ded2;
 }
 
 .joined_group_name {
@@ -351,24 +423,42 @@ fieldset {
     height:32px;
     width:32px;
 }
+
+.joined_group_img:hover{
+  filter: invert(19%) sepia(94%) saturate(2647%) hue-rotate(343deg) brightness(79%) contrast(95%);
+}
+
+.request {
+  height:150px;
+  width:100%;
+  margin-top:15px;
+  margin-bottom:15px;
+  overflow:auto;
+  resize:vertical" 
+}
+
+.icons {
+  filter:invert(99%) sepia(2%) saturate(358%) hue-rotate(181deg) brightness(117%) contrast(95%);
+}
+
 </style>
 </head>
 <body>
 <div class="tab">
     <button id="defaultOpenTab" class="tablinks" title="Home" onclick="openTab(event, 'Home')">
-        <img src="icons/home.png" alt="Home" width="50" height="50"/>
+        <img class="icons" src="icons/home.png" alt="Home" width="50" height="50"/>
     </button>
     <button class="tablinks" title="Search" onclick="openTab(event, 'Search')">
-        <img src="icons/search.png" alt="Search" width="50" height="50"/>
+        <img class="icons" src="icons/search.png" alt="Search" width="50" height="50"/>
     </button>
     <button class="tablinks" title="Create Group" onclick="openTab(event, 'Create_Group')">
-        <img src="icons/create_group.png" alt="Create Group" width="50" height="50"/>
+        <img class="icons" src="icons/create_group.png" alt="Create Group" width="50" height="50"/>
     </button>
     <button class="tablinks" title="User Profile" onclick="openTab(event, 'User_Profile')">
-        <img src="icons/user_profile.png" alt="User Profile" width="50" height="50"/>
+        <img class="icons" src="icons/user_profile.png" alt="User Profile" width="50" height="50"/>
     </button>
     <button id="logout" class="tablinks" title="Logout" onclick="logout()">
-        <img src="icons/logout.png" alt="Logout" width="50" height="50"/>
+        <img class="icons" src="icons/logout.png" alt="Logout" width="50" height="50"/>
     </button>
     <a href="login.html"></a>
 </div>
