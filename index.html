@@ -138,8 +138,11 @@ button.group {
   background-color: white;
   border: none;
   font-size: 12pt;
+  background:none;
+  border:none;
 }
 
+/* Style clickable group member name */
 button.members{
   cursor: pointer;
   font-size: 12pt;
@@ -158,7 +161,7 @@ button.group:hover {
 }
 
 /* The Modal (background) */
-#Search .modal {
+.modal {
   display: none;
   position: fixed; 
   z-index: 1; 
@@ -169,42 +172,29 @@ button.group:hover {
   overflow: auto;
   background-color: rgb(0,0,0); 
   background-color: rgba(0,0,0,0.4);
-  padding-top: 60px;
+  padding-top: 100px;
 }
 
 /* Modal Content/Box */
-#Search .modal-content {
+.modal-content {
   background-color: #fefefe;
-  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  margin: auto;
+  padding: 20px;
   width: 80%; /* Could be more or less, depending on screen size */
 }
 
-#Search .container {
-  border: 2px solid #dedede;
-  background-color: #f1f1f1;
-  border-radius: 0px;
-  padding: 15px;
-}
-
-#Search span.psw {
-  position: fixed; 
-  float: right;
-  padding-top: 0px;
-}
-
 /* The Close Button (x) */
-#Search .close {
-  position: absolute;
-  right: 200px;
-  top: 155px;
-  color: #000;
-  font-size: 35px;
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
   font-weight: bold;
 }
 
-#Search .close:hover,
-#Search .close:focus {
+.close:hover,
+.close:focus {
   color: red;
+  text-decoration: none;
   cursor: pointer;
 }
 
@@ -286,17 +276,6 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
   //padding: 5px;
 }
 
-.sidebar-item-header{
-  padding: 5px;
-  font-size: x-large;
-  font-weight: bold;
-  border-radius: 10px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  background-color: #696965;
-  color: #F8F8F8;
-}
-
 .container {
   background-color: #FEFEFE;
   color: #44403f;
@@ -340,6 +319,10 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
 
 .settings-icon{
   padding-top: 10px;
+}
+
+.settings-icon:hover {
+  color: red;
   cursor: pointer;
 }
 
@@ -545,19 +528,19 @@ fieldset {
         <th>Semester</th>
       </tr>
       <tr>
-        <td><button class="group" style="background:none;border:none" onclick="toggleRequest()">Programmieren 1 Lerngruppe</button></td>
+        <td><button class="group" onclick="toggleRequest()">Programmieren 1 Lerngruppe</button></td>
         <td>Programmieren 1</td>
         <td>14</td>
         <td>WiSe 20/21</td>
       </tr>
       <tr>
-        <td><button class="group" style="background:none;border:none" onclick="toggleRequest()">Programmieren 2</button></td>
+        <td><button class="group" onclick="toggleRequest()">Programmieren 2</button></td>
         <td>Programmieren 2</td>
         <td>5</td>
         <td>SoSe 20</td>
       </tr>
       <tr>
-          <td><button class="group" style="background:none;border:none" onclick="toggleRequest()">Die Programmier-Profis</button></td>
+        <td><button class="group" onclick="toggleRequest()">Die Programmier-Profis</button></td>
         <td>Programmieren 1</td>
         <td>6</td>
         <td>WiSe 18/19</td>
@@ -567,16 +550,13 @@ fieldset {
   
   <div id="request" class="modal">
     <form id="requestForm" class="modal-content animate" method="post" autocomplete="on" accept-charset="UTF-8">
-      <div class="imgcontainer">
-        <span onclick="document.getElementById('request').style.display='none'" class="close" title="Close Modal">&times;</span>
-      </div>
-      
-      <div class="container">
-        <h3>Request</h3>
-        <label for="reqmessage"><b>Message</b></label>
-        <textarea style="height:150px;width:100%;margin-top:15px;margin-bottom:15px;overflow:auto;resize:vertical"></textarea>
-        <button id="submitRequest" onclick="document.getElementById('request').style.display='none'"><b>Send Request</b></button><br>
-      </div>
+		<span onclick="toggleRequest()" class="close" title="Close Modal">&times;</span>
+		<div class="container" style="background-color: #FEFEFE;color:#44403f;border-radius: 5px;padding: 10px;margin: 10px 0;">
+			<h3>Request</h3>
+			<label for="reqmessage"><b>Message</b></label>
+			<textarea style="height:150px;width:100%;margin-top:15px;margin-bottom:15px;overflow:auto;resize:vertical"></textarea>
+			<button id="submitRequest" onclick="document.getElementById('request').style.display='none'"><b>Send Request</b></button><br>
+        </div>
     </form>
   </div>
 </div>
@@ -664,13 +644,13 @@ fieldset {
     <div class="flex-container">
         <div class="sidebar">
             <div class="sidebar-item">
-                <b>Members 3/6</b><br><br>
+                <b>Members 3/6</b><br>
                 You<br>
-                Hans Wurst <img src="icons/star.png" alt="Group Admin" title="Group Admin" width="10" height="10"/><br>
-                Joachim Schikele<br>
+                <button class="members" onclick="toggleProfile()">Hans Wurst</button> <img src="icons/star.png" alt="Group Admin" title="Group Admin" width="10" height="10"/><br>
+				<button class="members" onclick="toggleProfile()">Joachim Schikele</button>
             </div>
             <div class="sidebar-item">
-                <b>Dates</b><br><br>
+                <b>Dates</b><br>
                 13.11.20<br>
                 20.11.20<br>
                 27.11.20<br>
@@ -698,6 +678,23 @@ fieldset {
                 <button class="chat-button" type="button" onclick="sendText()">Send</button>
             </div>
         </div>
+    </div>
+	
+	<div id="profile" class="modal">
+		<div class="modal-content animate">
+			<span onclick="toggleProfile()" class="close" title="Close Modal">&times;</span>
+			<div class="container">
+				<h3>Profile</h3><br>
+				<b>Name:</b> Hans Wurst<br>
+				<b>University:</b> Leibniz Universität Hannover<br>
+				<b>Study Course:</b> Informatik B.Sc.<br>
+				<b>Semester:</b> 5<br>
+				<b>Email:</b> hans.wurst@stud.uni-hannover.de<br>
+				<b>Telephone:</b> +49 511 123456<br>
+				<b>Mobile Phone:</b> 0123 456789<br>
+				<b>Description:</b> Meine Hobbys sind Reiten, Lesen, Schwimmen.<br>
+			</div>
+		</div>
     </div>
 </div>
 
@@ -868,10 +865,22 @@ function toggleRequest() {
   }
 }
 
+function toggleProfile() {
+  var content = document.getElementById("profile");
+  if (content.style.display === "block") {
+    content.style.display = "none";
+  } else {
+    content.style.display = "block";
+  }
+}
+
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   if (event.target == request) {
     request.style.display = "none";
+  }
+  if (event.target == profile) {
+    profile.style.display = "none";
   }
 }
 
