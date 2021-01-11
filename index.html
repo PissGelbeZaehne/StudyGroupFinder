@@ -356,6 +356,7 @@ fieldset {
 
 #btn_delete {
     //background-color: rgba(225,75,50,1.0);
+    float: right;
 }
 #btn_delete:hover {
     background-color: darkgray;
@@ -439,6 +440,56 @@ fieldset {
   filter: invert(41%) sepia(8%) saturate(172%) hue-rotate(22deg) brightness(97%) contrast(91%);
 }
 
+.requestmenu {
+    display:inline-block;
+    width: 30%;
+}
+
+.requestitem {
+    border: 1px solid #696965;
+    border-radius: 12px;
+    background-color:#F8F8F8;
+    cursor: pointer;
+    margin: 20px;
+    padding: 20px;
+    white-space: normal;
+}
+
+.requestitem:hover {
+    background-color: #e6ded2;
+}
+
+.requestmessage {
+    background-color: white;
+    border-left: 2px solid black;
+    display: inline-block;
+    height: 100%;
+    position: absolute;
+    width: 70%;
+}
+
+.requestheader {
+    margin: 20px;
+}
+
+.requestcontent {
+    margin: 20px;
+}
+
+.requestfooter {
+    margin: 20px;
+}
+
+a:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.openedRequest {
+    background-color: #222222;
+    color: #F8F8F8;
+}
+
 </style>
 </head>
 <body>
@@ -458,6 +509,9 @@ fieldset {
 		</button>
 		<button class="tablinks" title="Create Group" onclick="openTab(event, 'Create_Group')">
 			<img class="icons" src="icons/create_group.png" alt="Create Group" width="50" height="50"/>
+		</button>
+        <button class="tablinks" title="Requests" onclick="openTab(event, 'Requests')">
+			<img class="icons" src="icons/envelope.png" alt="Requests" width="50" height="50"/>
 		</button>
 		<button id="userprofile" class="tablinks" title="User Profile" onclick="openTab(event, 'User_Profile')">
 			<img class="icons" src="icons/user_profile.png" alt="User Profile" width="50" height="50"/>
@@ -709,6 +763,46 @@ fieldset {
     </div>
 </div>
 
+<div id="Requests" class="tabcontent">
+    <h2>Requests</h2>
+    <div style="border:2px solid black;border-radius:12px;background-color:#F8F8F8;white-space:nowrap;overflow-x: auto;position:relative;">
+        <div class="requestmenu">
+            <div id="defaultOpenRequest" class="requestitem" onclick="showRequest(evt, 'req_1')">
+                Sent join-request to "Programmieren I: Scriptkiddies" (not received)
+            </div>
+            <div class="requestitem">
+                Sent join-request to "Programmieren II: Hackermen" (received, unread)
+            </div>
+            <div class="requestitem">
+                Sent join-request to "GMCI: Übung Gruppenarbeit" (read, in progress)
+            </div>
+            <div class="requestitem">
+                Sent join-request to "GDS: Klausurvorbereitung" (accepted)
+            </div>
+            <div class="requestitem">
+                Sent join-request to "Analysis B: Tutoren" (rejected)
+            </div>
+        </div>
+        
+        <div class="requestmessage">
+            <div class="requestheader">
+                <label><b>Join-request sent from:</b></label> <span id="requestsender"><a onclick="openTab(null, 'User_Profile')">Hans Wurst</a></span>
+            </div>
+            <hr>
+            <div class="requestcontent">
+                <label><b>Message:</b></label><br>
+                <p id="requestmessage">Hey guys! I wanna join your group.</p>
+            </div>
+            <hr>
+            <div class="requestfooter">
+                <input type="button" value="Accept" onclick="">
+                <input type="button" value="Reject" onclick="">
+                <input type="button" value="Cancel" onclick="">
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="User_Profile" class="tabcontent">
     <h2>User Profile</h2>
     <img src="icons/user_profile.png" alt="User Avatar" style="width:128px;height:128px;float:left;margin:10px;" onmouseover="show('avatar_svg')">
@@ -851,7 +945,7 @@ function logout() {
 }
 
 //// HOME ////
-//...
+// Add code here
 
 //// SEARCH ////
 function openDetailedSearch() {
@@ -962,6 +1056,13 @@ function sendText(){
     chatmessages.append(newmessage);
     chatText.value = "";
 }
+
+//// REQUESTS ////
+function showRequest(evt, req) {
+    // fill header and content with sender and message
+    //evt.currentTarget.className += " openedRequest";
+}
+//document.getElementById("defaultOpenRequest").click();
 
 //// USER PROFILE ////
 function openFileDialog(img) {
