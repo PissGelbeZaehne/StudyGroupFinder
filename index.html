@@ -11,10 +11,7 @@ body {
   font-family: Helvetica, sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-}
-
+/*** HEADER ***/
 /* Style the tab */
 .tab {
   background-color: #222222;
@@ -64,6 +61,7 @@ body {
   filter: none;
 }
 
+/*** BODY ***/
 /* Style the tab content */
 .tabcontent {
   display: none;
@@ -95,7 +93,8 @@ body {
 }
 
 /* Change background color of collapsible button when active and on hover*/
-.active, .collapsible:hover {
+/*.active,*/
+.collapsible:hover {
   background-color: #ba2026;
   //color: black;
 }
@@ -153,7 +152,7 @@ button.members{
   border: none;
 }
 
-button.members:hover{
+button.members:hover {
   color: #ba2026;
 }
 
@@ -228,10 +227,11 @@ select{
 }
 
 input {
-  padding: 12px  20px;
-  margin: 8px 0;
   border-radius: 12px;
-  box-sizing: border-box;
+  font-family: Helvetica, sans-serif;
+  font-size: 16px;
+  margin: 8px 0;
+  padding: 12px  20px;
 }
 
 input[type=button], input[type=submit], input[type=reset] {
@@ -243,7 +243,7 @@ input[type=button], input[type=submit], input[type=reset] {
   background-color: #222222;
 }
 
-input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
+input[type=button]:hover, input[type=button].active, input[type=submit]:hover, input[type=reset]:hover, .chat-button:hover {
   border: none;
   background-color: #ba2026;
   color: #F8F8F8;
@@ -264,6 +264,8 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
 }
 
 .chat{
+  border: 2px solid black;
+  border-radius: 12px;
   display: block;
   flex-basis: 60%;
   height: 100%;
@@ -316,6 +318,11 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
   cursor: pointer;
 }
 
+.chat-messages {
+  max-height: 600px;
+  overflow-y: scroll;
+}
+
 .group-header{
   flex-basis: 90%;
   align-self: center;
@@ -345,40 +352,17 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
 }
 
 fieldset {
-    color: #44403f;;
     border: 1px solid #ae946d;
-    //background-color: #696965;
     border-radius: 12px;
+    color: #44403f;
+    display: none;
     float:left;
-    width: 205px;
     margin: 10px;
+    width: 220px;
 }
 
-#btn_delete {
-    //background-color: rgba(225,75,50,1.0);
+.btn_delete {
     float: right;
-}
-#btn_delete:hover {
-    background-color: darkgray;
-}
-
-.footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 40px;
-    border: 0;
-    margin: 0;
-    padding: 0;
-    outline: none;
-    background-color: #F8F8F8;
-	font-size: small;
-    color: #696965;
-    text-align: center;
-    font-weight: bold;
-    white-space: nowrap;
-    overflow-x: auto;
 }
 
 #joinedgroups {
@@ -490,11 +474,42 @@ a:hover {
     color: #F8F8F8;
 }
 
+select {
+    font-family: Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+textarea {
+    border-radius: 12px;
+    font-family: Helvetica, sans-serif;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+/*** FOOTER ***/
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    outline: none;
+    background-color: #F8F8F8;
+	font-size: small;
+    color: #696965;
+    text-align: center;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow-x: auto;
+}
 </style>
 </head>
 <body>
 <div id="Tab" class="tab">
-	<div id="logo" style="display:inline-block;">
+	<div id="logo" style="display:inline-block;" title="Study Group Finder Logo">
 		<img class="icons" src="icons/logo.png" alt="Logo" width="60" height="60"/>
 	</div>
 	<div style="display:inline-block;">
@@ -527,11 +542,11 @@ a:hover {
     <h2>Home</h2>
     <div id="joinedgroups">
         <h3>Joined Groups</h3>
-        <div id="joined_group_1" class="joined_group" onclick="openTab(null, 'Group_Profile')">
+        <div id="joined_group_1" class="joined_group" onclick="openTab(null, 'Group_Profile');scrollDownToBottom('chat-messages');">
             <p class="joined_group_name">Programmieren I: Scriptkiddies</p>
             <img src="icons/new-message.png" alt="Mail" title="New Messages" class="joined_group_img"/>
         </div>
-        <div id="joined_group_2" class="joined_group">
+        <div id="joined_group_2" class="joined_group" onclick="openTab(null, 'Group_Profile');scrollDownToBottom('chat-messages');">
             <p class="joined_group_name">GMCI: Übung Gruppenarbeit</p>
             <img src="icons/new-message.png" alt="Mail" title="New Messages" class="joined_group_img"/>
         </div>
@@ -682,14 +697,12 @@ a:hover {
         
         <!-- Hinzufügen und Entfernen von Mitgliedern fehlt -->
         
-        <!-- Bearbeitung von Anfragen -->
-        
         <!-- kein Back-Button zurück zum Group Profile -->
         
-        <!-- <input type="submit" value="Save" onclick="saveGroup()" onsubmit"..."> -->
+        <!-- <input type="submit" value="Save" onclick="saveGroup()" onsubmit="..."> -->
         <input type="button" value="Save" onclick="saveGroup()">
         <input type="reset" value="Reset">
-        <input type="button" id="btn_delete" value="Delete Group" onclick="deleteGroup()"><br>
+        <input type="button" class="btn_delete" value="Delete Group" onclick="deleteGroup()"><br>
         
         <small>* input required</small>
     </form>
@@ -724,18 +737,18 @@ a:hover {
             <div class="chat-messages" id="chat-messages">
                 <div class="container">
                     <p><b>You:</b> Hello my name is Thomas.</p>
-                    11:00
+                    27.12.2020, 11:00
                 </div>
                 <div class="container darker">
                     <p><b>Hans:</b> has anyone of you heard of stack overflow ?</p>
-                    11:02
+                    27.12.2020, 11:02
                 </div>
                 <div class="container darker">
                     <p><b>Joachim:</b> yeah it had a neet fix for my relationship</p>
-                    11:03
+                    27.12.2020, 11:03
                 </div>
             </div>
-            <div class="flex-container">
+            <div class="flex-container" style="position:sticky;">
                 <input class="chat-text" id="chat-text" type="text" placeholder="Write a message..." onkeyup="onEnterSendMessage(event)"/>
                 <button class="chat-button" type="button" onclick="sendText()">Send</button>
             </div>
@@ -765,6 +778,9 @@ a:hover {
 
 <div id="Requests" class="tabcontent">
     <h2>Requests</h2>
+    <input type="button" id="sent_btn" class="sent_btn" value="sent" onclick="?">
+    <input type="button" id="received_btn" class="received_btn" value="received" onclick="?">
+    
     <div style="border:2px solid black;border-radius:12px;background-color:#F8F8F8;white-space:nowrap;overflow-x: auto;position:relative;">
         <div class="requestmenu">
             <div id="defaultOpenRequest" class="requestitem" onclick="showRequest(evt, 'req_1')">
@@ -805,8 +821,13 @@ a:hover {
 
 <div id="User_Profile" class="tabcontent">
     <h2>User Profile</h2>
-    <img src="icons/user_profile.png" alt="User Avatar" style="width:128px;height:128px;float:left;margin:10px;" onmouseover="show('avatar_svg')">
-    <svg id="avatar_svg" height="150" width="150" style="position:absolute;left:24px;top:170px;cursor:pointer;display:none;" onclick="openFileDialog(this)" onmouseleave="hide('avatar_svg')">
+    <input type="button" id="defaultOpenFieldset" class="fset_btn" value="Personal Data" onclick="showFieldset(event, 'person')">
+    <input type="button" class="fset_btn" value="Studies" onclick="showFieldset(event, 'studies')">
+    <input type="button" class="fset_btn" value="Contact Details" onclick="showFieldset(event, 'contact')">
+    <input type="button" class="fset_btn" value="Address" onclick="showFieldset(event, 'address')">
+    
+    <img id="avatar" src="icons/user_profile.png" alt="User Avatar" style="width:128px;height:128px;float:left;margin:10px;" onmouseover="show('avatar_svg')">
+    <svg id="avatar_svg" height="150" width="150" style="position:absolute;left:35px;top:160px;cursor:pointer;display:none;" onclick="openFileDialog()" onmouseleave="hide('avatar_svg')">
         <!-- drag & drop? -->
         <circle cx="71" cy="71" r="70" stroke="black" stroke-width="1" fill="rgba(200,200,200,0.5)"/>
         Sorry, your browser does not support inline SVG.
@@ -814,15 +835,14 @@ a:hover {
     <input type="file" id="avatar_upload" name="avatar_upload" style="display:none;" onchange="setAvatar(evt)">
     
     <form method="post" autocomplete="on" accept-charset="UTF-8"> <!--action="/user_profile.php" target="_self"-->
-        <fieldset>
-            <legend><big><b>Personal Data</b></big></legend>
+        <fieldset id="person" class="fset_page">
             <label for="user_name"><b>Name:*</b></label><br>
             <input type="text" id="user_name" name="user_name" value="Hans Wurst" size="30" required><br>
             <label for="user_birthday"><b>Birthday:*</b></label><br>
             <input type="date" id="user_birthday" name="birthday" value="1996-04-15" onchange="setAge(this.value)" required>
             <span id="user_age" name="user_age" style="margin:10px;"></span><br>
             <label><b>Sex:*</b></label><br>
-            <fieldset style="background-color:white;margin-top:10px;">
+            <fieldset style="background-color:white;display:block;margin-top:10px;">
                 <input type="radio" id="male" name="sex" value="male" checked>
                 <label for="male">Male</label>
                 <input type="radio" id="female" name="sex" value="female">
@@ -832,8 +852,7 @@ a:hover {
             </fieldset>
         </fieldset>
         
-        <fieldset>
-            <legend><big><b>Studies</b></big></legend>
+        <fieldset id="studies" class="fset_page">
             <label for="user_university"><b>University:*</b></label><br>
             <input type="text" list="universities" id="user_university" name="user_university" value="Leibniz Universität Hannover" size="30" required><br>
             <datalist id="universities">
@@ -864,8 +883,7 @@ a:hover {
             <input type="number" id="user_semester" name="user_semester" min="1" max="99" size="3" step="1" value="5">
         </fieldset>
         
-        <fieldset>
-            <legend><big><b>Contact Details</b></big></legend>
+        <fieldset id="contact" class="fset_page">
             <label for="user_email"><b>Email:*</b></label><br>
             <input type="email" id="user_email" name="user_email" value="hans.wurst@stud.uni-hannover.de" size="30" required><br>
             <label for="user_phone"><b>Telephone:</b></label><br>
@@ -876,8 +894,7 @@ a:hover {
             <input type="url" id="user_homepage" name="user_homepage" value="https://www.hans-wurst.de" size="30">
         </fieldset>
         
-        <fieldset>
-            <legend><big><b>Address</b></big></legend>
+        <fieldset id="address" class="fset_page">
             <label for="user_streetaddress"><b>Street Address:</b></label>
             <input type="text" id="user_streetaddress" name="user_streetaddress" value="Welfengarten 1" size="30"><br>
             <label for="user_city"><b>City:</b></label>
@@ -898,7 +915,7 @@ a:hover {
             
             <input type="submit" value="Save" onclick="saveUserProfile()">
             <input type="reset" value="Reset">
-            <input type="button" id="btn_delete" value="Delete Account" onclick="deleteAccount()"><br>
+            <input type="button" class="btn_delete" value="Delete Account" onclick="deleteAccount()"><br>
             <a href="login.html" id="link_login"></a>
             
             <small>* input required</small>
@@ -945,7 +962,7 @@ function logout() {
 }
 
 //// HOME ////
-// Add code here
+// Add code here...
 
 //// SEARCH ////
 function openDetailedSearch() {
@@ -1050,11 +1067,20 @@ function sendText(){
     
     newmessage.classList.add("container");
     newmessage.style.display = "block";
-    var time = new Date().toLocaleTimeString('de-DE', { hour: "numeric", minute: "numeric" });
+    var date = new Date();
+    var time = date.toLocaleTimeString('de-DE', { hour: "numeric", minute: "numeric" });
+    date = date.toLocaleDateString('de-DE', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
     
-    newmessage.innerHTML = '<p><b>Ich: </b>' + inputText + '</p>' + time;
+    newmessage.innerHTML = '<p><b>Ich: </b>' + inputText + '</p>' + date + ", " + time;
     chatmessages.append(newmessage);
     chatText.value = "";
+    
+    scrollDownToBottom("chat-messages");
+}
+
+function scrollDownToBottom(id) {
+    var element = document.getElementById(id);
+    element.scrollTo(0, element.scrollHeight);
 }
 
 //// REQUESTS ////
@@ -1065,7 +1091,7 @@ function showRequest(evt, req) {
 //document.getElementById("defaultOpenRequest").click();
 
 //// USER PROFILE ////
-function openFileDialog(img) {
+function openFileDialog() {
     var file = document.getElementById('avatar_upload');
     file.click();
     
@@ -1079,6 +1105,19 @@ function openFileDialog(img) {
 function setAvatar(evt) {
     // update avatar
 }
+
+function showFieldset(evt, fsetName) {
+    var fset_btns = document.getElementsByClassName("fset_btn");
+    var fset_pages = document.getElementsByClassName("fset_page");
+    for (var i = 0; i < fset_pages.length; ++i) {
+        fset_btns[i].className = fset_btns[i].className.replace(" active", "");
+        fset_pages[i].style.display = "none";
+    }
+    
+    evt.currentTarget.className += " active";
+    show(fsetName);
+}
+document.getElementById("defaultOpenFieldset").click();
 
 // calculate the current age of user
 function setAge(birthDate) {
