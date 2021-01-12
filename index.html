@@ -375,7 +375,8 @@ fieldset {
 
 .joined_group {
     color: #44403f;
-    background-color: #F8F8F8;
+    //background-color: #F8F8F8;
+    background-color: white;
     border: 1px solid #696965;
     cursor: pointer;
     height: 60px;
@@ -425,28 +426,32 @@ fieldset {
 }
 
 .requestmenu {
-    display:inline-block;
+    display: inline-block;
+    min-height: 650px;
+    max-height: 650px;
+    overflow-y: scroll;
     width: 30%;
 }
 
 .requestitem {
     border: 1px solid #696965;
     border-radius: 12px;
-    background-color:#F8F8F8;
+    //background-color:#F8F8F8;
+    background-color: white;
     cursor: pointer;
     margin: 20px;
     padding: 20px;
     white-space: normal;
 }
 
-.requestitem:hover {
+.requestitem:hover, .requestmenu > .active {
     background-color: #e6ded2;
 }
 
 .requestmessage {
     background-color: white;
     border-left: 2px solid black;
-    display: inline-block;
+    display: none;
     height: 100%;
     position: absolute;
     width: 70%;
@@ -540,6 +545,19 @@ textarea {
 
 <div id="Home" class="tabcontent">
     <h2>Home</h2>
+    
+    <!--
+    <div id="joinedgroups">
+        <h3>News</h3>
+        <div id="joined_group_1" class="joined_group" onclick="">
+            <p class="joined_group_name">Update am 01.01.2021</p>
+        </div>
+        <div id="joined_group_2" class="joined_group" onclick="">
+            <p class="joined_group_name">Studentische Hilfskraft gesucht!</p>
+        </div>
+    </div>
+    -->
+    
     <div id="joinedgroups">
         <h3>Joined Groups</h3>
         <div id="joined_group_1" class="joined_group" onclick="openTab(null, 'Group_Profile');scrollDownToBottom('chat-messages');">
@@ -551,6 +569,18 @@ textarea {
             <img src="icons/new-message.png" alt="Mail" title="New Messages" class="joined_group_img"/>
         </div>
     </div>
+    
+    <!--
+    <div id="joinedgroups">
+        <h3>Group Dates</h3>
+        <div id="joined_group_1" class="joined_group" onclick="">
+            <p class="joined_group_name">Programmieren I: Scriptkiddies: 01.02.2021, 14 Uhr</p>
+        </div>
+        <div id="joined_group_2" class="joined_group" onclick="">
+            <p class="joined_group_name">GMCI: Übung Gruppenarbeit: 02.02.2021, 10 Uhr</p>
+        </div>
+    </div>
+    -->
 </div>
 
 <div id="Search" class="tabcontent">
@@ -778,31 +808,82 @@ textarea {
 
 <div id="Requests" class="tabcontent">
     <h2>Requests</h2>
-    <input type="button" id="sent_btn" class="sent_btn" value="sent" onclick="?">
-    <input type="button" id="received_btn" class="received_btn" value="received" onclick="?">
+    <!-- <input type="button" id="requests_all_btn" class="requests_btn" value="all" onclick="showInbox(event, 'all')"> -->
+    <input type="button" id="requests_sent_btn" class="requests_btn" value="sent" onclick="showInbox(event, 'sent')">
+    <input type="button" id="requests_received_btn" class="requests_btn" value="received" onclick="showInbox(event, 'received')">
     
-    <div style="border:2px solid black;border-radius:12px;background-color:#F8F8F8;white-space:nowrap;overflow-x: auto;position:relative;">
+    <div style="border:2px solid black;border-radius:12px;background-color:#F8F8F8;white-space:nowrap;overflow-x:auto;position:relative;">
         <div class="requestmenu">
-            <div id="defaultOpenRequest" class="requestitem" onclick="showRequest(evt, 'req_1')">
+            <!-- Sent Inbox -->
+            <div id="defaultOpenRequestItemSent" class="requestitem sent">
                 Sent join-request to "Programmieren I: Scriptkiddies" (not received)
             </div>
-            <div class="requestitem">
+            <div class="requestitem sent">
                 Sent join-request to "Programmieren II: Hackermen" (received, unread)
             </div>
-            <div class="requestitem">
+            <div class="requestitem sent">
                 Sent join-request to "GMCI: Übung Gruppenarbeit" (read, in progress)
             </div>
-            <div class="requestitem">
+            <div class="requestitem sent">
                 Sent join-request to "GDS: Klausurvorbereitung" (accepted)
             </div>
-            <div class="requestitem">
+            <div class="requestitem sent">
                 Sent join-request to "Analysis B: Tutoren" (rejected)
+            </div>
+            <div class="requestitem sent">
+                Sent join-request to "Programmieren I: Scriptkiddies" (not received)
+            </div>
+            <div class="requestitem sent">
+                Sent join-request to "Programmieren II: Hackermen" (received, unread)
+            </div>
+            <div class="requestitem sent">
+                Sent join-request to "GMCI: Übung Gruppenarbeit" (read, in progress)
+            </div>
+            <div class="requestitem sent">
+                Sent join-request to "GDS: Klausurvorbereitung" (accepted)
+            </div>
+            <div class="requestitem sent">
+                Sent join-request to "Analysis B: Tutoren" (rejected)
+            </div>
+            
+            <!-- Received Inbox -->
+            <div id="defaultOpenRequestItemReceived" class="requestitem received">
+                Received request from Hans Wurst to join "Programmieren I: Scriptkiddies"
+            </div>
+            <div class="requestitem received">
+                Received request from Hans Wurst to join "Programmieren II: Hackermen"
+            </div>
+            <div class="requestitem received">
+                Received request from Hans Wurst to join "GMCI: Übung Gruppenarbeit"
+            </div>
+            <div class="requestitem received">
+                Received request from Hans Wurst to join "GDS: Klausurvorbereitung"
+            </div>
+            <div class="requestitem received">
+                Received request from Hans Wurst to join "Analysis B: Tutoren"
+            </div>
+            <div class="requestitem received">
+                Received request from Hans Wurst to join "Programmieren I: Scriptkiddies"
+            </div>
+            <div class="requestitem received">
+                Received request from Hans Wurst to join "Programmieren II: Hackermen"
+            </div>
+            <div class="requestitem received">
+                Received request from Hans Wurst to join "GMCI: Übung Gruppenarbeit"
+            </div>
+            <div class="requestitem received">
+                Received request from Hans Wurst to join "GDS: Klausurvorbereitung"
+            </div>
+            <div class="requestitem received">
+                Received request from Hans Wurst to join "Analysis B: Tutoren"
             </div>
         </div>
         
         <div class="requestmessage">
             <div class="requestheader">
-                <label><b>Join-request sent from:</b></label> <span id="requestsender"><a onclick="openTab(null, 'User_Profile')">Hans Wurst</a></span>
+                <h3>Join-request</h3>
+                <label><b>sent from:</b></label> <span id="requestsender"><a onclick="openTab(null, 'User_Profile')">Hans Wurst</a></span><br>
+                <label><b>to:</b></label> <span id="requestreceiver"><a onclick="openTab(null, 'Group_Profile')">Programmieren I: Scriptkiddies</a></span>
             </div>
             <hr>
             <div class="requestcontent">
@@ -811,9 +892,9 @@ textarea {
             </div>
             <hr>
             <div class="requestfooter">
-                <input type="button" value="Accept" onclick="">
-                <input type="button" value="Reject" onclick="">
-                <input type="button" value="Cancel" onclick="">
+                <input type="button" id="requests_accept_btn" value="Accept" onclick="removeRequestItem()">
+                <input type="button" id="requests_reject_btn" value="Reject" onclick="removeRequestItem()">
+                <input type="button" id="requests_cancel_btn" value="Cancel" onclick="removeRequestItem()">
             </div>
         </div>
     </div>
@@ -1083,12 +1164,84 @@ function scrollDownToBottom(id) {
     element.scrollTo(0, element.scrollHeight);
 }
 
-//// REQUESTS ////
-function showRequest(evt, req) {
-    // fill header and content with sender and message
-    //evt.currentTarget.className += " openedRequest";
+function scrollUpToTop(id) {
+    var element = document.getElementById(id);
+    element.scrollTo(0, 0);
 }
-//document.getElementById("defaultOpenRequest").click();
+
+//// REQUESTS ////
+function showInbox(evt, inboxName) {
+    // highlight selected inbox
+    var req_btns = document.getElementsByClassName("requests_btn");
+    for (var i = 0; i < req_btns.length; ++i) {
+        req_btns[i].className = req_btns[i].className.replace(" active", "");
+    }
+    
+    // select inbox items
+    var reqitems_sent = document.getElementsByClassName("sent");
+    var reqitems_received = document.getElementsByClassName("received");
+    if (inboxName == "sent") {
+        for (var i = 0; i < reqitems_sent.length; ++i) {
+            reqitems_sent[i].style.display = "block";
+        }
+        for (var i = 0; i < reqitems_received.length; ++i) {
+            reqitems_received[i].style.display = "none";
+        }
+        
+        document.getElementById("requests_accept_btn").style.display = "none";
+        document.getElementById("requests_reject_btn").style.display = "none";
+        document.getElementById("requests_cancel_btn").style.display = "inline-block";
+    } else if (inboxName == "received") {
+        for (var i = 0; i < reqitems_sent.length; ++i) {
+            reqitems_sent[i].style.display = "none";
+        }
+        for (var i = 0; i < reqitems_received.length; ++i) {
+            reqitems_received[i].style.display = "block";
+        }
+        
+        document.getElementById("requests_accept_btn").style.display = "inline-block";
+        document.getElementById("requests_reject_btn").style.display = "inline-block";
+        document.getElementById("requests_cancel_btn").style.display = "none";
+    }
+    
+    evt.currentTarget.className += " active";
+    var reqfirst = document.getElementsByClassName("requestmenu")[0].getElementsByClassName(inboxName);
+    if (reqfirst.length >= 1) {
+        reqfirst[0].click();
+    }
+    
+    // scroll up to top?
+}
+
+function showRequest(evt) {
+    // fill header+content with sender, receiving group and message...
+    
+    var reqitems = document.getElementsByClassName("requestitem");
+    for (var i = 0; i < reqitems.length; ++i) {
+        reqitems[i].className = reqitems[i].className.replace(" active", "");
+    }
+    
+    evt.currentTarget.className += " active";
+    document.getElementsByClassName("requestmessage")[0].style.display = "inline-block";
+}
+
+var reqitems = document.getElementsByClassName("requestitem");
+for (var i = 0; i < reqitems.length; ++i) {
+    reqitems[i].onclick = function (event) {
+        showRequest(event);
+    };
+}
+document.getElementById("requests_sent_btn").click();
+
+// after accept, reject or cancel
+function removeRequestItem() {
+    var reqmenu = document.getElementsByClassName("requestmenu")[0];
+    reqmenu.getElementsByClassName("active")[0].remove();
+    document.getElementsByClassName("requestmessage")[0].style.display = "none";
+    
+    // select next requestitem in the list depending on inbox?
+    //reqmenu.getElementsByClassName("sent")[0].click();
+}
 
 //// USER PROFILE ////
 function openFileDialog() {
