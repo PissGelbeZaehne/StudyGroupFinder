@@ -263,6 +263,34 @@ input[type=button]:hover, input[type=button].active, input[type=submit]:hover, i
   padding-right: 20px;
 }
 
+button.standard {
+  border-radius: 10px;
+  font-family: Helvetica, sans-serif;
+  font-size: 16px;
+  margin: 8px 0;
+  padding: 12px  20px;
+  border: none;
+  font-weight: bold;
+  font-size: medium;
+  letter-spacing: 1pt;
+  color: #F8F8F8;
+  background-color: #222222;
+}
+
+button.standard:hover {
+  border: none;
+  background-color: #ba2026;
+  color: #F8F8F8;
+  cursor: pointer;
+}
+
+#addDate {
+  width: 100%;
+  margin: 0;
+  margin-top: 8px;
+  padding: 12px 0;
+}
+
 .chat{
   border: 2px solid black;
   border-radius: 12px;
@@ -276,10 +304,10 @@ input[type=button]:hover, input[type=button].active, input[type=submit]:hover, i
   text-align: center;
   line-height: 40px;
   border-radius: 10px;
-  border:1px solid #ae946d;
+  border: 1px solid #ae946d;
   margin: 20px;
   margin-left: 0;
-  //padding: 5px;
+  padding: 5px;
 }
 
 .container {
@@ -756,9 +784,10 @@ textarea {
             </div>
             <div class="sidebar-item">
                 <b>Dates</b><br>
-                13.11.20<br>
-                20.11.20<br>
-                27.11.20<br>
+                <button class="members" onclick="toggleDate()">15.01.21</button><br>
+                <button class="members" onclick="toggleDate()">22.01.21</button><br>
+                <button class="members" onclick="toggleDate()">29.01.21</button><br>
+				<button id="addDate" class="standard" onclick="toggleDateForm()">Add date</button>
             </div>
         </div>
         
@@ -785,7 +814,7 @@ textarea {
         </div>
     </div>
 	
-	<div id="profile" class="modal">
+	<div id="profileModal" class="modal">
 		<div class="modal-content animate">
 			<span onclick="toggleProfile()" class="close" title="Close Modal">&times;</span>
 			<div class="container" style="line-height: 24px;">
@@ -803,6 +832,32 @@ textarea {
 				</div>
 			</div>
 		</div>
+    </div>
+	
+	<div id="dateModal" class="modal">
+		<div class="modal-content animate">
+			<span onclick="toggleDate()" class="close" title="Close Modal">&times;</span>
+			<div class="container" style="line-height: 24px;">
+				<h3>Date</h3>
+				<b>Description:</b> Wöchentliches Treffen<br>
+				<b>Time:</b> 15.1.20, 16:00 Uhr<br><br>
+				<button id="deleteDate" class="standard" onclick="toggleDate()">Delete Date</button>
+			</div>
+		</div>
+    </div>
+	
+	<div id="newDateModal" class="modal">
+		<form id="dateForm" class="modal-content animate" method="post" autocomplete="on" accept-charset="UTF-8">
+			<span onclick="toggleDateForm()" class="close" title="Close Modal">&times;</span>
+			<div class="container" style="line-height:24px;background-color: #FEFEFE;color:#44403f;border-radius: 5px;padding: 10px;margin: 10px 0;">
+				<h3>Create new date</h3>
+				<label for="newDate"><b>Date:</b></label><br>
+				<input type="date" id="newDate" required><br>
+				<label for="description"><b>Description:</b></label><br>
+				<input type="text" id="description" required><br>
+				<button id="createNewDate" class="standard" onclick="toggleDateForm()"><b>Create Date</b></button><br>
+			</div>
+		</form>
     </div>
 </div>
 
@@ -1036,6 +1091,22 @@ function showHome() {
 }
 showHome();
 
+// When the user clicks anywhere outside of a modal, close it
+window.onclick = function(event) {
+  if (event.target == request) {
+    request.style.display = "none";
+  }
+  if (event.target == profileModal) {
+    profileModal.style.display = "none";
+  }
+  if (event.target == dateModal) {
+	dateModal.style.display = "none";
+  }
+  if (event.target == newDateModal) {
+    newDateModal.style.display = "none";
+  }
+}
+
 // logout current user
 function logout() {
     // note logout in database and cookies...
@@ -1081,25 +1152,6 @@ function toggleRequest() {
   }
 }
 
-function toggleProfile() {
-  var content = document.getElementById("profile");
-  if (content.style.display === "block") {
-    content.style.display = "none";
-  } else {
-    content.style.display = "block";
-  }
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == request) {
-    request.style.display = "none";
-  }
-  if (event.target == profile) {
-    profile.style.display = "none";
-  }
-}
-
 var form = document.getElementById("searchform");
 function handleForm(event) { event.preventDefault(); }
 form.addEventListener('submit', handleForm);
@@ -1107,6 +1159,35 @@ form.addEventListener('submit', handleForm);
 var form = document.getElementById("requestForm");
 function handleForm(event) { event.preventDefault(); }
 form.addEventListener('submit', handleForm);
+
+//// GROUP PROFILE ////
+function toggleProfile() {
+  var content = document.getElementById("profileModal");
+  if (content.style.display === "block") {
+    content.style.display = "none";
+  } else {
+    content.style.display = "block";
+  }
+}
+
+function toggleDate() {
+  var content = document.getElementById("dateModal");
+  if (content.style.display === "block") {
+    content.style.display = "none";
+  } else {
+    content.style.display = "block";
+  }
+}
+
+function toggleDateForm() {
+  var content = document.getElementById("newDateModal");
+  if (content.style.display === "block") {
+    content.style.display = "none";
+  } else {
+    content.style.display = "block";
+  }
+}
+
 
 //// CREATE GROUP ////
 function createGroup() {
