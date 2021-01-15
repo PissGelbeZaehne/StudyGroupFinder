@@ -292,7 +292,6 @@ button.standard:hover {
 }
 
 .chat{
-  border: 2px solid black;
   border-radius: 12px;
   display: block;
   flex-basis: 60%;
@@ -308,6 +307,14 @@ button.standard:hover {
   margin: 20px;
   margin-left: 0;
   padding: 5px;
+  padding-top: 0px;
+  margin-top: 0px;
+}
+
+.sidebar-header {
+  font-weight: bolder;
+  font-weight: 700;
+  font-size: larger;
 }
 
 .container {
@@ -403,7 +410,6 @@ fieldset {
 
 .joined_group {
     color: #44403f;
-    //background-color: #F8F8F8;
     background-color: white;
     border: 1px solid #696965;
     cursor: pointer;
@@ -433,6 +439,28 @@ fieldset {
 .joined_group_img:hover{
   filter: invert(19%) sepia(94%) saturate(2647%) hue-rotate(343deg) brightness(79%) contrast(95%);
 }
+
+.add_date_button {
+  border: none;
+  background-color: #F8F8F8;
+  height:32px;
+  max-width: 32px;
+}
+
+.add_date_button:active {
+  border: none;
+}
+
+.add_date_img {
+    display: inline-block;
+    height:32px;
+    width:32px;
+}
+
+.add_date_img:hover{
+  filter: invert(19%) sepia(94%) saturate(2647%) hue-rotate(343deg) brightness(79%) contrast(95%);
+}
+
 
 .request {
   height:150px;
@@ -478,7 +506,7 @@ fieldset {
 
 .requestmessage {
     background-color: white;
-    border-left: 2px solid black;
+    border-left: 2px solid #e6ded2;
     display: none;
     height: 100%;
     position: absolute;
@@ -537,6 +565,10 @@ textarea {
     font-weight: bold;
     white-space: nowrap;
     overflow-x: auto;
+}
+
+hr{
+  border:1pt solid #e6ded2 ;
 }
 </style>
 </head>
@@ -777,18 +809,21 @@ textarea {
     <div class="flex-container">
         <div class="sidebar">
             <div class="sidebar-item">
-                <b>Members 3/6</b><br>
+                <div class="sidebar-header">Members 3/6</div>
                 You<br>
                 <button class="members" onclick="toggleProfile()">Hans Wurst</button> <img src="icons/star.png" alt="Group Admin" title="Group Admin" width="10" height="10"/><br>
 				<button class="members" onclick="toggleProfile()">Joachim Schikele</button>
             </div>
             <div class="sidebar-item">
-                <b>Dates</b><br>
+                <div class="sidebar-header">Dates</div>
                 <button class="members" onclick="toggleDate()">15.01.21</button><br>
                 <button class="members" onclick="toggleDate()">22.01.21</button><br>
                 <button class="members" onclick="toggleDate()">29.01.21</button><br>
-				<button id="addDate" class="standard" onclick="toggleDateForm()">Add date</button>
-            </div>
+                  <button class="add_date_button" id="addDate" onclick="toggleDateForm()">
+                    <img src="icons/add-date.png" alt="Mail" title="Add group" class="add_date_img icon"/>
+                  </button>
+				<!-- <button id="addDate" class="standard" onclick="toggleDateForm()">Add date</button> -->
+          </div>
         </div>
         
         <div class="chat">
@@ -867,7 +902,7 @@ textarea {
     <input type="button" id="requests_sent_btn" class="requests_btn" value="sent" onclick="showInbox(event, 'sent')">
     <input type="button" id="requests_received_btn" class="requests_btn" value="received" onclick="showInbox(event, 'received')">
     
-    <div style="border:2px solid black;border-radius:12px;background-color:#F8F8F8;white-space:nowrap;overflow-x:auto;position:relative;">
+    <div style="border:2px solid #e6ded2;border-radius:12px;background-color:#F8F8F8;white-space:nowrap;overflow-x:auto;position:relative;">
         <div class="requestmenu">
             <!-- Sent Inbox -->
             <div id="defaultOpenRequestItemSent" class="requestitem sent">
