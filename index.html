@@ -284,6 +284,28 @@ button.standard:hover {
   cursor: pointer;
 }
 
+#createNewDate {
+  border-radius: 10px;
+  font-family: Helvetica, sans-serif;
+  font-size: 16px;
+  margin: 8px 0;
+  margin-top: 20px;
+  padding: 12px  20px;
+  border: none;
+  font-weight: bold;
+  font-size: medium;
+  letter-spacing: 1pt;
+  color: #F8F8F8;
+  background-color: #222222;
+}
+
+#createNewDate:hover {
+  border: none;
+  background-color: #ba2026;
+  color: #F8F8F8;
+  cursor: pointer;
+}
+
 #addDate {
   width: 100%;
   margin: 0;
@@ -292,6 +314,7 @@ button.standard:hover {
 }
 
 .chat{
+  border: 2px solid black;
   border-radius: 12px;
   display: block;
   flex-basis: 60%;
@@ -307,14 +330,12 @@ button.standard:hover {
   margin: 20px;
   margin-left: 0;
   padding: 5px;
-  padding-top: 0px;
-  margin-top: 0px;
 }
 
-.sidebar-header {
-  font-weight: bolder;
-  font-weight: 700;
-  font-size: larger;
+ol {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 .container {
@@ -410,6 +431,7 @@ fieldset {
 
 .joined_group {
     color: #44403f;
+    //background-color: #F8F8F8;
     background-color: white;
     border: 1px solid #696965;
     cursor: pointer;
@@ -439,28 +461,6 @@ fieldset {
 .joined_group_img:hover{
   filter: invert(19%) sepia(94%) saturate(2647%) hue-rotate(343deg) brightness(79%) contrast(95%);
 }
-
-.add_date_button {
-  border: none;
-  background-color: #F8F8F8;
-  height:32px;
-  max-width: 32px;
-}
-
-.add_date_button:active {
-  border: none;
-}
-
-.add_date_img {
-    display: inline-block;
-    height:32px;
-    width:32px;
-}
-
-.add_date_img:hover{
-  filter: invert(19%) sepia(94%) saturate(2647%) hue-rotate(343deg) brightness(79%) contrast(95%);
-}
-
 
 .request {
   height:150px;
@@ -506,7 +506,7 @@ fieldset {
 
 .requestmessage {
     background-color: white;
-    border-left: 2px solid #e6ded2;
+    border-left: 2px solid black;
     display: none;
     height: 100%;
     position: absolute;
@@ -565,10 +565,6 @@ textarea {
     font-weight: bold;
     white-space: nowrap;
     overflow-x: auto;
-}
-
-hr{
-  border:1pt solid #e6ded2 ;
 }
 </style>
 </head>
@@ -809,21 +805,19 @@ hr{
     <div class="flex-container">
         <div class="sidebar">
             <div class="sidebar-item">
-                <div class="sidebar-header">Members 3/6</div>
-                You<br>
-                <button class="members" onclick="toggleProfile()">Hans Wurst</button> <img src="icons/star.png" alt="Group Admin" title="Group Admin" width="10" height="10"/><br>
-				<button class="members" onclick="toggleProfile()">Joachim Schikele</button>
-            </div>
+                <b>Members 3/6</b><br>
+				<ol>
+					<li>You</li>
+					<li><button class="members" onclick="toggleProfile()">Hans Wurst</button> <img src="icons/star.png" alt="Group Admin" title="Group Admin" width="10" height="10"/></li>
+					<li><button class="members" onclick="toggleProfile()">Joachim Schikele</button></li>
+				</ol>
+			</div>
             <div class="sidebar-item">
-                <div class="sidebar-header">Dates</div>
-                <button class="members" onclick="toggleDate()">15.01.21</button><br>
-                <button class="members" onclick="toggleDate()">22.01.21</button><br>
-                <button class="members" onclick="toggleDate()">29.01.21</button><br>
-                  <button class="add_date_button" id="addDate" onclick="toggleDateForm()">
-                    <img src="icons/add-date.png" alt="Mail" title="Add date" class="add_date_img icon"/>
-                  </button>
-				<!-- <button id="addDate" class="standard" onclick="toggleDateForm()">Add date</button> -->
-          </div>
+                <b>Dates</b><br>
+				<ol id="dateList">
+				</ol>
+				<button id="addDate" class="standard" onclick="toggleDateForm()">Add date</button>
+            </div>
         </div>
         
         <div class="chat">
@@ -871,26 +865,28 @@ hr{
 	
 	<div id="dateModal" class="modal">
 		<div class="modal-content animate">
-			<span onclick="toggleDate()" class="close" title="Close Modal">&times;</span>
+			<span id="closeDateModal" onclick="closeDate()" class="close" title="Close Modal">&times;</span>
 			<div class="container" style="line-height: 24px;">
 				<h3>Date</h3>
-				<b>Description:</b> Wöchentliches Treffen<br>
-				<b>Time:</b> 15.1.20, 16:00 Uhr<br><br>
-				<button id="deleteDate" class="standard" onclick="toggleDate()">Delete Date</button>
+				<b>Date and Time:</b> <div id="dateAndTimeText" style="display:inline-block;margin:5px 0;">15.1.20, 16:00 Uhr</div><br>
+				<b>Description:</b> <div id="descriptionText" style="display:inline-block;margin:5px 0;">Wöchentliches Treffen</div><br><br>
+				<button id="deleteDate" class="standard" onclick="deleteDate()">Delete Date</button>
 			</div>
 		</div>
     </div>
 	
 	<div id="newDateModal" class="modal">
-		<form id="dateForm" class="modal-content animate" method="post" autocomplete="on" accept-charset="UTF-8">
+		<form id="dateForm" class="modal-content animate" onsubmit="addDate()" method="post" autocomplete="on" accept-charset="UTF-8">
 			<span onclick="toggleDateForm()" class="close" title="Close Modal">&times;</span>
 			<div class="container" style="line-height:24px;background-color: #FEFEFE;color:#44403f;border-radius: 5px;padding: 10px;margin: 10px 0;">
 				<h3>Create new date</h3>
 				<label for="newDate"><b>Date:</b></label><br>
 				<input type="date" id="newDate" required><br>
-				<label for="description"><b>Description:</b></label><br>
-				<input type="text" id="description" required><br>
-				<button id="createNewDate" class="standard" onclick="toggleDateForm()"><b>Create Date</b></button><br>
+				<label for="newDateTime"><b>Time:</b></label><br>
+				<input type="time" id="newDateTime" required><br>
+				<label for="newDateDescription"><b>Description:</b></label><br>
+				<input type="text" id="newDateDescription" required><br>
+				<input type="submit" id="createNewDate" class="standard" value="Create Date"><br>
 			</div>
 		</form>
     </div>
@@ -902,7 +898,7 @@ hr{
     <input type="button" id="requests_sent_btn" class="requests_btn" value="sent" onclick="showInbox(event, 'sent')">
     <input type="button" id="requests_received_btn" class="requests_btn" value="received" onclick="showInbox(event, 'received')">
     
-    <div style="border:2px solid #e6ded2;border-radius:12px;background-color:#F8F8F8;white-space:nowrap;overflow-x:auto;position:relative;">
+    <div style="border:2px solid black;border-radius:12px;background-color:#F8F8F8;white-space:nowrap;overflow-x:auto;position:relative;">
         <div class="requestmenu">
             <!-- Sent Inbox -->
             <div id="defaultOpenRequestItemSent" class="requestitem sent">
@@ -1205,13 +1201,17 @@ function toggleProfile() {
   }
 }
 
-function toggleDate() {
-  var content = document.getElementById("dateModal");
-  if (content.style.display === "block") {
-    content.style.display = "none";
-  } else {
-    content.style.display = "block";
-  }
+var selectedDateIndex = 0;
+function openDate(event) {
+  selectedDateIndex = event.target.parentNode.getAttribute("value");
+  var selectedDate = dates[selectedDateIndex];
+  document.getElementById("dateAndTimeText").innerHTML = changeDateFormat(selectedDate.date) + ", " + selectedDate.time;
+  document.getElementById("descriptionText").innerHTML = selectedDate.description;
+  document.getElementById("dateModal").style.display = "block";
+}
+
+function closeDate() {
+  document.getElementById("dateModal").style.display = "none";
 }
 
 function toggleDateForm() {
@@ -1223,16 +1223,73 @@ function toggleDateForm() {
   }
 }
 
+var form = document.getElementById("dateForm");
+function handleForm(event) { event.preventDefault(); }
+form.addEventListener('submit', handleForm);
 
-//// CREATE GROUP ////
-function createGroup() {
-    // create group in database...
-    openTab(null, "Group_Profile");
+var dates = [{date:"2021-01-30",description:"Zusätzliches Treffen",time:"19:00"}, {date:"2021-01-22",description:"Wöchentliches Treffen",time:"16:00"}, {date:"2021-01-29",description:"Wöchentliches Treffen",time:"16:00"}];
+
+function updateDates() {
+  document.getElementById("dateList").innerHTML = "";
+  sortDateList();
+  var d;
+  var i = 0;
+  for (d of dates) {
+    var newDate = document.createElement("LI");
+	newDate.setAttribute("value",i);
+    var newButton = document.createElement("BUTTON");
+    newButton.setAttribute("class","members");
+    newButton.setAttribute("onclick","openDate(event)");
+    newButton.innerHTML = changeDateFormat(d.date);
+    newDate.appendChild(newButton);
+    document.getElementById("dateList").appendChild(newDate);
+	i++;
+  }
+}
+updateDates();
+
+function addDate() {
+  toggleDateForm();
+  var date = document.getElementById("newDate").value;
+  var description = document.getElementById("newDateDescription").value;
+  var time = document.getElementById("newDateTime").value;
+  dates.push({date:date,description:description,time:time});
+  updateDates();
 }
 
-function saveGroup() {
-    // save group in database...
-    openTab(null, "Group_Profile");
+function changeDateFormat(str) {
+	return str.substr(8, 2) + '.' + str.substr(5, 2) + '.' + str.substr(2, 2);
+}
+
+function deleteDate() {
+  var answer = window.confirm("Are you sure that you want to delete this date?\nThis action can not be undone.");
+  if (answer) {
+    dateModal.style.display = "none";
+    if (selectedDateIndex > -1) {
+	  dates.splice(selectedDateIndex, 1);
+    }
+    updateDates();
+  }
+}
+
+function compareDates(a, b) {
+  if (a.date < b.date){
+    return -1;
+  }
+  if (a.date > b.date){
+    return 1;
+  }
+  if (a.time < b.time){
+    return -1;
+  }
+  if (a.time > b.time){
+    return 1;
+  }
+  return 0;
+}
+
+function sortDateList() {
+  dates.sort(compareDates);
 }
 
 function deleteGroup() {
@@ -1284,6 +1341,19 @@ function scrollUpToTop(id) {
     var element = document.getElementById(id);
     element.scrollTo(0, 0);
 }
+
+
+//// CREATE GROUP ////
+function createGroup() {
+    // create group in database...
+    openTab(null, "Group_Profile");
+}
+
+function saveGroup() {
+    // save group in database...
+    openTab(null, "Group_Profile");
+}
+
 
 //// REQUESTS ////
 function showInbox(evt, inboxName) {
