@@ -310,7 +310,7 @@ button.standard:hover {
   cursor: pointer;
 }
 
-#addDate, #addFile {
+#addDate {
   width: 100%;
   margin: 0;
   margin-top: 8px;
@@ -855,14 +855,6 @@ hr{
 					<img src="icons/add-date.png" alt="Mail" title="Add date" class="add_date_img icon"/>
                 </button>
             </div>
-			<div class="sidebar-item">
-				<div class="sidebar-header">Files</div>
-				<ol id="fileList">
-				</ol>
-				<button class="add_date_button" id="addFile" onclick="toggleFileForm()">
-					<img src="icons/add-date.png" alt="Mail" title="Add date" class="add_date_img icon"/>
-                </button>
-			</div>
         </div>
         
         <div class="chat">
@@ -932,33 +924,6 @@ hr{
 				<label for="newDateDescription"><b>Description:</b></label><br>
 				<input type="text" id="newDateDescription" required><br>
 				<input type="submit" id="createNewDate" class="standard" value="Create Date"><br>
-			</div>
-		</form>
-    </div>
-	
-	<div id="fileModal" class="modal">
-		<div class="modal-content animate">
-			<span id="closeFileModal" onclick="closeFile()" class="close" title="Close Modal">&times;</span>
-			<div class="container" style="line-height: 24px;">
-				<h3>File</h3>
-				<b>Name:</b> <div id="nameOfFile" style="display:inline-block;margin:5px 0;">xxx</div><br>
-				<b>Description:</b> <div id="fileDescription" style="display:inline-block;margin:5px 0;">xxx</div><br><br>
-				<button id="downloadFile" class="standard" onclick="downloadFile()">Download File</button>
-				<button id="deleteFile" class="standard" onclick="deleteFile()">Delete File</button>
-			</div>
-		</div>
-    </div>
-	
-	<div id="newFileModal" class="modal">
-		<form id="fileForm" class="modal-content animate" onsubmit="addFile()" method="post" autocomplete="on" accept-charset="UTF-8">
-			<span onclick="toggleFileForm()" class="close" title="Close Modal">&times;</span>
-			<div class="container" style="line-height:24px;background-color: #FEFEFE;color:#44403f;border-radius: 5px;padding: 10px;margin: 10px 0;">
-				<h3>Upload new file</h3>
-				<label for="newFile"><b>Select a file:</b></label><br>
-				<input type="file" id="newFile" style="padding-left: 0;" required><br>
-				<label for="newFileDescription"><b>Description:</b></label><br>
-				<input type="text" id="newFileDescription" required><br>
-				<input type="submit" id="createNewFile" class="standard" value="Upload file"><br>
 			</div>
 		</form>
     </div>
@@ -1208,12 +1173,6 @@ window.onclick = function(event) {
   if (event.target == newDateModal) {
     newDateModal.style.display = "none";
   }
-  if (event.target == fileModal) {
-	fileModal.style.display = "none";
-  }
-  if (event.target == newFileModal) {
-    newFileModal.style.display = "none";
-  }
 }
 
 // logout current user
@@ -1301,9 +1260,9 @@ function toggleDateForm() {
   }
 }
 
-var dateForm = document.getElementById("dateForm");
+var form = document.getElementById("dateForm");
 function handleForm(event) { event.preventDefault(); }
-dateForm.addEventListener('submit', handleForm);
+form.addEventListener('submit', handleForm);
 
 var dates = [{date:"2021-01-30",description:"Zusätzliches Treffen",time:"19:00"}, {date:"2021-01-22",description:"Wöchentliches Treffen",time:"16:00"}, {date:"2021-01-29",description:"Wöchentliches Treffen",time:"16:00"}];
 
@@ -1342,7 +1301,7 @@ function changeDateFormat(str) {
 function deleteDate() {
   var answer = window.confirm("Are you sure that you want to delete this date?\nThis action can not be undone.");
   if (answer) {
-    fileModal.style.display = "none";
+    dateModal.style.display = "none";
     if (selectedDateIndex > -1) {
 	  dates.splice(selectedDateIndex, 1);
     }
@@ -1368,76 +1327,6 @@ function compareDates(a, b) {
 
 function sortDateList() {
   dates.sort(compareDates);
-}
-
-var selectedFileIndex = 0;
-function openFile(event) {
-  selectedFileIndex = event.target.parentNode.getAttribute("value");
-  var selectedFile = files[selectedFileIndex];
-  document.getElementById("nameOfFile").innerHTML = selectedFile.filename;
-  document.getElementById("fileDescription").innerHTML = selectedFile.description;
-  document.getElementById("fileModal").style.display = "block";
-}
-
-function closeFile() {
-  document.getElementById("fileModal").style.display = "none";
-}
-
-function toggleFileForm() {
-  var content = document.getElementById("newFileModal");
-  if (content.style.display === "block") {
-    content.style.display = "none";
-  } else {
-    content.style.display = "block";
-  }
-}
-
-var fileForm = document.getElementById("fileForm");
-function handleForm(event) { event.preventDefault(); }
-fileForm.addEventListener('submit', handleForm);
-
-var files = [{filename:"Aufgabenblatt10.pdf",description:"Abgabe bis zum 25.01"},{filename:"Aufgabenblatt09_Lösung.pdf",description:"Noch unvollständig"},{filename:"quicksort.c",description:"C-Implementation von Quicksort"}];
-
-function updateFiles() {
-  document.getElementById("fileList").innerHTML = "";
-  var f;
-  var i = 0;
-  for (f of files) {
-    var newFile = document.createElement("LI");
-	newFile.setAttribute("value",i);
-    var newButton = document.createElement("BUTTON");
-    newButton.setAttribute("class","members");
-    newButton.setAttribute("onclick","openFile(event)");
-    newButton.innerHTML = f.filename;
-    newFile.appendChild(newButton);
-    document.getElementById("fileList").appendChild(newFile);
-	i++;
-  }
-}
-updateFiles();
-
-function addFile() {
-  toggleFileForm();
-  var filename = document.getElementById("newFile").value.split('\\').pop();;
-  var description = document.getElementById("newFileDescription").value;
-  files.push({filename:filename,description:description});
-  updateFiles();
-}
-
-function deleteFile() {
-  var answer = window.confirm("Are you sure that you want to delete this file?\nThis action can not be undone.");
-  if (answer) {
-    fileModal.style.display = "none";
-    if (selectedFileIndex > -1) {
-	  files.splice(selectedFileIndex, 1);
-    }
-    updateFiles();
-  }
-}
-
-function downloadFile() {
-  // closeFile();
-  // download file...
 }
 
 function deleteGroup() {
@@ -1473,7 +1362,7 @@ function sendText(){
     var time = date.toLocaleTimeString('de-DE', { hour: "numeric", minute: "numeric" });
     date = date.toLocaleDateString('de-DE', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
     
-    newmessage.innerHTML = '<p><b>You: </b>' + inputText + '</p>' + date + ", " + time;
+    newmessage.innerHTML = '<p><b>Ich: </b>' + inputText + '</p>' + date + ", " + time;
     chatmessages.append(newmessage);
     chatText.value = "";
     
