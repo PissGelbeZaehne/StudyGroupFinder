@@ -83,10 +83,11 @@ body {
 .collapsible {
   border: none;
   color: #F8F8F8;
-  background-color: #696965;
+  background-color: #222222;/*#696965;*/
   cursor: pointer;
   margin: 8px 0;
   width: 100%;
+  max-width: 900px;
   text-align: left;
   font-size: medium;
   font-weight: bold;
@@ -100,16 +101,16 @@ body {
 /*.active,*/
 .collapsible:hover {
   background-color: #ba2026;
-  //color: black;
 }
 
 /* Style the content of the collapsible */
 .collapsiblecontent {
   color: #44403f;
-  //background-color: #696965;
   padding: 0 18px;
   border-radius: 10px;
   border: 1px solid #ae946d;
+  width: 100%;
+  max-width: 900px;
   display: none;
   overflow: hidden;
 }
@@ -130,7 +131,7 @@ td {
 
 th {
   //border: 1px solid #ae946d;
-  background-color: #696965;
+  background-color: #222222;/*#696965;*/
   color: #F8F8F8;
   text-align: center;
   padding: 16px;
@@ -202,21 +203,6 @@ button.group:hover {
   color: red;
   text-decoration: none;
   cursor: pointer;
-}
-
-#submitRequest{
-  background-color: #4CAF50;
-  color: #F8F8F8;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  width: 100%;
-}
-
-#submitRequest:hover {
-  opacity: 0.8;
 }
 
 select{
@@ -679,7 +665,7 @@ hr{
   <h2>Search</h2>
   <form id="searchform" onsubmit="showResults();">
     <div>
-      <input id="search" type="text" placeholder="Search..." required>
+      <input id="search" type="text" style="max-width:300px;width:100%" placeholder="Search..." required>
     </div>
   </form>
     
@@ -754,7 +740,7 @@ hr{
 			<b>Description:</b> Suchen motivierte Kommilitonen zum Lernen für Programmieren 1. Wir sind keine Experten, aber stets motiviert!<br><br>
 			<label for="reqmessage"><b>Message</b></label>
 			<textarea style="height:150px;width:100%;margin-top:15px;margin-bottom:15px;overflow:auto;resize:vertical;border-radius:6px;"></textarea>
-			<button id="submitRequest" onclick="document.getElementById('request').style.display='none'"><b>Send Request</b></button><br>
+			<button id="submitRequest" class="standard" onclick="document.getElementById('request').style.display='none'">Send Request</button><br>
         </div>
     </form>
   </div>
@@ -931,7 +917,7 @@ hr{
 				<label for="newDateTime"><b>Time:</b></label><br>
 				<input type="time" id="newDateTime" required><br>
 				<label for="newDateDescription"><b>Description:</b></label><br>
-				<input type="text" id="newDateDescription" required><br>
+				<input type="text" id="newDateDescription" style="width:400px" required><br>
 				<input type="submit" id="createNewDate" class="standard" value="Create Date"><br>
 			</div>
 		</form>
@@ -958,7 +944,7 @@ hr{
 				<label for="newFile"><b>Select a file:</b></label><br>
 				<input type="file" id="newFile" style="padding-left: 0;" required><br>
 				<label for="newFileDescription"><b>Description:</b></label><br>
-				<input type="text" id="newFileDescription" required><br>
+				<input type="text" id="newFileDescription" style="width:400px" required><br>
 				<input type="submit" id="createNewFile" class="standard" value="Upload file"><br>
 			</div>
 		</form>
